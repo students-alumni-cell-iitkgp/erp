@@ -13,9 +13,11 @@ class Login extends CI_Controller{
 	}
 	public function index(){
 		//here we need to check if a person is already logged in. In such a case, we will redirect him to his view.
+		if($this->session->userdata('privilege')){
+			$this->redirectUser($this->session->userdata('privilege'));
+		}
 
-
-		if ($this->form_validation->run() == FALSE)
+		elseif ($this->form_validation->run() == FALSE)
 		{	
 			$this->load->view('templates/header');
 			$this->load->view('loginForm');
@@ -35,9 +37,11 @@ class Login extends CI_Controller{
 	}
 
 	protected function redirectUser($privilege){
+		if(!$this->session->userdata('privilege')){
 		$username = $this->input->post('username');
 		$sessData = array('username'=>$username,'privilege'=>$privilege);
 		$this->session->set_userdata($sessData);
+		}
 		switch ($privilege) {
 			case '0':
 				header('Refresh:2, url="member"');
