@@ -5,6 +5,12 @@ class MemberModel extends CI_Model{
 		$this->load->database();
 
 	}
+	public function getUserName(){
+		if($this->session->userdata('alias'))
+			return $this->session->userdata('alias');
+		else
+			return $this->session->userdata('username');
+	}
 
 	public function getYearList(){
 		$this->db->select('alumSince');
@@ -60,7 +66,7 @@ class MemberModel extends CI_Model{
 
 	public function FullList($year){
 		$table = "";
-		$username = $this->session->userdata('username');
+		$username = $this->getUserName();
 		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year));
 		if($query->num_rows==0){
 			return -1;
@@ -77,7 +83,7 @@ class MemberModel extends CI_Model{
 
 	public function Positive($year){
 		$table = "";
-		$username = $this->session->userdata('username');
+		$username = $this->getUserName();
 		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'called'=>'3'));
 		if($query->num_rows==0){
 			return -1;
@@ -95,7 +101,7 @@ class MemberModel extends CI_Model{
 	public function Negative($year){
 
 		$table = "";
-		$username = $this->session->userdata('username');
+		$username = $this->getUserName();
 		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'called'=>'2'));
 		if($query->num_rows==0){
 			return -1;
@@ -114,7 +120,7 @@ class MemberModel extends CI_Model{
 	public function Neutral($year){
 
 		$table = "";
-		$username = $this->session->userdata('username');
+		$username = $this->getUserName();
 		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'called'=>'1'));
 		if($query->num_rows==0){
 			return -1;
@@ -132,7 +138,7 @@ class MemberModel extends CI_Model{
 	public function Register($year){
 
 		$table = "";
-		$username = $this->session->userdata('username');
+		$username = $this->getUserName();
 		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'register'=>'1'));
 		if($query->num_rows==0){
 			return -1;
@@ -150,7 +156,7 @@ class MemberModel extends CI_Model{
 	public function Uncontacted($year){
 
 		$table = "";
-		$username = $this->session->userdata('username');
+		$username = $this->getUserName();
 		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'called'=>'0'));
 		if($query->num_rows==0){
 			return -1;
@@ -168,7 +174,7 @@ class MemberModel extends CI_Model{
 	public function Unsearched($year){
 
 		$table = "";
-		$username = $this->session->userdata('username');
+		$username = $this->getUserName();
 		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'search'=>'0'));
 		if($query->num_rows==0){
 			return -1;
@@ -186,7 +192,7 @@ class MemberModel extends CI_Model{
 	public function notFound($year){
 
 		$table = "";
-		$username = $this->session->userdata('username');
+		$username = $this->getUserName();
 		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'search'=>'-1'));
 		if($query->num_rows==0){
 			return -1;
@@ -200,6 +206,19 @@ class MemberModel extends CI_Model{
 			return $table;
 		}
 
+	}
+
+
+	public function getPrimaryInfo($id){
+		$query = $this->db->get_where('alumni',array('id'=>$id));
+		if($query->num_rows()>0){
+			$result = $query->row_array();
+			$data['name'] = $result['name'];
+			$data['hall'] = $result['hall'];
+			$data['year'] = $result['alumSince'];
+			//$data['department'] = $result['department'];
+			return $data;
+		}
 	}
 	
 }

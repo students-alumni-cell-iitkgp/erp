@@ -44,7 +44,7 @@ class Login extends CI_Controller{
 		}
 		switch ($privilege) {
 			case '0':
-				header('Refresh:2, url="member"');
+				header('Refresh:2, url="office"');
 				echo 'You have been logged in as office. You are being redirected.';
 				break;
 			case '1':
@@ -53,11 +53,11 @@ class Login extends CI_Controller{
 				echo 'You have been logged in as a student member. You are being redirected.';
 				break;	
 			case '2':
-				header('Refresh:2, url="member"');
+				header('Refresh:2, url="coordinator"');
 				echo 'You have been logged in as a coordinator. You are being redirected.';
 				break;
 			case '3':
-				header('Refresh:2, url="member"');
+				header('Refresh:2, url="admin"');
 				echo 'You have been logged in as admin. You are being redirected.';
 				break;
 			

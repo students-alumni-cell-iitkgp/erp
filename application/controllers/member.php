@@ -12,7 +12,7 @@ class Member extends CI_Controller{
 	}
 	private function accessCheck(){
 		$privilege = $this->session->userdata('privilege');
-		if($privilege=='1'){
+		if($privilege=='2'||$privilege=='1'){
 			return "True";
 		}
 
@@ -190,6 +190,11 @@ else{
 	}else{
 	$this->load->view('templates/accessErr');
 }}
+public function getProfile(){
+	$id=$this->input->get('id');
+	$data = $this->memberModel->getPrimaryInfo($id);
+	echo json_encode($data);
+}
 
 }
 
