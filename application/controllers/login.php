@@ -66,6 +66,12 @@ class Login extends CI_Controller{
 
 	}
 
+	public function logout(){
+
+		$this->session->sess_destroy();
+		header('Refresh:2, url="index"');
+		echo "You have been logged out. You are being redirected.";
+	}
 
 }
 
