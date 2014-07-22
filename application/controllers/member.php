@@ -10,9 +10,16 @@ class Member extends CI_Controller{
 		$this->load->model('memberModel');
 		$this->data1 = $this->memberModel->getYearList();
 	}
+	private function accessCheck(){
+		$privilege = $this->session->userdata('privilege');
+		if($privilege=='1'){
+			return "True";
+		}
+
+	}
 
 	public function index(){
-		//check access
+		if($this->accessCheck()){
 		$data = array('years'=>$this->memberModel->getYearList());
 		$this->load->view('templates/header');
 		$this->load->view('templates/menu');
@@ -22,13 +29,19 @@ class Member extends CI_Controller{
 		$this->load->view('templates/footer');
 		
 	}
+else{
+	$this->load->view('templates/accessErr');
+}}
 
 	public function year($year){
+		if($this->accessCheck()){
+
 		$this->data1 = $this->memberModel->getYearList();
 		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
 			$data['table'] = $this->memberModel->getTable($year);
 			$data['year'] = $year;
 			$this->load->view('templates/header');
+			$this->load->view('templates/menu');
 			$this->load->view('members/fullList',$data);
 			$this->load->view('templates/footer');
 		}else{
@@ -38,13 +51,18 @@ class Member extends CI_Controller{
 		}
 
 
-	}
+	}else{
+	$this->load->view('templates/accessErr');
+}}
 
 	public function positive($year){
+				if($this->accessCheck()){
+
 		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
 			$data['table'] = $this->memberModel->getTable($year,"positive");
 			$data['year'] = $year;
 			$this->load->view('templates/header');
+			$this->load->view('templates/menu');
 			$this->load->view('members/fullList',$data);
 			$this->load->view('templates/footer');
 		}else{
@@ -54,11 +72,17 @@ class Member extends CI_Controller{
 		}
 
 	}
+else{
+	$this->load->view('templates/accessErr');
+}}
 	public function negative($year){
+				if($this->accessCheck()){
+
 		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
 			$data['table'] = $this->memberModel->getTable($year,"negative");
 			$data['year'] = $year;
 			$this->load->view('templates/header');
+			$this->load->view('templates/menu');
 			$this->load->view('members/fullList',$data);
 			$this->load->view('templates/footer');
 		}else{
@@ -66,13 +90,18 @@ class Member extends CI_Controller{
 			$this->load->view('templates/badParam');
 			$this->load->view('templates/footer');
 		}
-
-	}
+}
+	else{
+	$this->load->view('templates/accessErr');
+}}
 	public function neutral($year){
+				if($this->accessCheck()){
+
 		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
 			$data['table'] = $this->memberModel->getTable($year,"neutral");
 			$data['year'] = $year;
 			$this->load->view('templates/header');
+			$this->load->view('templates/menu');
 			$this->load->view('members/fullList',$data);
 			$this->load->view('templates/footer');
 		}else{
@@ -81,13 +110,18 @@ class Member extends CI_Controller{
 			$this->load->view('templates/footer');
 		}
 
-	}
+	}else{
+	$this->load->view('templates/accessErr');
+}}
 
 	public function registered($year){
+				if($this->accessCheck()){
+
 		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
 			$data['table'] = $this->memberModel->getTable($year,"register");
 			$data['year'] = $year;
 			$this->load->view('templates/header');
+			$this->load->view('templates/menu');
 			$this->load->view('members/fullList',$data);
 			$this->load->view('templates/footer');
 		}else{
@@ -96,12 +130,17 @@ class Member extends CI_Controller{
 			$this->load->view('templates/footer');
 		}
 
-	}
+	}else{
+	$this->load->view('templates/accessErr');
+}}
 	public function uncontacted($year){
+						if($this->accessCheck()){
+
 		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
 			$data['table'] = $this->memberModel->getTable($year,"uncontacted");
 			$data['year'] = $year;
 			$this->load->view('templates/header');
+			$this->load->view('templates/menu');
 			$this->load->view('members/fullList',$data);
 			$this->load->view('templates/footer');
 		}else{
@@ -110,12 +149,17 @@ class Member extends CI_Controller{
 			$this->load->view('templates/footer');
 		}
 
-	}
+	}else{
+	$this->load->view('templates/accessErr');
+}}
 	public function unsearched($year){
+						if($this->accessCheck()){
+
 		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
 			$data['table'] = $this->memberModel->getTable($year,"unsearched");
 			$data['year'] = $year;
 			$this->load->view('templates/header');
+			$this->load->view('templates/menu');
 			$this->load->view('members/fullList',$data);
 			$this->load->view('templates/footer');
 		}else{
@@ -124,12 +168,17 @@ class Member extends CI_Controller{
 			$this->load->view('templates/footer');
 		}
 
-	}
+	}else{
+	$this->load->view('templates/accessErr');
+}}
 	public function notFound($year){
+								if($this->accessCheck()){
+
 		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
 			$data['table'] = $this->memberModel->getTable($year,"notFound");
 			$data['year'] = $year;
 			$this->load->view('templates/header');
+			$this->load->view('templates/menu');
 			$this->load->view('members/fullList',$data);
 			$this->load->view('templates/footer');
 		}else{
@@ -138,7 +187,9 @@ class Member extends CI_Controller{
 			$this->load->view('templates/footer');
 		}
 
-	}
+	}else{
+	$this->load->view('templates/accessErr');
+}}
 
 }
 
