@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 22, 2014 at 06:39 PM
+-- Generation Time: Jul 23, 2014 at 08:02 AM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.16
 
@@ -96,7 +96,7 @@ INSERT INTO `alumni` (`id`, `name`, `hall`, `alumSince`) VALUES
 
 CREATE TABLE IF NOT EXISTS `assign` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `toname` varchar(30) NOT NULL DEFAULT 'None',
+  `userid` int(10) NOT NULL,
   `year` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -145,9 +145,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`name`, `username`, `password`, `privilege`, `email`) VALUES
-('Admin', 'admin', 'peace', 3, 'mishra.rahul1712@gmail.com'),
+('Admin', 'admin', '33ee7e1eb504b6619c1b445ca1442c21', 3, 'mishra.rahul1712@gmail.com'),
 ('Arpit', 'arpit', '33ee7e1eb504b6619c1b445ca1442c21', 1, 'arpit366@gmail.com'),
-('Rahul', 'root', 'rmmr', 1, 'namannishesh@gmail.com'),
+('Rahul', 'root', '33ee7e1eb504b6619c1b445ca1442c21', 1, 'namannishesh@gmail.com'),
 ('testuser', 'test', '33ee7e1eb504b6619c1b445ca1442c21', 2, 'user@user.com');
 
 -- --------------------------------------------------------
