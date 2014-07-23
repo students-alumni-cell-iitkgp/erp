@@ -132,13 +132,14 @@ INSERT INTO `status` (`alumid`, `search`, `called`, `register`, `pay`, `toname`,
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
+  `userid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(50) NOT NULL,
   `privilege` int(11) NOT NULL COMMENT 'can have 4 values',
   `email` varchar(100) NOT NULL,
-  PRIMARY KEY (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 --
 -- Dumping data for table `users`
