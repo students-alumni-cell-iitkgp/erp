@@ -39,7 +39,8 @@ class Login extends CI_Controller{
 	protected function redirectUser($privilege){
 		if(!$this->session->userdata('privilege')){
 		$username = $this->input->post('username');
-		$sessData = array('username'=>$username,'privilege'=>$privilege);
+		$userid = $this->loginModel->getUserId($username);
+		$sessData = array('username'=>$username,'privilege'=>$privilege,'userid'=>$userid);
 		$this->session->set_userdata($sessData);
 		}
 		switch ($privilege) {
