@@ -29,18 +29,18 @@ USE `erp`;
 --
 
 CREATE TABLE IF NOT EXISTS `alumni` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `alumid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `hall` varchar(100) NOT NULL,
   `alumSince` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`alumid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
 
 --
 -- Dumping data for table `alumni`
 --
 
-INSERT INTO `alumni` (`id`, `name`, `hall`, `alumSince`) VALUES
+INSERT INTO `alumni` (`alumid`, `name`, `hall`, `alumSince`) VALUES
 (2, 'Atanu Das', 'Rajendra Prasad Hall', 1964),
 (3, 'B K Tariyal', '', 1964),
 (4, 'Jyoti Parshad Banerjee', '', 1964),
@@ -95,10 +95,10 @@ INSERT INTO `alumni` (`id`, `name`, `hall`, `alumSince`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `assign` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `alumid` int(11) NOT NULL AUTO_INCREMENT,
   `userid` int(10) NOT NULL,
   `year` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`alumid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -108,21 +108,21 @@ CREATE TABLE IF NOT EXISTS `assign` (
 --
 
 CREATE TABLE IF NOT EXISTS `status` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `alumid` int(11) NOT NULL AUTO_INCREMENT,
   `search` int(11) NOT NULL,
   `called` int(11) NOT NULL,
   `register` int(11) NOT NULL,
   `pay` int(11) NOT NULL,
   `toname` varchar(30) NOT NULL,
   `year` year(4) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`alumid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='stores status about the alumni' AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `status`
 --
 
-INSERT INTO `status` (`id`, `search`, `called`, `register`, `pay`, `toname`, `year`) VALUES
+INSERT INTO `status` (`alumid`, `search`, `called`, `register`, `pay`, `toname`, `year`) VALUES
 (2, 3, 3, 1, 1, 'arpit', 1964);
 
 -- --------------------------------------------------------
@@ -183,13 +183,13 @@ INSERT INTO `work` (`id`, `table`, `description`, `toname`, `fromid`, `toid`, `y
 -- Constraints for table `assign`
 --
 ALTER TABLE `assign`
-  ADD CONSTRAINT `assign_ibfk_1` FOREIGN KEY (`id`) REFERENCES `alumni` (`id`);
+  ADD CONSTRAINT `assign_ibfk_1` FOREIGN KEY (`alumid`) REFERENCES `alumni` (`alumid`);
 
 --
 -- Constraints for table `status`
 --
 ALTER TABLE `status`
-  ADD CONSTRAINT `status_ibfk_1` FOREIGN KEY (`id`) REFERENCES `alumni` (`id`);
+  ADD CONSTRAINT `status_ibfk_1` FOREIGN KEY (`alumid`) REFERENCES `alumni` (`alumid`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
