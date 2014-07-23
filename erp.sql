@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `status` (
   `called` int(11) NOT NULL,
   `register` int(11) NOT NULL,
   `pay` int(11) NOT NULL,
-  `toname` varchar(30) NOT NULL,
+  `touserid` int(11) NOT NULL,
   `year` year(4) NOT NULL,
   PRIMARY KEY (`alumid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='stores status about the alumni' AUTO_INCREMENT=3 ;
