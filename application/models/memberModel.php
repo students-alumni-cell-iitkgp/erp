@@ -5,11 +5,17 @@ class MemberModel extends CI_Model{
 		$this->load->database();
 
 	}
-	public function getUserName(){
-		if($this->session->userdata('alias'))
-			return $this->session->userdata('alias');
-		else
-			return $this->session->userdata('username');
+	public function getUserId(){
+		if($this->session->userdata('alias')){
+			$username =  $this->session->userdata('alias');
+			
+		}
+		else{
+			$username = $this->session->userdata('username');
+		}
+		$query = $this->db->get_where('users',array('username'=>$username));
+		$result = $query->row_array();
+		return $result['userid'];
 	}
 
 	public function getYearList(){
@@ -66,8 +72,8 @@ class MemberModel extends CI_Model{
 
 	public function FullList($year){
 		$table = "";
-		$username = $this->getUserName();
-		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year));
+		$userid = $this->getUserId();
+		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year));
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -83,8 +89,8 @@ class MemberModel extends CI_Model{
 
 	public function Positive($year){
 		$table = "";
-		$username = $this->getUserName();
-		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'called'=>'3'));
+		$userid = $this->getUserId();
+		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'3'));
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -101,8 +107,8 @@ class MemberModel extends CI_Model{
 	public function Negative($year){
 
 		$table = "";
-		$username = $this->getUserName();
-		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'called'=>'2'));
+		$userid = $this->getUserId();
+		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'2'));
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -120,8 +126,8 @@ class MemberModel extends CI_Model{
 	public function Neutral($year){
 
 		$table = "";
-		$username = $this->getUserName();
-		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'called'=>'1'));
+		$userid = $this->getUserId();
+		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'1'));
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -138,8 +144,8 @@ class MemberModel extends CI_Model{
 	public function Register($year){
 
 		$table = "";
-		$username = $this->getUserName();
-		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'register'=>'1'));
+		$userid = $this->getUserId();
+		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'register'=>'1'));
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -156,8 +162,8 @@ class MemberModel extends CI_Model{
 	public function Uncontacted($year){
 
 		$table = "";
-		$username = $this->getUserName();
-		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'called'=>'0'));
+		$userid = $this->getUserId();
+		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'0'));
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -174,8 +180,8 @@ class MemberModel extends CI_Model{
 	public function Unsearched($year){
 
 		$table = "";
-		$username = $this->getUserName();
-		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'search'=>'0'));
+		$userid = $this->getUserId();
+		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'search'=>'0'));
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -192,8 +198,8 @@ class MemberModel extends CI_Model{
 	public function notFound($year){
 
 		$table = "";
-		$username = $this->getUserName();
-		$query = $this->db->get_where('status',array('toname'=>$username,'year'=>$year,'search'=>'-1'));
+		$userid = $this->getUserId();
+		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'search'=>'-1'));
 		if($query->num_rows==0){
 			return -1;
 		}else{
