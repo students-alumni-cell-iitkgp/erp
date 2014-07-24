@@ -98,7 +98,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE id = {$row['id']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$this->table->generate();
@@ -116,7 +116,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE id = {$row['id']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$this->table->generate();
@@ -135,7 +135,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE id = {$row['id']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$this->table->generate();
@@ -153,7 +153,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE id = {$row['id']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$this->table->generate();
@@ -171,7 +171,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE id = {$row['id']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$this->table->generate();
@@ -189,7 +189,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE id = {$row['id']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$this->table->generate();
@@ -207,7 +207,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE id = {$row['id']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$this->table->generate();
