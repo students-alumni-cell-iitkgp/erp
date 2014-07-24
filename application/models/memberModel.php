@@ -14,8 +14,10 @@ class MemberModel extends CI_Model{
 			$username = $this->session->userdata('username');
 		}
 		$query = $this->db->get_where('users',array('username'=>$username));
-		$result = $query->row_array();
-		return $result['userid'];
+		if($query->num_rows()>0){
+			$result = $query->row_array();
+			return $result['userid'];
+		}
 	}
 
 	public function getYearList(){
@@ -79,7 +81,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE id = {$row['id']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$table = $this->table->generate();
@@ -216,7 +218,7 @@ class MemberModel extends CI_Model{
 
 
 	public function getPrimaryInfo($id){
-		$query = $this->db->get_where('alumni',array('id'=>$id));
+		$query = $this->db->get_where('alumni',array('alumid'=>$id));
 		if($query->num_rows()>0){
 			$result = $query->row_array();
 			$data['name'] = $result['name'];

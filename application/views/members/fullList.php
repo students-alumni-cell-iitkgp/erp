@@ -85,13 +85,17 @@ dom3.onclick = function(){
 dom.setAttribute('class','modal fade ');
 dom.setAttribute('aria-hidden','true');
 dom.setAttribute('style','display:hidden');
-}
+};
 	//w.onclick = window.alert(this.cells[0].id);
-getdetails(this.cells[0].id);
+//getdetails(this.cells[0].innerHTML);
+console.log(this.cells[0]);
+console.log(this.cells[0].getAttribute('alumid'));
+getdetails(this.cells[0].getAttribute('alumid'));
 }
 
 
 function getdetails(id){
+//window.alert(id);
 var xhr;
 if(window.XMLHttpRequest){
 xhr = new XMLHttpRequest();
