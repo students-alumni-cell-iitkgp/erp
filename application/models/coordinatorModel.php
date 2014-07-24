@@ -18,6 +18,12 @@ class CoordinatorModel extends CI_Model{
 		}
 	}
 
+	public function getWorkDetail(){
+		$userid = $this->session->userdata('userid');
+		$query = $this->db->get_where('alumni',array('userid'=>$userid));
+		return $query->result_array();	
+	}
+
 
 
 }

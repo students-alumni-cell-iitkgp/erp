@@ -36,6 +36,14 @@ class Coordinator extends CI_Controller{
 
 	}
 }
+	public function assignWork(){
+		$data = $this->coordinatorModel->getWorkDetail();
+		var_dump($data);
+		/*$this->load->view('templates/header');
+		$this->load->view('coordinators/assign');
+		$this->load->view('templates/footer');*/
+
+	}
 }
 
 
