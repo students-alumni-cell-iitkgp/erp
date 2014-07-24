@@ -50,7 +50,7 @@ class MemberModel extends CI_Model{
 			return $this->FullList($year);
 		elseif($list=="positive")
 			return $this->Positive($year);
-		elseif($list=="negative")
+		elseif($list=="negative")	
 			return $this->Negative($year);
 		elseif($list=="neutral")
 			return $this->Negative($year);

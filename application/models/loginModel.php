@@ -19,6 +19,12 @@ class LoginModel extends CI_Model{
 		}
 
 	}
+	public function getUserId($username){
+ -
+ -		$query = $this->db->get_where('users',array('username'=>$username));
+ -		$result = $query->row_array();
+ -		return $result['id'];
+ -	}
 
 
 }
