@@ -44,6 +44,11 @@ class Coordinator extends CI_Controller{
 
 	}
 }
+public function viewAsSelf(){
+
+	$this->session->unset_userdata('alias');
+	$this->index();
+}
 public function assignWork(){
 
 	if ($this->form_validation->run() == FALSE)
