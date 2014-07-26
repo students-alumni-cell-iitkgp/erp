@@ -196,8 +196,45 @@ public function getProfile(){
 	echo json_encode($data);
 }
 
+
+public function search(){
+
+		if($this->session->userdata('privilege')){
+		$this->load->view('templates/header');
+		$this->load->view('templates/menu');
+		$this->load->view('members/search');
+		$this->load->view('templates/footer');
+
+		}
+		else
+		$this->load->view('templates/accessErr');
+	}
+
+	public function generate_result(){
+
+	
+		if($this->session->userdata('privilege')){
+			$data = $this->memberModel->search();
+		
+						if(!isset($data['errMsg'])){
+							$this->load->view('templates/header');
+							$this->load->view('templates/menu');
+							$this->load->view('members/search_result',$data);
+							$this->load->view('templates/footer');
+						}else{
+							$this->load->view('templates/header');
+							$this->load->view('templates/menu');
+							echo "Please specify atleast 1 parameter";
+							$this->load->view('templates/footer');
+						}
+				
+				
+			
+		}else{
+			$this->load->view('templates/accessErr');
 }
 
-
+}
+}
 
 ?>
