@@ -27,7 +27,7 @@ class Coordinator extends CI_Controller{
 			$this->load->view('templates/header');
 			$this->load->view('templates/menu');
 			$this->load->view('coordinators/home',$data);
-			$this->load->view('coordinators/assignWork');
+			$this->assignWork();
 			$this->load->view('templates/footer');
 		}else{
 			$this->load->view('templates/accessErr');
@@ -36,7 +36,8 @@ class Coordinator extends CI_Controller{
 	}
 	public function viewAs($name){
 		if($this->accessCheck()){
-		$this->session->set_userdata('alias',$name);
+		$username = $this->coordinatorModel->usernameFromName($name);
+		$this->session->set_userdata('alias',$username);
 		redirect('/member/index','refresh:2');
 	}else{
 					$this->load->view('templates/accessErr');
@@ -51,19 +52,18 @@ public function assignWork(){
 			$data['toid'] = $this->coordinatorModel->getUnassignedAlum();
 			$data['members'] = $this->coordinatorModel->getMembers();
 			$data['msg'] = "";
-			$this->load->view('templates/header');
-			$this->load->view('templates/menu');
+			
 			$this->load->view('coordinators/assignWork',$data);
-			$this->load->view('templates/footer');
+			
 		}
 		else
 		{	
 			$from = $this->input->post('from');
 			$to = $this->input->post('to');
 			if($to<$from){
-				$data["msg"] = "The To Id can not be smaller than the from id";
+				$data["msg"] = "The To Id can not be smaller than the From Id";
 				$data['fromid'] = $this->coordinatorModel->getUnassignedAlum();
-				$data['toid'] = $this->coordinatorModel->getUnassignedAlum();
+				$data['toid'] = $data['fromid'];
 				$data['members'] = $this->coordinatorModel->getMembers();
 				$this->load->view('templates/header');
 				$this->load->view('templates/menu');
@@ -73,10 +73,10 @@ public function assignWork(){
 				$member = $this->input->post('member');
 				
 					if($this->coordinatorModel->assignWork($from,$to,$member)=="success"){
-						header('Refresh:2, url="assignWork"');
+						header('Refresh:2, url="index"');
 						echo "Work assigned. You are being redirected back";
 					}else{
-						header('Refresh:2, url="assignWork"');
+						header('Refresh:2, url="index"');
 						echo "Unable to assign work, you are being redirected back";
 
 					}

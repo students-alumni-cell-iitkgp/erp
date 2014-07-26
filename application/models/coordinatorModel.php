@@ -17,6 +17,12 @@ class CoordinatorModel extends CI_Model{
 			return $arr;
 		}
 	}
+	public function usernameFromName($name){
+		$query = $this->db->get_where('users',array('name'=>$name));
+		$result = $query->row_array();
+		return $result['username'];
+
+	}
 	public function getUnassignedAlum(){
 		$arr = array();
 		$i=0;
@@ -36,10 +42,13 @@ class CoordinatorModel extends CI_Model{
 		$result = $query->row_array();
 		return $result['alumSince'];
 	}
-	public function getUserId(){
+	public function getUserId($username=""){
+		if($username!=""){
 		if($this->session->userdata('alias')){
 			$username =  $this->session->userdata('alias');
 			
+		}else{
+			$username = $this->session->userdata('username');
 		}
 		
 		$query = $this->db->get_where('users',array('username'=>$username));
@@ -48,12 +57,25 @@ class CoordinatorModel extends CI_Model{
 			return $result['userid'];
 		}
 	}
+	}
+
+public function getUserId2($username){// to be used in work assignment form
+
+
+		$query = $this->db->get_where('users',array('name'=>$username));
+		if($query->num_rows()>0){
+			$result = $query->row_array();
+			return $result['userid'];
+	
+}
+}
+	
 
 	public function assignWork($from,$to,$member){
 		$count = 0;
 		for($i=$from;$i<=$to;$i++){
 			$year = $this->getYearofPass($i);
-			$userid = $this->getUserId();
+			$userid = $this->getUserId2($member);
 			$data = array('alumid'=>$i,'userid'=>$userid,'year'=>$year);
 			if($this->db->insert('status',$data))
 				$count++;	

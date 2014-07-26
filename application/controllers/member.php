@@ -216,15 +216,10 @@ public function search(){
 		if($this->session->userdata('privilege')){
 			$data = $this->memberModel->search();
 		
-						if(!isset($data['errMsg'])){
+						if($data){
 							$this->load->view('templates/header');
 							$this->load->view('templates/menu');
 							$this->load->view('members/search_result',$data);
-							$this->load->view('templates/footer');
-						}else{
-							$this->load->view('templates/header');
-							$this->load->view('templates/menu');
-							echo "Please specify atleast 1 parameter";
 							$this->load->view('templates/footer');
 						}
 				

@@ -1,3 +1,4 @@
+<h2>Assign work to the members</h2>
 
 <h3 style="color:red"><?php echo validation_errors(); ?></h3>
 <?php
