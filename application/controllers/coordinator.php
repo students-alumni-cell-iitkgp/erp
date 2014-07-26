@@ -27,6 +27,7 @@ class Coordinator extends CI_Controller{
 			$this->load->view('templates/header');
 			$this->load->view('templates/menu');
 			$this->load->view('coordinators/home',$data);
+			$this->load->view('coordinators/assignWork');
 			$this->load->view('templates/footer');
 		}else{
 			$this->load->view('templates/accessErr');

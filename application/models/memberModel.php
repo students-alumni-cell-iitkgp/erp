@@ -282,21 +282,31 @@ class MemberModel extends CI_Model{
 							}
 							$this->table->add_row($dota);
 						}
-						$fields  = $this->db->list_fields('alumni');
-	if($fields){
-	$this->table->set_heading($fields);
-	}
-
-						$data['table'] =  $this->table->generate();
-						$data['num_rows'] = $num_rows;
-						return $data;
+						
 	}else{
-		$data['errMsg'] = "Please specify atleast one parameter";
-		return  $data;
+		$sql = "SELECT * FROM alumni";
+		$query = mysql_query($sql);
+		$num_rows = mysql_num_rows($query);
+
+		while ($row = mysql_fetch_array($query)) {
+			foreach ($row as $key1 => $value1) {
+				if(is_string($key1))
+					$dota[$key1] = $value1;
+			}
+			$this->table->add_row($dota);
+		}
 	}
+	$fields  = $this->db->list_fields('alumni');
+		if($fields){
+			$this->table->set_heading($fields);
+		}
+
+		$data['table'] =  $this->table->generate();
+		$data['num_rows'] = $num_rows;
+		return $data;
 	
-}
-}
+		}
+	}
 }
 
 
