@@ -27,7 +27,7 @@
     </div>
     <div id="collapseOne" class="panel-collapse collapse in">
       <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+       <div id="call"></div>
       </div>
     </div>
   </div>
@@ -41,10 +41,7 @@
     </div>
     <div id="collapseTwo" class="panel-collapse collapse">
       <div class="panel-body">
-        <table>
-          
-          
-        </table>
+        <div id="profile"></div>
       </div>
     </div>
   </div>
@@ -52,17 +49,46 @@
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-          Status
+          Searching Status
         </a>
       </h4>
     </div>
     <div id="collapseThree" class="panel-collapse collapse">
       <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+        <div id="callstatus"></div>
+      </div>
+    </div>
+  </div>
+   <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+          Response/Calling Status
+        </a>
+      </h4>
+    </div>
+    <div id="collapseFour" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div id="responsestatus"></div>
       </div>
     </div>
   </div>
 </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+          Payment Status
+        </a>
+      </h4>
+    </div>
+    <div id="collapseFive" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div id="paymentstatus"></div>
+      </div>
+    </div>
+  </div>
+
         <!-- tabs-->
       </div>
       <div class="modal-footer">
@@ -137,7 +163,7 @@ dom2.onclick = function(){
 dom.setAttribute('class','modal fade ');
 dom.setAttribute('aria-hidden','true');
 dom.setAttribute('style','display:hidden');
-}
+};
 var dom3 = document.getElementById('cross_button');
 dom3.onclick = function(){
 dom.setAttribute('class','modal fade ');
@@ -150,7 +176,9 @@ console.log(this.cells[0]);
 console.log(this.cells[0].getAttribute('alumid'));
 getdetails(this.cells[0].getAttribute('alumid'));
 }
-
+function codeStatusValues(){
+  var element = document.getElementById('status').children[0];
+}
 
 function getdetails(id){
 //window.alert(id);
@@ -164,15 +192,54 @@ xhr = new ActiveXObject("Microsoft.XMLHTTP");
 
 xhr.onreadystatechange = function(){
 	if(xhr.readyState==4 && xhr.status==200){
+
 		var obj = JSON.parse(xhr.responseText);
 		document.getElementById("name").innerHTML=obj.name;
     document.getElementById("hall").innerHTML=obj.hall;
     document.getElementById("year").innerHTML=obj.year;
+    document.getElementById("call").innerHTML = obj.callhistory|| "nothing to show";
+   document.getElementById("profile").innerHTML = obj.profile;
+    document.getElementById("callstatus").innerHTML = obj.searchstatus;
+    document.getElementById("responsestatus").innerHTML = obj.responsestatus;
+    document.getElementById("paymentstatus").innerHTML = obj.paymentstatus;
 
+   
+  
+   // console.log(obj.callhistory);
+    /*var calltable = document.getElementById("call");
+    
+    calltable.innerHTML="<tr><th>Id</th><th>Date</th><th>Time</th><th>Remarks</th><th>Next Date</th><th>NextTime</th></tr>";
+    
+    for(var i=0;i<obj.callid.length;i++){
+      var row = document.createElement('tr');
+      var id = document.createElement('td');
+      var date = document.createElement('td');
+      var time = document.createElement('td');
+      var remarks = document.createElement('td');
+      var nextdate = document.createElement('td');
+      var nexttime = document.createElement('td');
+      row.appendChild(id);
+      row.appendChild(date);
+      row.appendChild(time);
+      row.appendChild(remarks);
+      row.appendChild(nextdate);
+      row.appendChild(nexttime);
+      calltable.appendChild(row);
+
+      id.innerHTML = obj.callid[i];
+      date.innerHTML = obj.date[i];
+      time.innerHTML = obj.time[i];
+      remarks.innerHTML = obj.remarks[i];
+      nextdate.innerHTML = obj.nextdate[i];
+      nexttime.innerHTML = obj.nexttime[i];
+
+    }
 		//alert(JSON.parse(xhr.responseText));
 		//console.log();
+          calltable.setAttribute('class','table table-striped table-bordered table-hover');
+*/
 	}
-}
+};
 
 xhr.open("GET","<?php echo site_url()?>/member/getProfile?id="+id,true);
 xhr.send();

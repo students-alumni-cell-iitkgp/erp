@@ -193,6 +193,7 @@ else{
 public function getProfile(){
 	$id=$this->input->get('id');
 	$data = $this->memberModel->getPrimaryInfo($id);
+	
 	echo json_encode($data);
 }
 
@@ -229,6 +230,63 @@ public function search(){
 			$this->load->view('templates/accessErr');
 }
 
+}
+
+public function updateProfile(){
+	if($this->accessCheck()){
+		if($this->input->post('submit')){
+
+			if($this->memberModel->updateProfile()=="success"){
+				header('Refresh:2,url='.$_SERVER["HTTP_REFERER"]);//security issues here
+				echo "Values updated, you are being redirected back";
+			}
+		}
+
+	}else{
+		$this->load->view('templates/accessErr');
+	}
+
+
+}
+public function updateResponse(){
+	if($this->accessCheck()){
+		if($this->input->post('submit')){
+			if($this->memberModel->updateResponse()=="success"){
+				header('Refresh:2,url='.$_SERVER["HTTP_REFERER"]);//security issues here
+				echo "Values updated, you are being redirected back";
+			}
+		}
+
+	}else{
+		$this->load->view('templates/accessErr');
+	}
+}
+public function updateSearch(){
+	if($this->accessCheck()){
+		if($this->input->post('submit')){
+			if($this->memberModel->updateSearch()=="success"){
+				header('Refresh:2,url='.$_SERVER["HTTP_REFERER"]);//security issues here
+				echo "Values updated, you are being redirected back";
+			}
+		}
+
+	}else{
+		$this->load->view('templates/accessErr');
+	}
+}
+public function updatePayment(){
+	if($this->accessCheck()){
+		if($this->input->post('submit')){
+			if($this->memberModel->updatePayment()=="success"){
+				/*header('Refresh:2,url='.$_SERVER["HTTP_REFERER"]);//security issues here
+				echo "Values updated, you are being redirected back";*/
+			
+			}
+		}
+
+	}else{
+		$this->load->view('templates/accessErr');
+	}
 }
 }
 

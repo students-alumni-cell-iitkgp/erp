@@ -219,6 +219,29 @@ class MemberModel extends CI_Model{
 
 
 	public function getPrimaryInfo($id){
+		$this->table->clear();
+		$tmpl = array (
+                    'table_open'          => '<table class="table table-striped table-bordered table-hover" border="0" cellpadding="4" cellspacing="0">',
+
+                    'heading_row_start'   => '<tr>',
+                    'heading_row_end'     => '</tr>',
+                    'heading_cell_start'  => '<th>',
+                    'heading_cell_end'    => '</th>',
+
+                    'row_start'           => '<tr>',
+                    'row_end'             => '</tr>',
+                    'cell_start'          => '<td>',
+                    'cell_end'            => '</td>',
+
+                    'row_alt_start'       => '<tr>',
+                    'row_alt_end'         => '</tr>',
+                    'cell_alt_start'      => '<td>',
+                    'cell_alt_end'        => '</td>',
+
+                    'table_close'         => '</table>'
+              );
+
+		$this->table->set_template($tmpl); 
 		$query = $this->db->get_where('alumni',array('alumid'=>$id));
 		if($query->num_rows()>0){
 			$result = $query->row_array();
@@ -226,8 +249,126 @@ class MemberModel extends CI_Model{
 			$data['hall'] = $result['hall'];
 			$data['year'] = $result['alumSince'];
 			//$data['department'] = $result['department'];
+			$query = $this->db->get_where('callhistory',array('alumid'=>$id));
+			if($query->num_rows()>0){
+				$data['callhistory'] = $this->table->generate($query);
+			
+			}
+			$query = $this->db->get_where('alumni',array('alumid'=>$id));
+			if($query->num_rows()>0){
+				$data['profile'] = form_open('member/updateProfile');
+				$result = $query->row_array();
+				$i = 0;
+				
+				foreach ($result as $key => $value) {
+					if($key!="id"&&$key!="assigned"){
+					$data['profile'] .= $key.'   :<input class="form-control"  name="'.$key.'" value="'.$value.'">';
+					
+				}elseif ($key=="id"){
+					$data['profile'] .= $key.'   :<input style=" visibility:hidden" name="'.$key.'" value="'.$value.'">';
+
+				}
+				}
+				$data['profile'].='<br><input type="submit" name="submit" value="Update" class="form-control"></form>';
+			}
+			$query = $this->db->get_where('status',array('alumid'=>$id));
+				if($query->num_rows()>0){
+					$data['searchstatus'] = "Current Status: ";
+					//$this->table->set_heading(array('id','search status','call status','register status','pay status','userid','year'));
+					switch ($query->row_array()['search']) {
+						case '0':
+							$data['searchstatus'] .= "Yet to be searched";
+							break;
+						case '1':
+							$data['searchstatus'] .= "Found";
+							break;
+							case '2':
+							$data['searchstatus'] .= "Unable to find";
+							break;
+							case '4':
+							$data['searchstatus'] .= "Ready contact";
+							break;
+						
+					}
+					$data['searchstatus'] .= form_open('member/updateSearch');
+					$data['searchstatus'] .= '<input type="hidden" name="alumid" value="'.$id.'">';
+					$data['searchstatus'] .= '<select name="search" class="form-control"><option value="4">Ready</option><option value="1">Found</option><option value="0">Yet to be Found</option><option value="2">Unable to find</option></select>';
+					$data['searchstatus'].='<input type="submit" name="submit" value="Update" class="form-control"></form>';
+
+					$data['responsestatus'] = "Current Staus: ";
+					switch ($query->row_array()['called']) {
+						case '0':
+						$data['responsestatus'] .="Not called";
+						break;
+						case '1':
+							$data['responsestatus'] .= "Neutral";
+							break;
+						case '2':
+							$data['responsestatus'] .= "Negative";
+							break;
+							case '3':
+							$data['responsestatus'] .= "Positive";
+							break;
+							
+						
+					}
+					$data['responsestatus'] .= form_open('member/updateResponse');
+					$data['responsestatus'] .= '<input type="hidden" name="alumid" value="'.$id.'">';
+
+					$data['responsestatus'] .= '<select name="response" class="form-control"><option value="1">Neutral</option><option value="3">Positive</option><option value="2">Negative</option><option value="0">Not Called</option></select>';
+					
+					$data['responsestatus'].='<input type="submit" name="submit" value="Update" class="form-control"></form>';
+
+					$data['paymentstatus'] = "Current Staus: ";
+
+				
+					switch ($query->row_array()['pay']) {
+						case '0':
+						$data['paymentstatus'] .="Not Paid";
+						break;
+						case '1':
+							$data['paymentstatus'] .= "Paid, Not verified";
+							$query = $this->db->get_where('payment',array('alumid'=>$id));
+							if($query->num_rows()>0){
+								$result = $query->row_array();
+								$data['paymentstatus'] .='<table class="table table-striped table-bordered table-hover"><tr>';
+								foreach ($result as $key => $value) {
+									$data['paymentstatus'] .='<th>'.$key.'</th>';
+									# code...
+								}
+								$data['paymentstatus'] .='</tr><tr>';
+								foreach ($result as $key => $value) {
+									$data['paymentstatus'] .='<td>'.$value.'</td>';
+									# code...
+								}
+								$data['paymentstatus'] .= '</tr></table>';
+							}
+							break;
+						case '2':
+							$data['paymentstatus'] .= "Verified";
+							break;
+							
+							
+						
+					}
+					
+					$data['paymentstatus'] .= form_open('member/updatePayment');
+
+					$data['paymentstatus'] .= '<select name="payment" class="form-control"><option value="0">Not Paid</option><option value="1">Paid but not verified</option></select>';
+					$data['paymentstatus'] .= '<table class="table table-striped table-bordered table-hover">';
+					$data['paymentstatus'] .= '<input type="text" name="alumid" value="'.$id.'" style="visibility:hidden"><tr><td><input type="date" name="dateofpayment" class="form-control"></td><td><input type="text" class="form-control" name="referenceNo"></td><td><input type="number" name="paymentAmt" class="form-control"></td></tr>';
+					$data['paymentstatus'] .='</table>';
+					
+					$data['paymentstatus'] .='<input type="submit" name="submit" value="Update" class="form-control"></form>';
+					
+					
+
+				}	
+
+			
 			return $data;
 		}
+		
 	}
 
 	public function search(){
@@ -307,6 +448,51 @@ class MemberModel extends CI_Model{
 	
 		}
 	}
+	public function updateProfile(){
+		unset($_POST['submit']);
+		$query = $this->db->where('alumid',$this->input->post('alumid'));
+
+		if($this->db->update('alumni',$_POST)){
+			$this->db->where('alumid',$_POST['alumid']);
+			$this->db->update('status',array('year'=>$_POST['alumSince']));
+			return "success";
+		}
+		else
+			return "failed";
+
+	}
+
+	public function updateResponse(){
+		unset($_POST['submit']);
+		$query = $this->db->where('alumid',$this->input->post('alumid'));
+		if($this->db->update('status',array('called'=>$_POST['response'])))
+			return "success";
+		else
+			return "false";
+
+	}
+	public function updateSearch(){
+		unset($_POST['submit']);
+		$query = $this->db->where('alumid',$this->input->post('alumid'));
+		if($this->db->update('status',array('search'=>$_POST['search'])))
+			return "success";
+		else
+			return "false";
+
+	}
+	public function updatePayment(){
+		unset($_POST['submit']);
+		unset($_POST['payment']);
+		$query = $this->db->where('alumid',$this->input->post('alumid'));
+		if($this->db->update('status',array('pay'=>'1'))&& $this->db->insert('payment',$this->input->post())){
+			return "success";
+			
+		}
+		else
+			return "false";
+
+	}
+
 }
 
 

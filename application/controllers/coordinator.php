@@ -47,10 +47,11 @@ class Coordinator extends CI_Controller{
 public function viewAsSelf(){
 
 	$this->session->unset_userdata('alias');
-	$this->index();
+	redirect('/coordinator/index','refresh:2');
+	echo "You are being redirected back";
 }
 public function assignWork(){
-
+	if($this->accessCheck()){
 	if ($this->form_validation->run() == FALSE)
 		{	
 			$data['fromid'] = $this->coordinatorModel->getUnassignedAlum();
@@ -89,6 +90,10 @@ public function assignWork(){
 			}
 		}
 	
+}else{
+					$this->load->view('templates/accessErr');
+
+	}
 }
 }
 
