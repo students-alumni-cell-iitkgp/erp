@@ -82,7 +82,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$table = $this->table->generate();
@@ -99,10 +99,10 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
-			$this->table->generate();
+			$table = $this->table->generate();
 			return $table;
 		}
 	}
@@ -117,7 +117,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$this->table->generate();
@@ -136,7 +136,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$this->table->generate();
@@ -154,7 +154,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$this->table->generate();
@@ -172,7 +172,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$this->table->generate();
@@ -190,7 +190,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$this->table->generate();
@@ -208,7 +208,7 @@ class MemberModel extends CI_Model{
 		}else{
 			foreach ($query->result_array() as $row) {
 				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']}");
+				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
 				$table = $this->table->add_row($listQuery->row_array());
 			}
 			$this->table->generate();
@@ -351,7 +351,7 @@ class MemberModel extends CI_Model{
 							
 						
 					}
-					
+					if($query->row_array()['pay']=='0'){
 					$data['paymentstatus'] .= form_open('member/updatePayment');
 
 					$data['paymentstatus'] .= '<select name="payment" class="form-control"><option value="0">Not Paid</option><option value="1">Paid but not verified</option></select>';
@@ -362,8 +362,9 @@ class MemberModel extends CI_Model{
 					$data['paymentstatus'] .='<input type="submit" name="submit" value="Update" class="form-control"></form>';
 					
 					
-
+					//code for accompaniants
 				}	
+			}
 
 			
 			return $data;
@@ -491,6 +492,53 @@ class MemberModel extends CI_Model{
 		else
 			return "false";
 
+	}
+	public function addCallDetail($alumid,$date,$time){
+		$query = $this->db->get_where('callhistory',array('alumid'=>$alumid));
+		$num = $query->num_rows();
+		$this->db->insert('callhistory',array('callid'=>($num+1),'alumid'=>$alumid,'date'=>$date,'time'=>$time));
+		return $this->nextCallDetails($alumid);
+	}
+	public function nextCallDetails($alumid){
+		$lastRow =array();
+
+		$query = $this->db->get_where('callhistory',array('alumid'=>$alumid));
+		foreach ($query->result_array() as $row) {
+			$lastRow = $row;
+		}
+		$callRow = '<form name="form1" action="Javascript:updateCall()"><table class="table table-striped table-bordered table-hover">';
+		$callRow .='<tr><td><input type="text" name="alumid" class="form-control" value="'.$lastRow['alumid'].'"disabled></td><td><input type="text" class="form-control" name="callid" value="'.$lastRow['callid'].'" disabled></td><td>'.$lastRow['date'].'</td><td>'.$lastRow['time'].'</td><td><input type="text" id="remarks" class="form-control" name="remarks"></td><td><input type="date" class="form-control" name="nextdate"></td><td><input type="text" name="nexttime" class="form-control"></td>';
+		$callRow .='</tr></table><input type="submit" name="submit" id="button1" class="form-control" value="Update"></form>';
+		return $callRow;
+	}
+	public function updateCall($remarks,$nextdate,$nexttime,$callid,$alumid){
+		$tmpl = array (
+                    'table_open'          => '<table class="table table-striped table-bordered table-hover" border="0" cellpadding="4" cellspacing="0">',
+
+                    'heading_row_start'   => '<tr>',
+                    'heading_row_end'     => '</tr>',
+                    'heading_cell_start'  => '<th>',
+                    'heading_cell_end'    => '</th>',
+
+                    'row_start'           => '<tr>',
+                    'row_end'             => '</tr>',
+                    'cell_start'          => '<td>',
+                    'cell_end'            => '</td>',
+
+                    'row_alt_start'       => '<tr>',
+                    'row_alt_end'         => '</tr>',
+                    'cell_alt_start'      => '<td>',
+                    'cell_alt_end'        => '</td>',
+
+                    'table_close'         => '</table>'
+              );
+
+		$this->table->set_template($tmpl); 
+	
+		$this->db->where(array('alumid'=>$alumid,'callid'=>$callid));
+		$this->db->update('callhistory',array('remarks'=>$remarks,'nextdate'=>$nextdate,'nexttime'=>$nexttime));
+		$query = $this->db->get_where('callhistory',array('alumid'=>$alumid));
+		return $this->table->generate($query);
 	}
 
 }

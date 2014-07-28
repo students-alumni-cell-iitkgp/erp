@@ -278,8 +278,8 @@ public function updatePayment(){
 	if($this->accessCheck()){
 		if($this->input->post('submit')){
 			if($this->memberModel->updatePayment()=="success"){
-				/*header('Refresh:2,url='.$_SERVER["HTTP_REFERER"]);//security issues here
-				echo "Values updated, you are being redirected back";*/
+				header('Refresh:2,url='.$_SERVER["HTTP_REFERER"]);//security issues here
+				echo "Values updated, you are being redirected back";
 			
 			}
 		}
@@ -287,6 +287,23 @@ public function updatePayment(){
 	}else{
 		$this->load->view('templates/accessErr');
 	}
+}
+public function addCallDetail(){
+	$alumid = $this->input->get('alumid');
+	date_default_timezone_set('Asia/Calcutta');
+	$date = date('Y-m-d');
+	$time = date('H:i:s');
+	echo $this->memberModel->addCallDetail($alumid,$date,$time);
+}
+
+public function updateCall(){
+	$remarks = $this->input->get('remarks');
+		$nextdate = $this->input->get('nextdate');
+		$nexttime = $this->input->get('nexttime');
+		$callid = $this->input->get('callid');
+		$alumid = $this->input->get('alumid');
+		echo $this->memberModel->updateCall($remarks,$nextdate,$nexttime,$callid,$alumid);
+	
 }
 }
 

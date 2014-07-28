@@ -1,18 +1,24 @@
 <div class="modal fade" id="update"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog" id="content">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" id="cross_button" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myModalLabel">Details</h4>
       </div>
       <div class="modal-body" id="updateform">
-        <span id="name"></span>
-        <span id="hall"></span>
-        <span id="year"></span>
-        <span id="department"></span>
-        <?php echo form_open('member/call');?>
-        <input type="button" name="call" value="Call Now">
-        </form>
+        <table class="class=table table-striped table-bordered table-hover">
+<tr><td><span id="name"></span></td><span id="hall"></span><td></td></tr>
+<tr><td><span id="year"></span></td><td></td> <span id="department"></span></td></tr>
+
+
+        </table>
+        
+        
+        
+       
+        
+        <button type="button"  class="btn btn-primary btn-lg" name="call" id="callButton" value="Call Now">Call</button>
+       
         <div id="callHistory"></div>
         
         <!-- tabs-->
@@ -139,46 +145,95 @@ echo "Nothing here.. move along";
 ?>
 </div>
 <script type="text/javascript">
+  var alumid;
 window.onload = function (){
+
 	var link = document.getElementsByClassName("lookfor");
-	//var headers = document.getElementsByClassName("heading");
-	
-//window.alert(link.length);
-//window.alert(link[1].cells[0].id);
-for (var i = link.length - 1; i >= 0; i--) {
-	link[i].onclick = EventHandler;
-}
-/*for (var i = headers.length - 1; i >= 0; i--) {
-	headers[i].onclick = AnotherEventHandler;
-}*/
+
+	var dom4 = document.getElementById('callButton');
+  dom4.onclick = addCallDetails;
+
+  for (var i = link.length - 1; i >= 0; i--) {
+    link[i].onclick = EventHandler;
+  }
 };
 
 function EventHandler() {
-var dom = document.getElementById('update');
-dom.setAttribute('class','modal fade in');
-dom.setAttribute('aria-hidden','false');
-dom.setAttribute('style','display:block');
-var dom2 = document.getElementById('cancel_button');
-dom2.onclick = function(){
-dom.setAttribute('class','modal fade ');
-dom.setAttribute('aria-hidden','true');
-dom.setAttribute('style','display:hidden');
-};
-var dom3 = document.getElementById('cross_button');
-dom3.onclick = function(){
-dom.setAttribute('class','modal fade ');
-dom.setAttribute('aria-hidden','true');
-dom.setAttribute('style','display:hidden');
-};
-	//w.onclick = window.alert(this.cells[0].id);
-//getdetails(this.cells[0].innerHTML);
-console.log(this.cells[0]);
-console.log(this.cells[0].getAttribute('alumid'));
-getdetails(this.cells[0].getAttribute('alumid'));
+  var dom = document.getElementById('update');
+  dom.setAttribute('class','modal fade in');
+  dom.setAttribute('aria-hidden','false');
+  dom.setAttribute('style','display:block');
+  document.getElementById('content').setAttribute('style','width:90%');
+
+  var dom2 = document.getElementById('cancel_button');
+  dom2.onclick = function(){
+    dom.setAttribute('class','modal fade ');
+    dom.setAttribute('aria-hidden','true');
+   dom.setAttribute('style','display:hidden');
+  };
+
+  var dom3 = document.getElementById('cross_button');
+  dom3.onclick = function(){
+    dom.setAttribute('class','modal fade ');
+    dom.setAttribute('aria-hidden','true');
+    dom.setAttribute('style','display:hidden');
+  };
+
+	
+  console.log(this.cells[0]);
+  console.log(this.cells[0].getAttribute('alumid'));
+  alumid = this.cells[0].getAttribute('alumid');
+  getdetails(this.cells[0].getAttribute('alumid'));
 }
-function codeStatusValues(){
-  var element = document.getElementById('status').children[0];
+
+function addCallDetails(){
+  var xhr;
+  if(window.XMLHttpRequest){
+    xhr = new XMLHttpRequest();
+  }
+  else{
+    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState==4 && xhr.status==200){
+
+      var callDiv = document.getElementById('call');
+      callDiv.innerHTML = callDiv.innerHTML + xhr.responseText;
+    
+    }
+  };
+
+  xhr.open("GET","<?php echo site_url()?>/member/addCallDetail?alumid="+alumid,true);
+  xhr.send();
 }
+function updateCall(){
+  var xhr;
+  if(window.XMLHttpRequest){
+    xhr = new XMLHttpRequest();
+  }
+  else{
+    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  
+      var remarks = form1.remarks.value;
+      var nextdate = form1.nextdate.value;
+      var nexttime = form1.nexttime.value;
+      var callid = form1.callid.value;
+      var alumid = form1.alumid.value;
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState==4 && xhr.status==200){
+      var callDiv = document.getElementById('call');
+        callDiv.innerHTML = xhr.responseText;
+      
+    }
+  };
+console.log("remarks="+remarks+"&nextdate="+nextdate+"&nexttime="+nexttime+"callid="+callid+"alumid="+alumid);
+  xhr.open("GET","<?php echo site_url()?>/member/updateCall?remarks="+remarks+"&nextdate="+nextdate+"&nexttime="+nexttime+"&callid="+callid+"&alumid="+alumid,true);
+  xhr.send();
+}
+
+
 
 function getdetails(id){
 //window.alert(id);
@@ -203,41 +258,7 @@ xhr.onreadystatechange = function(){
     document.getElementById("responsestatus").innerHTML = obj.responsestatus;
     document.getElementById("paymentstatus").innerHTML = obj.paymentstatus;
 
-   
-  
-   // console.log(obj.callhistory);
-    /*var calltable = document.getElementById("call");
-    
-    calltable.innerHTML="<tr><th>Id</th><th>Date</th><th>Time</th><th>Remarks</th><th>Next Date</th><th>NextTime</th></tr>";
-    
-    for(var i=0;i<obj.callid.length;i++){
-      var row = document.createElement('tr');
-      var id = document.createElement('td');
-      var date = document.createElement('td');
-      var time = document.createElement('td');
-      var remarks = document.createElement('td');
-      var nextdate = document.createElement('td');
-      var nexttime = document.createElement('td');
-      row.appendChild(id);
-      row.appendChild(date);
-      row.appendChild(time);
-      row.appendChild(remarks);
-      row.appendChild(nextdate);
-      row.appendChild(nexttime);
-      calltable.appendChild(row);
 
-      id.innerHTML = obj.callid[i];
-      date.innerHTML = obj.date[i];
-      time.innerHTML = obj.time[i];
-      remarks.innerHTML = obj.remarks[i];
-      nextdate.innerHTML = obj.nextdate[i];
-      nexttime.innerHTML = obj.nexttime[i];
-
-    }
-		//alert(JSON.parse(xhr.responseText));
-		//console.log();
-          calltable.setAttribute('class','table table-striped table-bordered table-hover');
-*/
 	}
 };
 
