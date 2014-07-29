@@ -25,8 +25,17 @@ class CoordinatorModel extends CI_Model{
 	}
 	public function getUnassignedAlum(){
 		$arr = array();
+		$arr2 = array();
 		$i=0;
-		$query = $this->db->get_where('alumni',array('assigned'=>0));
+		$j = 0;
+		$this->db->select('alumid');
+		$initQuery = $this->db->get('status');
+		$result = $initQuery->result_array();
+		foreach ($result as $row) {
+			$arr2[$j] =$row['alumid']; 
+			$j++;
+		}
+		$query = $this->db->query("SELECT alumid FROM alumni WHERE alumid NOT IN (SELECT alumid FROM status)");
 		if($query->num_rows()>0){
 			foreach ($query->result_array() as $result) {
 				$arr[$i] = $result['alumid'];
@@ -74,16 +83,15 @@ public function getUserId2($username){// to be used in work assignment form
 	public function assignWork($from,$to,$member){
 		$count = 0;
 		for($i=$from;$i<=$to;$i++){
-			$year = $this->getYearofPass($i);
+			
 			$userid = $this->getUserId2($member);
-			$data = array('alumid'=>$i,'userid'=>$userid,'year'=>$year);
+			$data = array('alumid'=>$i,'userid'=>$userid);
 			if($this->db->insert('status',$data))
 				$count++;	
 			$this->db->where('alumid',$i);
-			if($this->db->update('alumni',array('assigned'=>1)))
-				$count++;
+			
 		}
-		if($count==2)
+		if($count==1)
 			return "success";
 		else
 			return "failed";
