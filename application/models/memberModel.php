@@ -4,6 +4,30 @@ class MemberModel extends CI_Model{
 	public function __construct(){
 		$this->load->database();
 		$this->load->library('table');
+		$tmpl = array (
+                    'table_open'          => '<table class="table table-striped table-bordered table-hover" border="5" cellpadding="6" cellspacing="4">',
+
+                    'heading_row_start'   => '<tr >',// Important
+                    'heading_row_end'     => '</tr>',
+                    'heading_cell_start'  => '<th class="heading">',
+                    'heading_cell_end'    => '</th>',
+
+                    'row_start'           => '<tr class="lookfor" >',
+                    'row_end'             => '</tr>',
+                    'cell_start'          => '<td>',
+                    'cell_end'            => '</td>',
+
+                    'row_alt_start'       => '<tr class="lookfor" >',
+                    'row_alt_end'         => '</tr>',
+                    'cell_alt_start'      => '<td>',
+                    'cell_alt_end'        => '</td>',
+
+              
+
+                    'table_close'         => '</table>'
+              );
+
+		$this->table->set_template($tmpl);
 
 	}
 	public function getUserId(){
@@ -76,16 +100,13 @@ class MemberModel extends CI_Model{
 	public function FullList($year){
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year));
+		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status  ON alumni.alumid = status.alumid  LEFT JOIN callhistory ON callhistory.alumid = alumni.alumid WHERE status.userid = $userid AND alumni.alumSince = $year GROUP BY alumni.alumid ORDER BY callhistory.nextdate DESC");
+		//$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year));
 		if($query->num_rows==0){
 			return -1;
 		}else{
-			foreach ($query->result_array() as $row) {
-				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
-				$table = $this->table->add_row($listQuery->row_array());
-			}
-			$table = $this->table->generate();
+			
+			$table = $this->table->generate($query);
 			return $table;
 		}
 	}
@@ -93,16 +114,13 @@ class MemberModel extends CI_Model{
 	public function Positive($year){
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'3'));
+		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 3 AND alumni.alumSince = $year AND status.userid = $userid");
+		//$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'3'));
 		if($query->num_rows==0){
 			return -1;
 		}else{
-			foreach ($query->result_array() as $row) {
-				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ");
-				$table = $this->table->add_row($listQuery->row_array());
-			}
-			$table = $this->table->generate();
+			
+			$table = $this->table->generate($query);
 			return $table;
 		}
 	}
@@ -111,16 +129,13 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'2'));
+		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 2 AND alumni.alumSince = $year AND status.userid = $userid");
+		//$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'2'));
 		if($query->num_rows==0){
 			return -1;
 		}else{
-			foreach ($query->result_array() as $row) {
-				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
-				$table = $this->table->add_row($listQuery->row_array());
-			}
-			$this->table->generate();
+			
+			$table = $this->table->generate($query);
 			return $table;
 		}
 
@@ -130,16 +145,12 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'1'));
+		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 1 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
-			foreach ($query->result_array() as $row) {
-				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
-				$table = $this->table->add_row($listQuery->row_array());
-			}
-			$this->table->generate();
+			
+			$table = $this->table->generate($query);
 			return $table;
 		}
 
@@ -148,16 +159,12 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'register'=>'1'));
+		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.register = 1 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
-			foreach ($query->result_array() as $row) {
-				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
-				$table = $this->table->add_row($listQuery->row_array());
-			}
-			$this->table->generate();
+			
+			$table = $this->table->generate($query);
 			return $table;
 		}
 
@@ -166,16 +173,12 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'0'));
+		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 0 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
-			foreach ($query->result_array() as $row) {
-				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
-				$table = $this->table->add_row($listQuery->row_array());
-			}
-			$this->table->generate();
+			
+			$table = $this->table->generate($query);
 			return $table;
 		}
 
@@ -184,16 +187,12 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'search'=>'0'));
+		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.search = 0 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
-			foreach ($query->result_array() as $row) {
-				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
-				$table = $this->table->add_row($listQuery->row_array());
-			}
-			$this->table->generate();
+			
+			$table = $this->table->generate($query);
 			return $table;
 		}
 
@@ -202,16 +201,12 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'search'=>'-1'));
+		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.search = -1 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
-			foreach ($query->result_array() as $row) {
-				
-				$listQuery = $this->db->query("SELECT * FROM alumni WHERE alumid = {$row['alumid']} ORDER BY nextdate");
-				$table = $this->table->add_row($listQuery->row_array());
-			}
-			$this->table->generate();
+			
+			$table = $this->table->generate();
 			return $table;
 		}
 
@@ -219,29 +214,8 @@ class MemberModel extends CI_Model{
 
 
 	public function getPrimaryInfo($id){
-		$this->table->clear();
-		$tmpl = array (
-                    'table_open'          => '<table class="table table-striped table-bordered table-hover" border="0" cellpadding="4" cellspacing="0">',
-
-                    'heading_row_start'   => '<tr>',
-                    'heading_row_end'     => '</tr>',
-                    'heading_cell_start'  => '<th>',
-                    'heading_cell_end'    => '</th>',
-
-                    'row_start'           => '<tr>',
-                    'row_end'             => '</tr>',
-                    'cell_start'          => '<td>',
-                    'cell_end'            => '</td>',
-
-                    'row_alt_start'       => '<tr>',
-                    'row_alt_end'         => '</tr>',
-                    'cell_alt_start'      => '<td>',
-                    'cell_alt_end'        => '</td>',
-
-                    'table_close'         => '</table>'
-              );
-
-		$this->table->set_template($tmpl); 
+	
+		
 		$query = $this->db->get_where('alumni',array('alumid'=>$id));
 		if($query->num_rows()>0){
 			$result = $query->row_array();
@@ -290,8 +264,8 @@ class MemberModel extends CI_Model{
 							break;
 						
 					}
-					$data['searchstatus'] .= form_open('member/updateSearch');
-					$data['searchstatus'] .= '<input type="hidden" name="alumid" value="'.$id.'">';
+					$data['searchstatus'] .= '<form name="form3" action="Javascript:updateSearch()">';
+					$data['searchstatus'] .= '<input  name="alumid" value="'.$id.'" disabled>';
 					$data['searchstatus'] .= '<select name="search" class="form-control"><option value="4">Ready</option><option value="1">Found</option><option value="0">Yet to be Found</option><option value="2">Unable to find</option></select>';
 					$data['searchstatus'].='<input type="submit" name="submit" value="Update" class="form-control"></form>';
 
@@ -312,8 +286,8 @@ class MemberModel extends CI_Model{
 							
 						
 					}
-					$data['responsestatus'] .= form_open('member/updateResponse');
-					$data['responsestatus'] .= '<input type="hidden" name="alumid" value="'.$id.'">';
+					$data['responsestatus'] .= '<form name="form4" action="Javascript:updateResponse()">';
+					$data['responsestatus'] .= '<input  name="alumid" value="'.$id.'" disabled>';
 
 					$data['responsestatus'] .= '<select name="response" class="form-control"><option value="1">Neutral</option><option value="3">Positive</option><option value="2">Negative</option><option value="0">Not Called</option></select>';
 					
@@ -325,6 +299,16 @@ class MemberModel extends CI_Model{
 					switch ($query->row_array()['pay']) {
 						case '0':
 						$data['paymentstatus'] .="Not Paid";
+						$data['paymentstatus'] .= '<form name="form2" action="Javascript:updatePayment()">';
+
+						$data['paymentstatus'] .= '<select name="payment" class="form-control"><option value="0">Not Paid</option><option value="1">Paid but not verified</option></select>';
+						$data['paymentstatus'] .= '<table class="table table-striped table-bordered table-hover">';
+						$data['paymentstatus'] .= '<tr><td><input type="text" name="alumid" value="'.$id.'" disabled></td><td><input type="date" name="dateofpayment" class="form-control"></td><td><input type="text" class="form-control" name="referenceNo"></td><td><input type="number" name="paymentAmt" class="form-control"></td></tr>';
+						$data['paymentstatus'] .='</table>';
+					
+						$data['paymentstatus'] .='<input type="submit" name="submit" value="Update" class="form-control"></form>';
+					
+
 						break;
 						case '1':
 							$data['paymentstatus'] .= "Paid, Not verified";
@@ -341,7 +325,7 @@ class MemberModel extends CI_Model{
 									$data['paymentstatus'] .='<td>'.$value.'</td>';
 									# code...
 								}
-								$data['paymentstatus'] .= '</tr></table>';
+								$data['paymentstatus'] .= '</tr></table></form>';
 							}
 							break;
 						case '2':
@@ -351,19 +335,7 @@ class MemberModel extends CI_Model{
 							
 						
 					}
-					if($query->row_array()['pay']=='0'){
-					$data['paymentstatus'] .= form_open('member/updatePayment');
-
-					$data['paymentstatus'] .= '<select name="payment" class="form-control"><option value="0">Not Paid</option><option value="1">Paid but not verified</option></select>';
-					$data['paymentstatus'] .= '<table class="table table-striped table-bordered table-hover">';
-					$data['paymentstatus'] .= '<input type="text" name="alumid" value="'.$id.'" style="visibility:hidden"><tr><td><input type="date" name="dateofpayment" class="form-control"></td><td><input type="text" class="form-control" name="referenceNo"></td><td><input type="number" name="paymentAmt" class="form-control"></td></tr>';
-					$data['paymentstatus'] .='</table>';
 					
-					$data['paymentstatus'] .='<input type="submit" name="submit" value="Update" class="form-control"></form>';
-					
-					
-					//code for accompaniants
-				}	
 			}
 
 			
@@ -463,34 +435,41 @@ class MemberModel extends CI_Model{
 
 	}
 
-	public function updateResponse(){
-		unset($_POST['submit']);
-		$query = $this->db->where('alumid',$this->input->post('alumid'));
-		if($this->db->update('status',array('called'=>$_POST['response'])))
-			return "success";
-		else
-			return "false";
-
-	}
-	public function updateSearch(){
-		unset($_POST['submit']);
-		$query = $this->db->where('alumid',$this->input->post('alumid'));
-		if($this->db->update('status',array('search'=>$_POST['search'])))
-			return "success";
-		else
-			return "false";
-
-	}
-	public function updatePayment(){
-		unset($_POST['submit']);
-		unset($_POST['payment']);
-		$query = $this->db->where('alumid',$this->input->post('alumid'));
-		if($this->db->update('status',array('pay'=>'1'))&& $this->db->insert('payment',$this->input->post())){
-			return "success";
-			
+	public function updateResponse($alumid,$response){
+		
+		$query = $this->db->where('alumid',$alumid);
+		if($this->db->update('status',array('response'=>$response))){
+			$query = $this->db->get_where('status',array('alumid'=>$alumid));
+			$result = $query->row_array();
+			return "Current Status:".$result['response'];
 		}
 		else
 			return "false";
+
+	}
+	public function updateSearch($alumid,$search){
+		
+		$query = $this->db->where('alumid',$alumid);
+		if($this->db->update('status',array('search'=>$search))){
+			$query = $this->db->get_where('status',array('alumid'=>$alumid));
+			$result = $query->row_array();
+			return "Current Status:".$result['search'];
+		}
+		else
+			return "false";
+
+	}
+	public function updatePayment($alumid,$dateofpayment,$referenceNo,$paymentAmt){
+	//lkksdnfksndf
+		
+		$query = $this->db->where('alumid',$alumid);
+		if($this->db->update('status',array('pay'=>'1'))&& $this->db->insert('payment',array('alumid'=>$alumid,'dateofpayment'=>$dateofpayment,'referenceNo'=>$referenceNo,'paymentAmt'=>$paymentAmt))){
+			$query = $this->db->get_where('payment',array('alumid'=>$alumid));
+			return $this->table->generate($query);
+			
+		}
+		else
+			return "There was some error. Please try again.";
 
 	}
 	public function addCallDetail($alumid,$date,$time){

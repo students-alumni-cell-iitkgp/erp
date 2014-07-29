@@ -61,7 +61,7 @@
     </div>
     <div id="collapseThree" class="panel-collapse collapse">
       <div class="panel-body">
-        <div id="callstatus"></div>
+        <div id="searchstatus"></div>
       </div>
     </div>
   </div>
@@ -180,10 +180,10 @@ function EventHandler() {
   };
 
 	
-  console.log(this.cells[0]);
-  console.log(this.cells[0].getAttribute('alumid'));
-  alumid = this.cells[0].getAttribute('alumid');
-  getdetails(this.cells[0].getAttribute('alumid'));
+  
+  console.log(this.cells[0].innerHTML);
+  alumid = this.cells[0].innerHTML;
+    getdetails(alumid);
 }
 
 function addCallDetails(){
@@ -232,7 +232,76 @@ console.log("remarks="+remarks+"&nextdate="+nextdate+"&nexttime="+nexttime+"call
   xhr.open("GET","<?php echo site_url()?>/member/updateCall?remarks="+remarks+"&nextdate="+nextdate+"&nexttime="+nexttime+"&callid="+callid+"&alumid="+alumid,true);
   xhr.send();
 }
-
+function updatePayment(){
+  var xhr;
+  if(window.XMLHttpRequest){
+    xhr = new XMLHttpRequest();
+  }
+  else{
+    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  
+      var payment = form2.payment.value;
+      var alumid = form2.alumid.value;
+      var dateofpayment = form2.dateofpayment.value;
+      var referenceNo = form2.referenceNo.value;
+      var paymentAmt = form2.paymentAmt.value;
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState==4 && xhr.status==200){
+      var payDiv = document.getElementById('paymentstatus');
+        payDiv.innerHTML =  xhr.responseText;
+      
+    }
+  };
+  xhr.open("GET","<?php echo site_url()?>/member/updatePayment?payment="+payment+"&alumid="+alumid+"&dateofpayment="+dateofpayment+"&referenceNo="+referenceNo+"&paymentAmt="+paymentAmt,true);
+  xhr.send();
+}
+function updateSearch(){
+  var xhr;
+  if(window.XMLHttpRequest){
+    xhr = new XMLHttpRequest();
+  }
+  else{
+    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  
+      
+      var alumid = form3.alumid.value;
+      
+      var search = form3.search.value;
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState==4 && xhr.status==200){
+      var searchDiv = document.getElementById('searchstatus');
+        searchDiv.innerHTML =  xhr.responseText;
+      
+    }
+  };
+  xhr.open("GET","<?php echo site_url()?>/member/updateSearch?alumid="+alumid+"&search="+search,true);
+  xhr.send();
+}
+function updateResponse(){
+  var xhr;
+  if(window.XMLHttpRequest){
+    xhr = new XMLHttpRequest();
+  }
+  else{
+    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  
+      
+      var alumid = form4.alumid.value;
+      
+      var response = form4.response.value;
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState==4 && xhr.status==200){
+      var responseDiv = document.getElementById('responsestatus');
+        responseDiv.innerHTML =  xhr.responseText;
+      
+    }
+  };
+  xhr.open("GET","<?php echo site_url()?>/member/updateSearch?alumid="+alumid+"&response="+response,true);
+  xhr.send();
+}
 
 
 function getdetails(id){
@@ -247,6 +316,7 @@ xhr = new ActiveXObject("Microsoft.XMLHTTP");
 
 xhr.onreadystatechange = function(){
 	if(xhr.readyState==4 && xhr.status==200){
+        console.log(JSON.parse(xhr.responseText));
 
 		var obj = JSON.parse(xhr.responseText);
 		document.getElementById("name").innerHTML=obj.name;
@@ -254,7 +324,7 @@ xhr.onreadystatechange = function(){
     document.getElementById("year").innerHTML=obj.year;
     document.getElementById("call").innerHTML = obj.callhistory|| "nothing to show";
    document.getElementById("profile").innerHTML = obj.profile;
-    document.getElementById("callstatus").innerHTML = obj.searchstatus;
+    document.getElementById("searchstatus").innerHTML = obj.searchstatus;
     document.getElementById("responsestatus").innerHTML = obj.responsestatus;
     document.getElementById("paymentstatus").innerHTML = obj.paymentstatus;
 
