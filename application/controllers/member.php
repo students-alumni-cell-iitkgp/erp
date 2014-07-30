@@ -248,45 +248,63 @@ public function updateProfile(){
 
 
 }
-public function updateResponse(){
-	if($this->accessCheck()){
-		if($this->input->post('submit')){
-			if($this->memberModel->updateResponse()=="success"){
-				header('Refresh:2,url='.$_SERVER["HTTP_REFERER"]);//security issues here
-				echo "Values updated, you are being redirected back";
-			}
-		}
 
-	}else{
+public function updateSearch(){
+	if($this->accessCheck()){
+		$alumid = $this->input->get('alumid');
+		$search = $this->input->get('search');
+		$result = $this->memberModel->updateSearch($alumid,$search);
+			echo $result;
+		}
+		else{
 		$this->load->view('templates/accessErr');
 	}
 }
-public function updateSearch(){
+public function updateResponse(){
 	if($this->accessCheck()){
-		if($this->input->post('submit')){
-			if($this->memberModel->updateSearch()=="success"){
-				header('Refresh:2,url='.$_SERVER["HTTP_REFERER"]);//security issues here
-				echo "Values updated, you are being redirected back";
-			}
+		$alumid = $this->input->get('alumid');
+		$response = $this->input->get('response');
+		$result = $this->memberModel->updateResponse($alumid,$response);
+			echo $result;
 		}
-
-	}else{
+		else{
 		$this->load->view('templates/accessErr');
 	}
 }
 public function updatePayment(){
 	if($this->accessCheck()){
-		if($this->input->post('submit')){
-			if($this->memberModel->updatePayment()=="success"){
-				/*header('Refresh:2,url='.$_SERVER["HTTP_REFERER"]);//security issues here
-				echo "Values updated, you are being redirected back";*/
+			$payment  = $this->input->get('payment');
+			$alumid = $this->input->get('alumid');
+			$dateofpayment = $this->input->get('dateofpayment');
+			$referenceNo =	$this->input->get('referenceNo');
+			$paymentAmt = $this->input->get('paymentAmt');
+			$result = $this->memberModel->updatePayment($payment,$alumid,$dateofpayment,$referenceNo,$paymentAmt);
 			
-			}
-		}
+				echo $result;
+			
+			
+		
 
 	}else{
 		$this->load->view('templates/accessErr');
 	}
+}
+public function addCallDetail(){
+	$alumid = $this->input->get('alumid');
+	date_default_timezone_set('Asia/Calcutta');
+	$date = date('Y-m-d');
+	$time = date('H:i:s');
+	echo $this->memberModel->addCallDetail($alumid,$date,$time);
+}
+
+public function updateCall(){
+		$remarks = $this->input->get('remarks');
+		$nextdate = $this->input->get('nextdate');
+		$nexttime = $this->input->get('nexttime');
+		$callid = $this->input->get('callid');
+		$alumid = $this->input->get('alumid');
+		echo $this->memberModel->updateCall($remarks,$nextdate,$nexttime,$callid,$alumid);
+	
 }
 }
 

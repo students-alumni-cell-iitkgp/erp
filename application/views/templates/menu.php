@@ -7,8 +7,8 @@
 </div>
 <div class="row">
 <span class="col-md-9" id="notifications">
-<span style="display:none" ></span>
-
+<span ></span>
+<?php if($this->session->userdata('privilege')==2) echo '<a href="'.site_url().'/coordinator/getNotifications">Notifications</a>'?>
 </span>
 <span class="col-md-3">
 <?php if($this->session->userdata('alias')){
