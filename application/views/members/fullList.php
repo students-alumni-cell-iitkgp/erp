@@ -19,7 +19,7 @@
         <!-- tabs-->
         <div class="panel-group" id="accordion">
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" style="background-color:#3276b1">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
           Call History
@@ -33,7 +33,7 @@
     </div>
   </div>
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" style="background-color:#3276b1">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
           Profile
@@ -47,7 +47,7 @@
     </div>
   </div>
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" style="background-color:#3276b1">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
           Searching Status
@@ -61,7 +61,7 @@
     </div>
   </div>
    <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" style="background-color:#3276b1">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
           Response/Calling Status
@@ -76,7 +76,7 @@
   </div>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" >
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
           Payment Status
