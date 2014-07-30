@@ -6,6 +6,6 @@
  </head>
 <body class="container">
 <div class="row">
-<span class="col-md-12"><h2 ><center>Students' Alumni Cell</center></h2><?php //$this->load->view('tot_registrations');?><br><!-- important--></span>
+<span class="col-md-12" style="color:blue;font:bold 20px Tahoma"><h2 ><center>Students' Alumni Cell</center></h2><?php //$this->load->view('tot_registrations');?><br><!-- important--></span>
 </div>
 

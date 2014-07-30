@@ -243,7 +243,7 @@ class MemberModel extends CI_Model{
 
 				}
 				}
-				$data['profile'].='<br><input type="submit" name="submit" value="Update" class="form-control"></form>';
+				$data['profile'].='<br><input type="button" name="submit" value="Update" class="btn btn-success"></form>';
 			}
 			$query = $this->db->get_where('status',array('alumid'=>$id));
 				if($query->num_rows()>0){
@@ -267,7 +267,7 @@ class MemberModel extends CI_Model{
 					$data['searchstatus'] .= '<form name="form3" action="Javascript:updateSearch()">';
 					$data['searchstatus'] .= '<input  name="alumid" value="'.$id.'" disabled>';
 					$data['searchstatus'] .= '<select name="search" class="form-control"><option value="4">Ready</option><option value="1">Found</option><option value="0">Yet to be Found</option><option value="2">Unable to find</option></select>';
-					$data['searchstatus'].='<input type="submit" name="submit" value="Update" class="form-control"></form>';
+					$data['searchstatus'].='<input type="button" name="submit" value="Update" class="btn btn-success"></form>';
 
 					$data['responsestatus'] = "Current Staus: ";
 					switch ($query->row_array()['called']) {
@@ -291,7 +291,7 @@ class MemberModel extends CI_Model{
 
 					$data['responsestatus'] .= '<select name="response" class="form-control"><option value="1">Neutral</option><option value="3">Positive</option><option value="2">Negative</option><option value="0">Not Called</option></select>';
 					
-					$data['responsestatus'].='<input type="submit" name="submit" value="Update" class="form-control"></form>';
+					$data['responsestatus'].='<input type="button" name="submit" value="Update" class="btn btn-success"></form>';
 
 					$data['paymentstatus'] = "Current Staus: ";
 
@@ -306,7 +306,7 @@ class MemberModel extends CI_Model{
 						$data['paymentstatus'] .= '<tr><td><input type="text" name="alumid" value="'.$id.'" disabled></td><td><input type="date" name="dateofpayment" class="form-control"></td><td><input type="text" class="form-control" name="referenceNo"></td><td><input type="number" name="paymentAmt" class="form-control"></td></tr>';
 						$data['paymentstatus'] .='</table>';
 					
-						$data['paymentstatus'] .='<input type="submit" name="submit" value="Update" class="form-control"></form>';
+						$data['paymentstatus'] .='<input type="button" name="submit" value="Update" class="btn btn-success"></form>';
 					
 
 						break;
@@ -490,7 +490,7 @@ class MemberModel extends CI_Model{
 		}
 		$callRow = '<form name="form1" action="Javascript:updateCall()"><table class="table table-striped table-bordered table-hover">';
 		$callRow .='<tr><td><input type="text" name="alumid" class="form-control" value="'.$lastRow['alumid'].'"disabled></td><td><input type="text" class="form-control" name="callid" value="'.$lastRow['callid'].'" disabled></td><td>'.$lastRow['date'].'</td><td>'.$lastRow['time'].'</td><td><input type="text" id="remarks" class="form-control" name="remarks"></td><td><input type="date" class="form-control" name="nextdate"></td><td><input type="text" name="nexttime" class="form-control"></td>';
-		$callRow .='</tr></table><input type="submit" name="submit" id="button1" class="form-control" value="Update"></form>';
+		$callRow .='</tr></table><input type="button" name="submit" id="button1" class="btn btn-success" value="Update"></form>';
 		return $callRow;
 	}
 	public function updateCall($remarks,$nextdate,$nexttime,$callid,$alumid){
