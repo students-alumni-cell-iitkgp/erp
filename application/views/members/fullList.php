@@ -98,39 +98,39 @@
     </div>
   </div>
 </div>	
-<div class="pull-left">
+<div class="pull-left" style="width:30%">
 <ul class="nav nav-pills nav-stacked">
 <li>
-<a href="<?php echo site_url() ?>/member/year/<?php echo $year ?>">Full List</a>
+<button type="button" class="btn btn-lg btn-success"><a  href="<?php echo site_url() ?>/member/year/<?php echo $year ?>">Full List</a></button>
 </li>
-<ul>
+
 <li>
-<a href="<?php echo site_url() ?>/member/positive/<?php echo $year ?>">Positive</a>
-</li>
-<li>
-<a href="<?php echo site_url() ?>/member/negative/<?php echo $year ?>">Negative</a>
+<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/positive/<?php echo $year ?>">Positive</a></button>
 </li>
 <li>
-<a href="<?php echo site_url() ?>/member/neutral/<?php echo $year ?>">Neutral</a>
-</li>
-</ul>
-<li>
-<a href="<?php echo site_url() ?>/member/registered/<?php echo $year ?>">Registered</a>
+<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/negative/<?php echo $year ?>">Negative</a></button>
 </li>
 <li>
-<a href="<?php echo site_url() ?>/member/uncontacted/<?php echo $year ?>">Yet to be contacted</a>
+<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/neutral/<?php echo $year ?>">Neutral</a></button>
+</li>
+
+<li>
+<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/registered/<?php echo $year ?>">Registered</a></button>
 </li>
 <li>
-<a href="<?php echo site_url() ?>/member/unsearched/<?php echo $year ?>">Net to be searched</a>
+<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/uncontacted/<?php echo $year ?>">Yet to be contacted</a></button>
 </li>
 <li>
-<a href="<?php echo site_url() ?>/member/notFound/<?php echo $year ?>">Not Found</a>
+<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/unsearched/<?php echo $year ?>">Yet to be searched</a></button>
+</li>
+<li>
+<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/notFound/<?php echo $year ?>">Not Found</a></button>
 </li>
 
 </ul>
 
 </div>
-<div >
+<div class="pull-left" style="width:70%">
 <?php
 if($table!=-1)
 echo $table;
