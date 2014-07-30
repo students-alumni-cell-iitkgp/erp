@@ -273,11 +273,12 @@ public function updateResponse(){
 }
 public function updatePayment(){
 	if($this->accessCheck()){
+			$payment  = $this->input->get('payment');
 			$alumid = $this->input->get('alumid');
 			$dateofpayment = $this->input->get('dateofpayment');
 			$referenceNo =	$this->input->get('referenceNo');
 			$paymentAmt = $this->input->get('paymentAmt');
-			$result = $this->memberModel->updatePayment($alumid,$dateofpayment,$referenceNo,$paymentAmt);
+			$result = $this->memberModel->updatePayment($payment,$alumid,$dateofpayment,$referenceNo,$paymentAmt);
 			
 				echo $result;
 			

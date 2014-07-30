@@ -438,10 +438,10 @@ class MemberModel extends CI_Model{
 	public function updateResponse($alumid,$response){
 		
 		$query = $this->db->where('alumid',$alumid);
-		if($this->db->update('status',array('response'=>$response))){
+		if($this->db->update('status',array('called'=>$response))){
 			$query = $this->db->get_where('status',array('alumid'=>$alumid));
 			$result = $query->row_array();
-			return "Current Status:".$result['response'];
+			return "Current Status:".$result['called'];
 		}
 		else
 			return "false";
@@ -459,13 +459,16 @@ class MemberModel extends CI_Model{
 			return "false";
 
 	}
-	public function updatePayment($alumid,$dateofpayment,$referenceNo,$paymentAmt){
-	//lkksdnfksndf
-		
+	public function updatePayment($payment,$alumid,$dateofpayment,$referenceNo,$paymentAmt){
+		if($payment!=1){
+			return "Change the payment status first";
+		}
 		$query = $this->db->where('alumid',$alumid);
 		if($this->db->update('status',array('pay'=>'1'))&& $this->db->insert('payment',array('alumid'=>$alumid,'dateofpayment'=>$dateofpayment,'referenceNo'=>$referenceNo,'paymentAmt'=>$paymentAmt))){
 			$query = $this->db->get_where('payment',array('alumid'=>$alumid));
-			return $this->table->generate($query);
+			$userid = $this->getUserId();
+			$this->db->insert('notifications',array('alumid'=>$alumid,'userid'=>$userid,'message'=>"Verify payment"));
+			return "Current Status: Paid<br>".$this->table->generate($query);
 			
 		}
 		else

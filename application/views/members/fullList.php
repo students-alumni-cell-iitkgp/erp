@@ -6,12 +6,7 @@
         <h4 class="modal-title" id="myModalLabel">Details</h4>
       </div>
       <div class="modal-body" id="updateform">
-        <table class="class=table table-striped table-bordered table-hover">
-<tr><td><span id="name"></span></td><span id="hall"></span><td></td></tr>
-<tr><td><span id="year"></span></td><td></td> <span id="department"></span></td></tr>
-
-
-        </table>
+       
         
         
         
@@ -103,8 +98,8 @@
     </div>
   </div>
 </div>	
-<div style="float:left">
-<ul>
+<div class="pull-left">
+<ul class="nav nav-pills nav-stacked">
 <li>
 <a href="<?php echo site_url() ?>/member/year/<?php echo $year ?>">Full List</a>
 </li>
@@ -299,7 +294,7 @@ function updateResponse(){
       
     }
   };
-  xhr.open("GET","<?php echo site_url()?>/member/updateSearch?alumid="+alumid+"&response="+response,true);
+  xhr.open("GET","<?php echo site_url()?>/member/updateResponse?alumid="+alumid+"&response="+response,true);
   xhr.send();
 }
 
@@ -319,9 +314,9 @@ xhr.onreadystatechange = function(){
         console.log(JSON.parse(xhr.responseText));
 
 		var obj = JSON.parse(xhr.responseText);
-		document.getElementById("name").innerHTML=obj.name;
+		/*document.getElementById("name").innerHTML=obj.name;
     document.getElementById("hall").innerHTML=obj.hall;
-    document.getElementById("year").innerHTML=obj.year;
+    document.getElementById("year").innerHTML=obj.year;*/
     document.getElementById("call").innerHTML = obj.callhistory|| "nothing to show";
    document.getElementById("profile").innerHTML = obj.profile;
     document.getElementById("searchstatus").innerHTML = obj.searchstatus;

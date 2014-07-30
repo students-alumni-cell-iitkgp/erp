@@ -3,6 +3,32 @@ class CoordinatorModel extends CI_Model{
 	public function __construct(){
 		parent::__construct();
 		$this->load->database();
+		$this->load->library('table');
+		$tmpl = array (
+                    'table_open'          => '<table class="table table-striped table-bordered table-hover" border="5" cellpadding="6" cellspacing="4">',
+
+                    'heading_row_start'   => '<tr >',// Important
+                    'heading_row_end'     => '</tr>',
+                    'heading_cell_start'  => '<th class="heading">',
+                    'heading_cell_end'    => '</th>',
+
+                    'row_start'           => '<tr class="lookfor" >',
+                    'row_end'             => '</tr>',
+                    'cell_start'          => '<td>',
+                    'cell_end'            => '</td>',
+
+                    'row_alt_start'       => '<tr class="lookfor" >',
+                    'row_alt_end'         => '</tr>',
+                    'cell_alt_start'      => '<td>',
+                    'cell_alt_end'        => '</td>',
+
+              
+
+                    'table_close'         => '</table>'
+              );
+
+		$this->table->set_template($tmpl);
+
 	}
 	public function getMembers(){
 		$arr = array();
@@ -98,6 +124,14 @@ public function getUserId2($username){// to be used in work assignment form
 
 
 
+	}
+	public function getNotifications(){
+		$query = $this->db->get('notifications');
+		if($query->num_rows()>0){
+			return $this->table->generate($query);
+		}else{
+			return "No Notification";
+		}
 	}
 
 
