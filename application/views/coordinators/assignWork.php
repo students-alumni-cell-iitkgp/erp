@@ -6,6 +6,9 @@ if(isset($msg))
 	echo $msg;
 
 ?>
+<div class="row">
+<div class="col-md-3"></div>
+<div class="col-md-6">
 <?php echo form_open('coordinator/assignWork');?>
 <label for="from" class="form-control">From </label>
 <select name="from" class="form-control">
@@ -27,5 +30,8 @@ if(isset($msg))
 	echo '<option class="form-control" value="'.$member.'">'.$member.'</option>';
 }?>
 </select><br>
-<input type="submit" class="form-control" name="submit" value="Assign">
-</form>
+<center><input type="submit" class="btn btn-primary" name="submit" value="Assign">
+</center></form>
+</div>
+<div class="col-md-3"></div>
+</div>

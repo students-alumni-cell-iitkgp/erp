@@ -24,10 +24,18 @@ class Coordinator extends CI_Controller{
 	public function index(){
 		if($this->accessCheck()){
 			$data['memberList'] = $this->coordinatorModel->getMembers();
-			$this->load->view('templates/header');
+			$data['notifications'] = $this->coordinatorModel->numberOfNotifications();
+
+			
+			$this->load->view('templates/header',$data);
 			$this->load->view('templates/menu');
 			$this->load->view('coordinators/home',$data);
-			$this->assignWork();
+			$data['fromid'] = $this->coordinatorModel->getUnassignedAlum();
+			$data['toid'] = $this->coordinatorModel->getUnassignedAlum();
+			$data['members'] = $this->coordinatorModel->getMembers();
+			
+			$data['msg'] = "";
+			$this->load->view('coordinators/assignWork',$data);
 			$this->load->view('templates/footer');
 		}else{
 			$this->load->view('templates/accessErr');
@@ -58,7 +66,8 @@ public function assignWork(){
 			$data['toid'] = $this->coordinatorModel->getUnassignedAlum();
 			$data['members'] = $this->coordinatorModel->getMembers();
 			$data['msg'] = "";
-			
+			$this->load->view('templates/header');
+			$this->load->view('templates/menu');
 			$this->load->view('coordinators/assignWork',$data);
 			
 		}
@@ -112,6 +121,7 @@ public function getNotifications(){
 public function verifyPayment($alumid){
 	if($this->accessCheck()){
 		if($this->coordinatorModel->verifyPayment($alumid)){
+			header('Refresh:2, url="login"');
 			echo  "Payment verified.";
 		}
 		else

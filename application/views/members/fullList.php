@@ -90,33 +90,35 @@
     </div>
   </div>
 </div>	
+
 <div class="pull-left" style="width:30%">
+
 <ul class="nav nav-pills nav-stacked">
 <li>
-<button type="button" style="width:200px" class="btn btn-lg btn-success"><a  href="<?php echo site_url() ?>/member/year/<?php echo $year ?>">Full List</a></button>
+<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a  href="<?php echo site_url() ?>/member/year/<?php echo $year ?>">Full List</a></button>
 </li>
 
 <li>
-<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/positive/<?php echo $year ?>">Positive</a></button>
+<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/positive/<?php echo $year ?>">Positive</a></button>
 </li>
 <li>
-<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/negative/<?php echo $year ?>">Negative</a></button>
+<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/negative/<?php echo $year ?>">Negative</a></button>
 </li>
 <li>
-<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/neutral/<?php echo $year ?>">Neutral</a></button>
+<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/neutral/<?php echo $year ?>">Neutral</a></button>
 </li>
 
 <li>
-<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/registered/<?php echo $year ?>">Registered</a></button>
+<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/registered/<?php echo $year ?>">Registered</a></button>
 </li>
 <li>
-<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/uncontacted/<?php echo $year ?>">Yet to be contacted</a></button>
+<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/uncontacted/<?php echo $year ?>">Yet to be contacted</a></button>
 </li>
 <li>
-<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/unsearched/<?php echo $year ?>">Yet to be searched</a></button>
+<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/unsearched/<?php echo $year ?>">Yet to be searched</a></button>
 </li>
 <li>
-<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/notFound/<?php echo $year ?>">Not Found</a></button>
+<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/notFound/<?php echo $year ?>">Not Found</a></button>
 </li>
 
 </ul>
@@ -127,7 +129,7 @@
 if($table!=-1)
 echo $table;
 else
-echo "Nothing here.. move along";
+echo "<h2>Nothing here.. move along</h2>";
 
 ?>
 </div>

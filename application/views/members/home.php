@@ -1,10 +1,12 @@
-<div class="navbar navbar-default" id ="topPane">
+<h2>Yearwise Database</h2>
+<div class="navbar nav-pills nav-justified" id ="topPane">
+
 	<ul class="nav navbar-nav">
 <?php
 
 
 foreach ($years as $year) {
-	echo '<button type="button"  class="btn btn-primary btn-lg" style="width:200px !important"><li><a style="color:white" href="'.site_url().'/member/year/'.$year['alumSince'].'">'.$year['alumSince'].'</a></li></button>';
+	echo '<button type="button"  class="btn btn-success btn-lg" style="width:180px ;height:40px !important"><li><a style="color:white" href="'.site_url().'/member/year/'.$year['alumSince'].'">'.$year['alumSince'].'</a></li></button>';
 }
 
 
@@ -19,10 +21,10 @@ foreach ($years as $year) {
 
 		<?php
 		$year = 0;
-		echo '<button type="button" class="btn btn-primary btn-lg" onclick = "Javascript:getNetworkingSummary('.$year.')" style="width:300px !important">All Years</button>';
+		echo '<button type="button" class="btn btn-primary btn-lg" onclick = "Javascript:getNetworkingSummary('.$year.')" style="width:180px;height:40px !important">All Years</button>';
 		foreach ($years as $year) {
 			$data = $year['alumSince'];
-	echo '<button type="button"  class="btn btn-primary btn-lg" onclick = "Javascript:getNetworkingSummary('.$data.')" style="width:200px !important"><li>'.$data.'</li></button>';
+	echo '<button type="button"  class="btn btn-primary btn-lg" onclick = "Javascript:getNetworkingSummary('.$data.')" style="width:180px;height:40px !important"><li>'.$data.'</li></button>';
 }
 
 		?>

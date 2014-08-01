@@ -144,6 +144,10 @@ public function getUserId2($username){// to be used in work assignment form
 		}
 	}
 
+public function numberOfNotifications(){
+	$query = $this->db->get_where('notifications',array('status'=>'0'));
+	return $query->num_rows();
+}
 
 
 }

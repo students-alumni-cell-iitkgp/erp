@@ -516,6 +516,8 @@ class MemberModel extends CI_Model{
 			$result = $query->row_array();
 			$this->load->model('codeParser');
 			$value = $result['register'];
+			$this->db->insert('notifications',array('alumid'=>$alumid,'userid'=>$userid,'message'=>"Alumni Registered"));
+
 			return "Current Status: ".$value;
 		}
 		else

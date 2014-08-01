@@ -1,6 +1,14 @@
 <div class="navbar navbar-default">
 	<ul class="nav navbar-nav">
-<li><a   href="<?php echo base_url();?>index.php/member/index"  target="_blank">Home</a></li>
+		<?php 
+		if($this->session->userdata('privilege')==1)
+			$homeUrl = site_url('member/index');
+		elseif($this->session->userdata('privilege')==2)
+			$homeUrl = site_url('coordinator/index');
+
+
+		?>
+<li><a   href="<?php echo $homeUrl ?>" >Home</a></li>
 
 <li><a   href="<?php echo base_url();?>index.php/member/search"  target="_blank">Search</a></li>
 
@@ -11,7 +19,8 @@
 
 <li id="notifications">
 
-<?php if($this->session->userdata('privilege')==2) echo '<a   href="'.site_url().'/coordinator/getNotifications">Notifications</a>'?>
+<?php if($this->session->userdata('privilege')==2) {echo '<a   href="'.site_url().'/coordinator/getNotifications">Notifications  ';}
+if(isset($notifications)) echo $notifications .'</a>';?> 
 </li>
 <li>
 <?php if($this->session->userdata('alias')){

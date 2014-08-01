@@ -7,7 +7,7 @@
 $fields = $this->db->list_fields($table);
 echo form_open('member/generate_result');
 foreach ($fields as $field)
-{	
+{if($field!="image")	{
    echo '<select name ="'.$field.'" class="form-control">';
    
     // Time to use query bindings
@@ -27,7 +27,7 @@ foreach ($fields as $field)
 echo '</select><br>';
    
    //echo $query;
-}
+}}
  
 echo '<button type="submit" class="btn btn-primary"  name = "submit">Search</button>'; 
 echo '</form>';
