@@ -24,8 +24,8 @@ class Coordinator extends CI_Controller{
 	public function index(){
 		if($this->accessCheck()){
 			$data['memberList'] = $this->coordinatorModel->getMembers();
-			$data['notifications'] = $this->coordinatorModel->numberOfNotifications();
-
+			$notifications = $this->coordinatorModel->numberOfNotifications();
+			$this->session->set_userdata('notifications',$notifications);
 			
 			$this->load->view('templates/header',$data);
 			$this->load->view('templates/menu');
