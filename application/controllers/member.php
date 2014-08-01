@@ -193,7 +193,7 @@ else{
 public function getProfile(){
 	$id=$this->input->get('id');
 	$data = $this->memberModel->getPrimaryInfo($id);
-	
+
 	echo json_encode($data);
 }
 
@@ -236,9 +236,9 @@ public function updateProfile(){
 	if($this->accessCheck()){
 		if($this->input->post('submit')){
 
-			if($this->memberModel->updateProfile()=="success"){
+			if($msg = $this->memberModel->updateProfile()){
 				header('Refresh:2,url='.$_SERVER["HTTP_REFERER"]);//security issues here
-				echo "Values updated, you are being redirected back";
+				echo $msg;
 			}
 		}
 
@@ -289,6 +289,21 @@ public function updatePayment(){
 		$this->load->view('templates/accessErr');
 	}
 }
+public function updateRegister(){
+	if($this->accessCheck()){
+			$register  = $this->input->get('register');
+			$alumid = $this->input->get('alumid');
+			$result = $this->memberModel->updateRegister($alumid,$register);
+			
+				echo $result;
+			
+			
+		
+
+	}else{
+		$this->load->view('templates/accessErr');
+	}
+}
 public function addCallDetail(){
 	$alumid = $this->input->get('alumid');
 	date_default_timezone_set('Asia/Calcutta');
@@ -306,6 +321,16 @@ public function updateCall(){
 		echo $this->memberModel->updateCall($remarks,$nextdate,$nexttime,$callid,$alumid);
 	
 }
+
+
+public function getNetworkingSummary($year){
+	
+	$userid = $this->memberModel->getUserId();
+	if($data =  $this->memberModel->getNetworkingSummary($userid,$year))
+		echo json_encode($data);
+	
+		//echo json_encode($data['msg']="boo");
 }
 
+}
 ?>

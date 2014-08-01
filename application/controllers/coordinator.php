@@ -96,13 +96,31 @@ public function assignWork(){
 	}
 }
 public function getNotifications(){
-	$data['result'] = $this->coordinatorModel->getNotifications();
-	$this->load->view('templates/header');
-	$this->load->view('templates/menu');
-	$this->load->view('templates/dummy',$data);
-	$this->load->view('templates/footer');
+	if($this->accessCheck()){
+		$data['result'] = $this->coordinatorModel->getNotifications();
+		$this->load->view('templates/header');
+		$this->load->view('templates/menu');
+		$this->load->view('templates/dummy',$data);
+		$this->load->view('templates/footer');
+	}else{
+		$this->load->view('templates/accessErr');
+		
+	}
 
 }
+
+public function verifyPayment($alumid){
+	if($this->accessCheck()){
+		if($this->coordinatorModel->verifyPayment($alumid)){
+			echo  "Payment verified.";
+		}
+		else
+			echo "some error occured,please try again.";
+
+		}else{
+			$this->load->view('templates/accessErr');
+		}
+	}
 }
 
 

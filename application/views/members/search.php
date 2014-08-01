@@ -1,5 +1,7 @@
 
 <h2>Search for alumni in database</h2>
+<div class="col-md-3"></div>
+<div class="col-md-6" style="text-align:center">
 <?php $table = "alumni";?>
 <?php
 $fields = $this->db->list_fields($table);
@@ -27,7 +29,9 @@ echo '</select><br>';
    //echo $query;
 }
  
-echo '<input type="submit" class="form-control" value = "Search" name = "submit">'; 
+echo '<button type="submit" class="btn btn-primary"  name = "submit">Search</button>'; 
 echo '</form>';
 
 ?>
+</div>
+<div class="col-md-3"></div>

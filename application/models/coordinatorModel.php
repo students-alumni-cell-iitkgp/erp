@@ -133,6 +133,16 @@ public function getUserId2($username){// to be used in work assignment form
 			return "No Notification";
 		}
 	}
+	public function verifyPayment($alumid){
+		$this->db->where('alumid',$alumid);
+		if($this->db->update('status',array('pay'=>2))){
+			$this->db->where('alumid',$alumid);
+			$this->db->update('notifications',array('status'=>1));
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 
 

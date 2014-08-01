@@ -4,7 +4,7 @@
 
 
 foreach ($years as $year) {
-	echo '<button type="button" class="btn btn-primary btn-lg"><li><a style="color:white" href="'.site_url().'/member/year/'.$year['alumSince'].'">'.$year['alumSince'].'</a></li></button>';
+	echo '<button type="button"  class="btn btn-primary btn-lg" style="width:200px !important"><li><a style="color:white" href="'.site_url().'/member/year/'.$year['alumSince'].'">'.$year['alumSince'].'</a></li></button>';
 }
 
 
@@ -13,8 +13,130 @@ foreach ($years as $year) {
 ?>
 </ul>
 </div>
-<div id="summary">
+<h2>Networking Summary</h2>
+<div id="overall">
+	<ul class='nav nav-pills nav-justified' role='tablist'>
 
+		<?php
+		$year = 0;
+		echo '<button type="button" class="btn btn-primary btn-lg" onclick = "Javascript:getNetworkingSummary('.$year.')" style="width:300px !important">All Years</button>';
+		foreach ($years as $year) {
+			$data = $year['alumSince'];
+	echo '<button type="button"  class="btn btn-primary btn-lg" onclick = "Javascript:getNetworkingSummary('.$data.')" style="width:200px !important"><li>'.$data.'</li></button>';
+}
+
+		?>
+	</ul>
 
 
 </div>
+<h3> Total Number of Alumni Allocated: <span id="total"></span> </h3>
+
+	<h3 style="text-decoration: underline;"> Searching Status </h3>
+
+	<table class="table table-bordered">
+
+		<thead>
+
+			<tr class='active'>
+				<th> Found
+				</th>
+				<th> Yet to be searched
+				</th>
+				<th> Not Found
+				</th>
+			</tr>
+
+		</thead>
+
+		<tbody>
+
+			<tr>
+				<td id="found"> 
+				</td>
+				
+				<td id="yettobesearched"> 
+				</td>
+				<td id="notfound"> 
+				</td>
+			</tr>
+
+		</tbody>
+
+	</table>
+
+	<h3 style="text-decoration: underline;"> Response Status </h3>
+
+	<table class="table table-bordered">
+
+		<thead>
+
+			<tr class='active'>
+				<th> Called (2-way)
+				</th>
+				<th> Neutral
+				</th>
+				<th> Positive
+				</th>
+				<th> Negative
+				</th>
+			</tr>
+
+		</thead>
+
+		<tbody>
+
+			<tr>
+				<td id="called2way"> 
+				</td>
+				<td id="neutral"> 
+				</td>
+				<td id="positive"> 
+				</td>
+				<td id="negative" > 
+				</td>
+			</tr>
+
+		</tbody>
+
+	</table>
+<script type="text/javascript">
+
+function getNetworkingSummary(year){
+	var xhr;
+  if(window.XMLHttpRequest){
+    xhr = new XMLHttpRequest();
+  }
+  else{
+    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  var total = document.getElementById('total');
+  var found = document.getElementById('found');
+  var yettobesearched = document.getElementById('yettobesearched');
+  var notfound = document.getElementById('notfound');
+  var called2way = document.getElementById('called2way');
+  var neutral = document.getElementById('neutral');
+  var positive = document.getElementById('positive');
+  var negative = document.getElementById('negative');
+
+      
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState==4 && xhr.status==200){
+    	console.log(JSON.parse(xhr.responseText));
+    			var obj = JSON.parse(xhr.responseText);
+    			found.innerHTML = obj.found;
+    			yettobesearched.innerHTML = obj.yettobesearched;
+    			notfound.innerHTML = obj.notfound;
+    			called2way.innerHTML = obj.called2way;
+    			neutral.innerHTML = obj.neutral;
+    			positive.innerHTML = obj.positive;
+    			negative.innerHTML = obj.negative;
+      			total.innerHTML = obj.total;
+      
+    }
+  };
+  xhr.open("GET","<?php echo site_url()?>/member/getNetworkingSummary/"+year,true);
+  xhr.send();
+}
+
+</script>

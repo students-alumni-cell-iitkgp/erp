@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" id="cross_button" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Details</h4>
+        <h2 class="modal-title" id="myModalLabel">Details</h2>
       </div>
       <div class="modal-body" id="updateform">
        
@@ -17,83 +17,75 @@
         <div id="callHistory"></div>
         
         <!-- tabs-->
-        <div class="panel-group" id="accordion">
-  <div class="panel panel-default">
-    <div class="panel-heading" style="background-color:#3276b1">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+        
+  
+      <h2>
+        <a >
           Call History
         </a>
-      </h4>
-    </div>
-    <div id="collapseOne" class="panel-collapse collapse in">
-      <div class="panel-body">
+      </h2>
+    
+      
        <div id="call"></div>
-      </div>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading" style="background-color:#3276b1">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+     <hr>
+      <h2>
+        <a >
           Profile
         </a>
-      </h4>
-    </div>
-    <div id="collapseTwo" class="panel-collapse collapse">
-      <div class="panel-body">
+      </h2>
+    
         <div id="profile"></div>
-      </div>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading" style="background-color:#3276b1">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-          Searching Status
-        </a>
-      </h4>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        <div id="searchstatus"></div>
-      </div>
-    </div>
-  </div>
-   <div class="panel panel-default">
-    <div class="panel-heading" style="background-color:#3276b1">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+    <hr>
+      
+      <hr>
+  <div class="row">
+  <div class="col-md-6">
+      <h2>
+        <a >
           Response/Calling Status
         </a>
-      </h4>
-    </div>
-    <div id="collapseFour" class="panel-collapse collapse">
-      <div class="panel-body">
+      </h2>
+    
         <div id="responsestatus"></div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading" >
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+     </div>
+
+<div class="col-md-6">
+      <h2>
+        <a >
           Payment Status
         </a>
-      </h4>
-    </div>
-    <div id="collapseFive" class="panel-collapse collapse">
-      <div class="panel-body">
+      </h2>
+    
         <div id="paymentstatus"></div>
-      </div>
-    </div>
-  </div>
+     
+</div>
 
         <!-- tabs-->
       </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+      <h2 >
+        <a >
+          Searching Status
+        </a>
+      </h2>
+        <div id="searchstatus"></div>
+      </div>
+      <div class="col-md-6">
+         <h2 >
+        <a >
+          Register Status
+        </a>
+      </h2>
+        <div id="registerstatus"></div>
+      </div>
+    </div>
+    <hr>
+    </div>
+
       <div class="modal-footer">
-        <button type="button" id = "cancel_button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" id = "cancel_button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
@@ -101,30 +93,30 @@
 <div class="pull-left" style="width:30%">
 <ul class="nav nav-pills nav-stacked">
 <li>
-<button type="button" class="btn btn-lg btn-success"><a  href="<?php echo site_url() ?>/member/year/<?php echo $year ?>">Full List</a></button>
+<button type="button" style="width:200px" class="btn btn-lg btn-success"><a  href="<?php echo site_url() ?>/member/year/<?php echo $year ?>">Full List</a></button>
 </li>
 
 <li>
-<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/positive/<?php echo $year ?>">Positive</a></button>
+<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/positive/<?php echo $year ?>">Positive</a></button>
 </li>
 <li>
-<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/negative/<?php echo $year ?>">Negative</a></button>
+<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/negative/<?php echo $year ?>">Negative</a></button>
 </li>
 <li>
-<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/neutral/<?php echo $year ?>">Neutral</a></button>
+<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/neutral/<?php echo $year ?>">Neutral</a></button>
 </li>
 
 <li>
-<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/registered/<?php echo $year ?>">Registered</a></button>
+<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/registered/<?php echo $year ?>">Registered</a></button>
 </li>
 <li>
-<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/uncontacted/<?php echo $year ?>">Yet to be contacted</a></button>
+<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/uncontacted/<?php echo $year ?>">Yet to be contacted</a></button>
 </li>
 <li>
-<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/unsearched/<?php echo $year ?>">Yet to be searched</a></button>
+<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/unsearched/<?php echo $year ?>">Yet to be searched</a></button>
 </li>
 <li>
-<button type="button" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/notFound/<?php echo $year ?>">Not Found</a></button>
+<button type="button" style="width:200px" class="btn btn-lg btn-success"><a href="<?php echo site_url() ?>/member/notFound/<?php echo $year ?>">Not Found</a></button>
 </li>
 
 </ul>
@@ -297,7 +289,29 @@ function updateResponse(){
   xhr.open("GET","<?php echo site_url()?>/member/updateResponse?alumid="+alumid+"&response="+response,true);
   xhr.send();
 }
-
+function updateRegister(){
+  var xhr;
+  if(window.XMLHttpRequest){
+    xhr = new XMLHttpRequest();
+  }
+  else{
+    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  
+      
+      var alumid = form5.alumid.value;
+      
+      var register = form5.register.value;
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState==4 && xhr.status==200){
+      var registerDiv = document.getElementById('registerstatus');
+        registerDiv.innerHTML =  xhr.responseText;
+      
+    }
+  };
+  xhr.open("GET","<?php echo site_url()?>/member/updateRegister?alumid="+alumid+"&register="+register,true);
+  xhr.send();
+}
 
 function getdetails(id){
 //window.alert(id);
@@ -322,6 +336,8 @@ xhr.onreadystatechange = function(){
     document.getElementById("searchstatus").innerHTML = obj.searchstatus;
     document.getElementById("responsestatus").innerHTML = obj.responsestatus;
     document.getElementById("paymentstatus").innerHTML = obj.paymentstatus;
+    document.getElementById("registerstatus").innerHTML = obj.registerstatus;
+
 
 
 	}
