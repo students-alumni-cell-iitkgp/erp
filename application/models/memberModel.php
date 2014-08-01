@@ -103,7 +103,7 @@ class MemberModel extends CI_Model{
 	public function FullList($year){
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.* ,callhistory.nextdate FROM alumni JOIN status  ON alumni.alumid = status.alumid  LEFT JOIN callhistory ON callhistory.alumid = alumni.alumid WHERE status.userid = $userid AND alumni.alumSince = $year GROUP BY alumni.alumid ORDER BY callhistory.nextdate DESC");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince,callhistory.nextdate,callhistory.nexttime FROM alumni JOIN status  ON alumni.alumid = status.alumid  LEFT JOIN callhistory ON callhistory.alumid = alumni.alumid WHERE status.userid = $userid AND alumni.alumSince = $year GROUP BY alumni.alumid ORDER BY callhistory.nextdate DESC");
 		//$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year));
 		if($query->num_rows==0){
 			return -1;
@@ -117,7 +117,7 @@ class MemberModel extends CI_Model{
 	public function Positive($year){
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 3 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 3 AND alumni.alumSince = $year AND status.userid = $userid");
 		//$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'3'));
 		if($query->num_rows==0){
 			return -1;
@@ -132,7 +132,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 2 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 2 AND alumni.alumSince = $year AND status.userid = $userid");
 		//$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'2'));
 		if($query->num_rows==0){
 			return -1;
@@ -148,7 +148,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 1 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 1 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -162,7 +162,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.register = 1 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.register = 1 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -176,7 +176,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 0 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 0 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -190,7 +190,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.search = 0 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.search = 0 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -204,7 +204,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.* FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.search = -1 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.search = -1 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
