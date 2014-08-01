@@ -321,6 +321,12 @@ public function updateCall(){
 		echo $this->memberModel->updateCall($remarks,$nextdate,$nexttime,$callid,$alumid);
 	
 }
+public function updateRemark(){
+	$remark = $this->input->get('remark');
+	$alumid = $this->input->get('alumid');
+
+	echo $this->memberModel->updateRemark($alumid,$remark);
+}
 
 
 public function getNetworkingSummary($year){

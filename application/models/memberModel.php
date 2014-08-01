@@ -369,6 +369,19 @@ class MemberModel extends CI_Model{
 
 				
 			}
+			$query = $this->db->get_where('remarks',array('alumid'=>$id));
+			if($query->num_rows()>0){
+				$remark = $query->row_array()['remark'];
+				$data['remarks'] = '<form name="form6" action="Javascript:updateRemarks()">Alum Id:<input type="text" name="alumid" value="'.$id.'" disabled><br>';
+				$data['remarks'] .= 'Remark:<input type="text" class="form-control"  name="remark" value="'.$remark.'"><br>';
+				$data['remarks'] .='<input type="submit" name="submit" value="Update" class="btn btn-success"></form>';
+			}else{
+
+				$data['remarks'] = '<form name="form6" action="Javascript:updateRemarks()">Alum Id:<input type="text" name="alumid" value="'.$id.'" disabled><br>';
+				$data['remarks'] .= 'Remark:<input type="text" class="form-control" name="remark" placeholder="Your remark Here"><br>';
+				$data['remarks'] .='<input type="submit" name="submit" value="Update" class="btn btn-success"></form>';
+
+			}
 
 			
 			return $data;	
@@ -598,6 +611,19 @@ class MemberModel extends CI_Model{
 		$this->db->update('callhistory',array('remarks'=>$remarks,'nextdate'=>$nextdate,'nexttime'=>$nexttime));
 		$query = $this->db->get_where('callhistory',array('alumid'=>$alumid));
 		return $this->table->generate($query);
+	}
+	public function updateRemark($alumid,$remark){
+		$query = $this->db->get_where('remarks',array('alumid'=>$alumid));
+		if($query->num_rows()==0){
+			$this->db->insert('remarks',array('alumid'=>$alumid,'remark'=>$remark));
+			
+		}else{
+			$this->db->where('alumid',$alumid);
+
+			$this->db->update('remarks',array('remark'=>$remark));
+		}
+			return "Remark Updated";
+
 	}
 
 

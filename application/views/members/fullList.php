@@ -62,7 +62,7 @@
 
         <!-- tabs-->
       </div>
-      <hr>
+      <hr><hr>
       <div class="row">
         <div class="col-md-6">
       <h2 >
@@ -81,6 +81,19 @@
         <div id="registerstatus"></div>
       </div>
     </div>
+    <hr><hr>
+    <div class="row">
+      <div class="col-md-12">
+ <h2 >
+        <a >
+          Remarks
+        </a>
+      </h2>
+        <div id="remarks"></div>
+
+
+    </div>
+  </div>
     <hr>
     </div>
 
@@ -134,6 +147,14 @@ echo "<h2>Nothing here.. move along</h2>";
 ?>
 </div>
 <script type="text/javascript">
+var xhr;
+  if(window.XMLHttpRequest){
+    xhr = new XMLHttpRequest();
+  }
+  else{
+    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+
   var alumid;
 window.onload = function (){
 
@@ -176,14 +197,6 @@ function EventHandler() {
 }
 
 function addCallDetails(){
-  var xhr;
-  if(window.XMLHttpRequest){
-    xhr = new XMLHttpRequest();
-  }
-  else{
-    xhr = new ActiveXObject("Microsoft.XMLHTTP");
-  }
-
   xhr.onreadystatechange = function(){
     if(xhr.readyState==4 && xhr.status==200){
 
@@ -197,14 +210,6 @@ function addCallDetails(){
   xhr.send();
 }
 function updateCall(){
-  var xhr;
-  if(window.XMLHttpRequest){
-    xhr = new XMLHttpRequest();
-  }
-  else{
-    xhr = new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  
       var remarks = form1.remarks.value;
       var nextdate = form1.nextdate.value;
       var nexttime = form1.nexttime.value;
@@ -221,15 +226,7 @@ console.log("remarks="+remarks+"&nextdate="+nextdate+"&nexttime="+nexttime+"call
   xhr.open("GET","<?php echo site_url()?>/member/updateCall?remarks="+remarks+"&nextdate="+nextdate+"&nexttime="+nexttime+"&callid="+callid+"&alumid="+alumid,true);
   xhr.send();
 }
-function updatePayment(){
-  var xhr;
-  if(window.XMLHttpRequest){
-    xhr = new XMLHttpRequest();
-  }
-  else{
-    xhr = new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  
+function updatePayment(){ 
       var payment = form2.payment.value;
       var alumid = form2.alumid.value;
       var dateofpayment = form2.dateofpayment.value;
@@ -245,16 +242,7 @@ function updatePayment(){
   xhr.open("GET","<?php echo site_url()?>/member/updatePayment?payment="+payment+"&alumid="+alumid+"&dateofpayment="+dateofpayment+"&referenceNo="+referenceNo+"&paymentAmt="+paymentAmt,true);
   xhr.send();
 }
-function updateSearch(){
-  var xhr;
-  if(window.XMLHttpRequest){
-    xhr = new XMLHttpRequest();
-  }
-  else{
-    xhr = new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  
-      
+function updateSearch(){      
       var alumid = form3.alumid.value;
       
       var search = form3.search.value;
@@ -269,13 +257,6 @@ function updateSearch(){
   xhr.send();
 }
 function updateResponse(){
-  var xhr;
-  if(window.XMLHttpRequest){
-    xhr = new XMLHttpRequest();
-  }
-  else{
-    xhr = new ActiveXObject("Microsoft.XMLHTTP");
-  }
   
       
       var alumid = form4.alumid.value;
@@ -292,13 +273,7 @@ function updateResponse(){
   xhr.send();
 }
 function updateRegister(){
-  var xhr;
-  if(window.XMLHttpRequest){
-    xhr = new XMLHttpRequest();
-  }
-  else{
-    xhr = new ActiveXObject("Microsoft.XMLHTTP");
-  }
+  
   
       
       var alumid = form5.alumid.value;
@@ -313,6 +288,22 @@ function updateRegister(){
   };
   xhr.open("GET","<?php echo site_url()?>/member/updateRegister?alumid="+alumid+"&register="+register,true);
   xhr.send();
+}
+function updateRemarks(){
+ 
+      var alumid = form6.alumid.value;
+      
+      var remark = form6.remark.value;
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState==4 && xhr.status==200){
+      var remarkDiv = document.getElementById('remarks');
+        remarkDiv.innerHTML =  xhr.responseText;
+      
+    }
+  };
+  xhr.open("GET","<?php echo site_url()?>/member/updateRemark?alumid="+alumid+"&remark="+remark,true);
+  xhr.send();
+
 }
 
 function getdetails(id){
@@ -339,6 +330,7 @@ xhr.onreadystatechange = function(){
     document.getElementById("responsestatus").innerHTML = obj.responsestatus;
     document.getElementById("paymentstatus").innerHTML = obj.paymentstatus;
     document.getElementById("registerstatus").innerHTML = obj.registerstatus;
+    document.getElementById("remarks").innerHTML = obj.remarks;
 
 
 
