@@ -476,7 +476,7 @@ class MemberModel extends CI_Model{
 	}
 	public function updateProfile(){
 		unset($_POST['submit']);
-		
+		$msg = "";
 		$config['upload_path'] = './files/images/';
 		if(is_dir("files/images")==false){
 					mkdir("files/images", 0777, true);	
