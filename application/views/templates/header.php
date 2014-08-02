@@ -9,7 +9,7 @@ html{
 }
 #wrapper{
 	min-height: 100%;
-	padding-bottom: 10px;
+	padding-bottom: 5px;
 }
 body{
 	background-color:#c8c7ff;

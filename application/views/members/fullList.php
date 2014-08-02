@@ -83,13 +83,23 @@
     </div>
     <hr><hr>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
  <h2 >
         <a >
           Remarks
         </a>
       </h2>
         <div id="remarks"></div>
+
+
+    </div>
+    <div class="col-md-6">
+ <h2 >
+        <a >
+          Accompaniants
+        </a>
+      </h2>
+        <div id="accompany"></div>
 
 
     </div>
@@ -162,6 +172,7 @@ window.onload = function (){
 
 	var dom4 = document.getElementById('callButton');
   dom4.onclick = addCallDetails;
+  
 
   for (var i = link.length - 1; i >= 0; i--) {
     link[i].onclick = EventHandler;
@@ -225,6 +236,23 @@ function updateCall(){
 console.log("remarks="+remarks+"&nextdate="+nextdate+"&nexttime="+nexttime+"callid="+callid+"alumid="+alumid);
   xhr.open("GET","<?php echo site_url()?>/member/updateCall?remarks="+remarks+"&nextdate="+nextdate+"&nexttime="+nexttime+"&callid="+callid+"&alumid="+alumid,true);
   xhr.send();
+}
+function addMember(){
+  var name = form7.name.value;
+      var age = form7.age.value;
+      var gender = form7.gender.value;
+      var relationship = form7.relationship.value;
+      var alumid = form7.alumid.value;
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState==4 && xhr.status==200){
+      var accompanyDiv = document.getElementById('accompany');
+        accompanyDiv.innerHTML = xhr.responseText;
+      
+    }
+  };
+  xhr.open("GET","<?php echo site_url()?>/member/updateMember?name="+name+"&age="+age+"&gender="+gender+"&relationship="+relationship+"&alumid="+alumid,true);
+  xhr.send();
+  
 }
 function updatePayment(){ 
       var payment = form2.payment.value;
@@ -331,6 +359,7 @@ xhr.onreadystatechange = function(){
     document.getElementById("paymentstatus").innerHTML = obj.paymentstatus;
     document.getElementById("registerstatus").innerHTML = obj.registerstatus;
     document.getElementById("remarks").innerHTML = obj.remarks;
+    document.getElementById("accompany").innerHTML = obj.accompaniants;
 
 
 

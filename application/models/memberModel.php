@@ -89,7 +89,7 @@ class MemberModel extends CI_Model{
 		elseif($list=="negative")	
 			return $this->Negative($year);
 		elseif($list=="neutral")
-			return $this->Negative($year);
+			return $this->Neutral($year);
 		elseif($list=="register")
 			return $this->Register($year);
 		elseif($list=="uncontacted")
@@ -132,7 +132,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 2 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince,status.called FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = '2' AND alumni.alumSince = $year AND status.userid = $userid");
 		//$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'2'));
 		if($query->num_rows==0){
 			return -1;
@@ -148,7 +148,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 1 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince,status.called FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = '1' AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -379,6 +379,17 @@ class MemberModel extends CI_Model{
 				$data['remarks'] .='<input type="submit" name="submit" value="Update" class="btn btn-success"></form>';
 
 			}
+			$query = $this->db->get_where('accompaniants',array('alumid'=>$id));
+			$data['accompaniants']='';
+			if($query->num_rows()>0){
+				$data['accompaniants'] = '<table class="table table-striped table-bordered table-hover">';
+				foreach ($query->result_array() as $row) {
+					$data['accompaniants'] .= '<tr><td>'.$row['memberid'].'</td><td>'.$row['name'].'</td><td>'.$row['age'].'</td><td>'.$row['relationship'].'</td></tr>';
+				}
+				$data['accompaniants'] .= '</table>';
+			}
+
+			$data['accompaniants'] .= '<form name="form7" action="javascript:addMember()">Alum Id:<input type="text" name="alumid" value="'.$id.'" disabled><br><table class="table table-striped table-bordered table-hover"><tr><td><input type="text" name="name" placeholder="Name" class="form-control" /></td><td><input type="text" name="age" placeholder="Age" class="form-control" /></td><td><input type="text" name="gender" placeholder="Gender" class="form-control" /></td><td><input type="text" name="relationship" placeholder="Relationship" class="form-control" /></td></tr></table><br><input type="submit" class="btn btn-success" name="submit" value="Add Member"/></form>';
 
 			
 			return $data;	
@@ -523,7 +534,7 @@ class MemberModel extends CI_Model{
 
 	}
 	public function updateRegister($alumid,$register){
-		
+		$userid = $this->getUserId();
 		$query = $this->db->where('alumid',$alumid);
 		if($this->db->update('status',array('register'=>$register))){
 			$query = $this->db->get_where('status',array('alumid'=>$alumid));
@@ -572,6 +583,7 @@ class MemberModel extends CI_Model{
 		$this->db->insert('callhistory',array('callid'=>($num+1),'alumid'=>$alumid,'date'=>$date,'time'=>$time));
 		return $this->nextCallDetails($alumid);
 	}
+
 	public function nextCallDetails($alumid){
 		$lastRow =array();
 
@@ -613,6 +625,13 @@ class MemberModel extends CI_Model{
 		$query = $this->db->get_where('callhistory',array('alumid'=>$alumid));
 		return $this->table->generate($query);
 	}
+	public function updateMember($name,$age,$gender,$relationship,$alumid){
+		$query = $this->db->get_where('accompaniants',array('alumid'=>$alumid));
+		$num = $query->num_rows();
+		$this->db->insert('accompaniants',array('name'=>$name,'age'=>$age,'gender'=>$gender,'relationship'=>$relationship,'alumid'=>$alumid,'memberid'=>$num+1));
+		return $this->table->generate($this->db->get_where('accompaniants',array('alumid'=>$alumid)));
+
+	}
 	public function updateRemark($alumid,$remark){
 		$query = $this->db->get_where('remarks',array('alumid'=>$alumid));
 		if($query->num_rows()==0){
@@ -635,10 +654,11 @@ class MemberModel extends CI_Model{
 			$data['found'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.search = 1")->num_rows();
 			$data['yettobesearched'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.search = 0")->num_rows();
 			$data['notfound'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.search = 2")->num_rows();
-			$data['called2way'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.called = 4")->num_rows();
 			$data['neutral'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.called = 1")->num_rows();
 			$data['positive'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.called = 3")->num_rows();
 			$data['negative'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.called = 3")->num_rows();
+			$data['called2way'] = $data['neutral']+$data['positive']+$data['negative']; 
+			$data['register'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.register= 1")->num_rows();
 
 		
 
@@ -648,10 +668,12 @@ class MemberModel extends CI_Model{
 			$data['found'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE status.userid = $userid AND status.search = 1")->num_rows();
 			$data['yettobesearched'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE  status.userid = $userid AND status.search = 0")->num_rows();
 			$data['notfound'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE status.userid = $userid AND status.search = 2")->num_rows();
-			$data['called2way'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE  status.userid = $userid AND status.called = 4")->num_rows();
 			$data['neutral'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE  status.userid = $userid AND status.called = 1")->num_rows();
 			$data['positive'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE  status.userid = $userid AND status.called = 3")->num_rows();
 			$data['negative'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE  status.userid = $userid AND status.called = 3")->num_rows();
+			$data['called2way'] = $data['neutral']+$data['positive']+$data['negative'];
+			$data['register'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE status.userid = $userid AND status.register= 1")->num_rows();
+	
 
 		}
 
