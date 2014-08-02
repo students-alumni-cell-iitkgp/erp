@@ -121,7 +121,7 @@ public function getNotifications(){
 public function verifyPayment($alumid){
 	if($this->accessCheck()){
 		if($this->coordinatorModel->verifyPayment($alumid)){
-			header('Refresh:2, url="login"');
+			header('Location:'.site_url("coordinator"));
 			echo  "Payment verified.";
 		}
 		else
