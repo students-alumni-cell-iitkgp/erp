@@ -114,10 +114,9 @@ public function getUserId2($username){// to be used in work assignment form
 			$data = array('alumid'=>$i,'userid'=>$userid);
 			if($this->db->insert('status',$data))
 				$count++;	
-			$this->db->where('alumid',$i);
 			
 		}
-		if($count==1)
+		if($count>0)
 			return "success";
 		else
 			return "failed";

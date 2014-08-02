@@ -103,7 +103,7 @@ class MemberModel extends CI_Model{
 	public function FullList($year){
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince,callhistory.nextdate,callhistory.nexttime FROM alumni JOIN status  ON alumni.alumid = status.alumid  LEFT JOIN callhistory ON callhistory.alumid = alumni.alumid WHERE status.userid = $userid AND alumni.alumSince = $year GROUP BY alumni.alumid ORDER BY callhistory.nextdate DESC");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince,callhistory.nextdate,callhistory.nexttime FROM alumni JOIN status  ON alumni.alumid = status.alumid  LEFT JOIN callhistory ON callhistory.alumid = alumni.alumid WHERE status.userid = $userid AND alumni.alumSince = $year GROUP BY alumni.alumid ORDER BY callhistory.nextdate DESC");
 		//$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year));
 		if($query->num_rows==0){
 			return -1;
@@ -117,7 +117,7 @@ class MemberModel extends CI_Model{
 	public function Positive($year){
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 3 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 3 AND alumni.alumSince = $year AND status.userid = $userid");
 		//$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'3'));
 		if($query->num_rows==0){
 			return -1;
@@ -132,7 +132,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 2 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 2 AND alumni.alumSince = $year AND status.userid = $userid");
 		//$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'2'));
 		if($query->num_rows==0){
 			return -1;
@@ -148,7 +148,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 1 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 1 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -162,7 +162,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.register = 1 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.register = 1 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -176,7 +176,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 0 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.called = 0 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -190,7 +190,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.search = 0 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.search = 0 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -204,7 +204,7 @@ class MemberModel extends CI_Model{
 
 		$table = "";
 		$userid = $this->getUserId();
-		$query = $this->db->query("SELECT alumni.alumid,alumni.name,alumni.hall,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.search = -1 AND alumni.alumSince = $year AND status.userid = $userid");
+		$query = $this->db->query("SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.search = -1 AND alumni.alumSince = $year AND status.userid = $userid");
 		if($query->num_rows==0){
 			return -1;
 		}else{
@@ -222,10 +222,7 @@ class MemberModel extends CI_Model{
 		$query = $this->db->get_where('alumni',array('alumid'=>$id));
 		if($query->num_rows()>0){
 			$result = $query->row_array();
-			$data['name'] = $result['name'];
-			$data['hall'] = $result['hall'];
-			$data['year'] = $result['alumSince'];
-			//$data['department'] = $result['department'];
+			
 			$query = $this->db->get_where('callhistory',array('alumid'=>$id));
 			if($query->num_rows()>0){
 				$data['callhistory'] = $this->table->generate($query);
@@ -235,26 +232,26 @@ class MemberModel extends CI_Model{
 			if($query->num_rows()>0){
 				$result = $query->row_array();
 				$i = 0;
-				if($result['image']!='0'){
+				if($result['image']!=''){
 					$src= base_url().'files/images/'.$result['image'];
 				}else{
 					$src = base_url().'files/images/dummy.jpg';
 				}
-				$data['profile'] = '<div class="row"><div class="col-md-3"><img src="'.$src.'" /></div><div class="col-md-9">';
+				$data['profile'] = '<div class="row"><div class="col-md-3"><img width="90%" src="'.$src.'" /></div><div class="col-md-9">';
 				$data['profile'] .= form_open_multipart('member/updateProfile');
 				
-				
 				foreach ($result as $key => $value) {
-					if($key!="id"&&$key!="assigned"&&$key!="image"){
+					if($key!="alumid"&&$key!="assigned"&&$key!="image"){
 					$data['profile'] .= '<span font="bold 15px Tahoma">'.$key.'</span>   :<input class="form-control"  name="'.$key.'" value="'.$value.'">';
 					
-				}elseif ($key=="id"){
-					$data['profile'] .= $key.'   :<input style=" visibility:hidden" name="'.$key.'" value="'.$value.'">';
+				}elseif ($key=="alumid"){
+					$data['profile'] .= $key.'   :<input class="form-control" style="visibility:hidden" name="'.$key.'" value="'.$value.'" >';
 
 				}
 				}
-				if($result['image']=='0'){
-					$data['profile'].='<input type="file" class="form-control" name="userfile" value="Upload Photo" >';
+				
+				if($result['image']==''){
+					$data['profile'].='<span font="bold 15px Tahoma">Photo</span>:<input type="file" class="form-control" name="userfile">';
 				}
 
 				$data['profile'].='<br><input type="submit" name="submit" value="Update" class="btn btn-success"></form></div></div>';
@@ -473,8 +470,10 @@ class MemberModel extends CI_Model{
 		if(is_dir("files/images")==false){
 					mkdir("files/images", 0777, true);	
 				}
-		$original_name = $_FILES['userfile']['name'];
-		$extension = strtolower(explode(".",$original_name)[1]);
+			
+		if(isset($_FILES['userfile'])){
+		$name = $_FILES['userfile']['name'];
+		$extension = strtolower(end((explode(".", $name))));
 		$config['allowed_types'] = 'gif|jpg|png|bmp|jpeg';
 		$config['max_size']	= '1000';
 		$config['max_width']  = '1024';
@@ -494,18 +493,20 @@ class MemberModel extends CI_Model{
 		}
 		else
 		{
-			$msg = 'photo uploaded';
+			$msg = '<h2>photo uploaded</h2> ';
 			$this->db->where('alumid',$_POST['alumid']);
 			$this->db->update('alumni',array('image'=>$config['file_name']));
 		}
-		$this->db->where('alumid',$_POST['alumid']);
 		unset($_POST['userfile']);
+	}
+		$this->db->where('alumid',$_POST['alumid']);
+		
 		if($this->db->update('alumni',$_POST)){
 
-			return $msg ."Profile updated";
+			return $msg ."<h2>Profile updated</h2> ";
 		}
 		else
-			return "failed";
+			return "<h2>failed to update, try again</h2>";
 
 	}
 
@@ -528,7 +529,7 @@ class MemberModel extends CI_Model{
 			$query = $this->db->get_where('status',array('alumid'=>$alumid));
 			$result = $query->row_array();
 			$this->load->model('codeParser');
-			$value = $this->codeParser($result['register']);
+			$value = $this->codeParser->register($result['register']);
 			$this->db->insert('notifications',array('alumid'=>$alumid,'userid'=>$userid,'message'=>"Alumni Registered"));
 
 			return "Current Status: ".$value;

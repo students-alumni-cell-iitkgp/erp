@@ -6,7 +6,7 @@
 
 
 foreach ($years as $year) {
-	echo '<button type="button"  class="btn btn-success btn-lg" style="width:180px ;height:40px !important"><li><a style="color:white" href="'.site_url().'/member/year/'.$year['alumSince'].'">'.$year['alumSince'].'</a></li></button>';
+	echo '<button type="button"  class="btn btn-success " style="width:80px ;height:40px !important"><li><a style="color:white" href="'.site_url().'/member/year/'.$year['alumSince'].'">'.$year['alumSince'].'</a></li></button>';
 }
 
 
