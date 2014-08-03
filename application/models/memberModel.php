@@ -338,6 +338,15 @@ class MemberModel extends CI_Model{
 								}
 								$data['paymentstatus'] .= '</tr></table></form>';
 							}
+						$data['paymentstatus'] .= '<form name="form2" action="Javascript:updatePayment()">';
+
+						$data['paymentstatus'] .= '<div class="radio-inline"><input type="radio" name="payment" value="0">Not Paid</div><div class="radio-inline"><input type="radio" name="payment" value="1">Paid but not verified</div><br>';
+						$data['paymentstatus'] .= '<table class="table table-striped table-bordered table-hover">';
+						$data['paymentstatus'] .= '<tr><td><input type="text" name="alumid" value="'.$id.'" disabled></td><td><input type="date" name="dateofpayment" class="form-control"></td><td><input type="text" class="form-control" name="referenceNo"></td><td><input type="number" name="paymentAmt" class="form-control"></td></tr>';
+						$data['paymentstatus'] .='</table>';
+					
+						$data['paymentstatus'] .='<input type="submit" name="submit" value="Update" class="btn btn-success"></form>';
+					
 							break;
 						case '2':
 							$data['paymentstatus'] .= "Verified";
@@ -359,8 +368,10 @@ class MemberModel extends CI_Model{
 							$data['registerstatus'] .= '<input type="submit" name="submit" value="Update" class="btn btn-success"></form>';
 							break;
 						case '1':
-							$data['registerstatus'] .='Registered';
+							$data['registerstatus'] .='Registered(Unconfirmed)';
 							break;
+						case '2':
+							$data['registerstatus'] .='Registered(Confirmed)';
 					}
 
 
@@ -686,7 +697,7 @@ class MemberModel extends CI_Model{
 			$data['positive'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.called = 3")->num_rows();
 			$data['negative'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.called = 3")->num_rows();
 			$data['called2way'] = $data['neutral']+$data['positive']+$data['negative']; 
-			$data['register'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.register= 1")->num_rows();
+			$data['register'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.register= 2")->num_rows();
 
 		
 
@@ -700,8 +711,8 @@ class MemberModel extends CI_Model{
 			$data['positive'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE  status.userid = $userid AND status.called = 3")->num_rows();
 			$data['negative'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE  status.userid = $userid AND status.called = 3")->num_rows();
 			$data['called2way'] = $data['neutral']+$data['positive']+$data['negative'];
-			$data['register'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE status.userid = $userid AND status.register= 1")->num_rows();
-	
+			$data['register'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE status.userid = $userid AND status.register= 2")->num_rows();
+			
 
 		}
 

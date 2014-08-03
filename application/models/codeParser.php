@@ -13,7 +13,11 @@ class Codeparser extends CI_Model{
 		break;
 
 		case '1':
-		return 'Registered';
+		return 'Registered(Unconfirmed)';
+		break;
+
+		case '2':
+		return 'Registered(Confirmed)';
 		break;
 	}
 	}

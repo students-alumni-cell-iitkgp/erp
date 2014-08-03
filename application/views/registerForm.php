@@ -26,6 +26,7 @@ echo form_open('login/register');
 	<button class="btn btn-large btn-success" name="submit">Register</button>
 </div>
 
+	<span style="float:right"><a href="<?php echo site_url('login')?>" class="btn btn-lg btn-primary">Already a member? Login</a></span>
 
 </div>
 </form>
