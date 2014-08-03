@@ -245,7 +245,7 @@ class MemberModel extends CI_Model{
 					$data['profile'] .= '<span font="bold 15px Tahoma">'.$key.'</span>   :<input class="form-control"  name="'.$key.'" value="'.$value.'">';
 					
 				}elseif ($key=="alumid"){
-					$data['profile'] .= $key.'   :<input class="form-control" style="visibility:hidden" name="'.$key.'" value="'.$value.'" >';
+					$data['profile'] .= '   :<input class="form-control" style="visibility:hidden" name="'.$key.'" value="'.$value.'" >';
 
 				}
 				}
@@ -382,9 +382,9 @@ class MemberModel extends CI_Model{
 			$query = $this->db->get_where('accompaniants',array('alumid'=>$id));
 			$data['accompaniants']='';
 			if($query->num_rows()>0){
-				$data['accompaniants'] = '<table class="table table-striped table-bordered table-hover">';
+				$data['accompaniants'] = '<table class="table table-striped table-bordered table-hover"><th><td>Member Number</td><td>Age</td><td>Gender</td><td>Relationship</td><td></td></th>';
 				foreach ($query->result_array() as $row) {
-					$data['accompaniants'] .= '<tr><td>'.$row['memberid'].'</td><td>'.$row['name'].'</td><td>'.$row['age'].'</td><td>'.$row['relationship'].'</td></tr>';
+					$data['accompaniants'] .= '<tr><td></td><td>'.$row['memberid'].'</td><td>'.$row['name'].'</td><td>'.$row['age'].'</td><td>'.$row['relationship'].'</td><td><button class="btn btn-danger" onclick="Javascript:removeAccompaniant('.$row['memberid'].','.$row['alumid'].')" ><span class="glyphicon glyphicon-remove"></span></button></td></tr>';
 				}
 				$data['accompaniants'] .= '</table>';
 			}
@@ -522,12 +522,12 @@ class MemberModel extends CI_Model{
 	}
 
 	public function updateResponse($alumid,$response){
-		
+		$this->load->model('codeparser');
 		$query = $this->db->where('alumid',$alumid);
 		if($this->db->update('status',array('called'=>$response))){
 			$query = $this->db->get_where('status',array('alumid'=>$alumid));
 			$result = $query->row_array();
-			return "Current Status:".$result['called'];
+			return "Current Status:".$this->codeparser->response($result['called']);
 		}
 		else
 			return "false";
@@ -550,12 +550,12 @@ class MemberModel extends CI_Model{
 
 	}
 	public function updateSearch($alumid,$search){
-		
+		$this->load->model('codeParser');
 		$query = $this->db->where('alumid',$alumid);
 		if($this->db->update('status',array('search'=>$search))){
 			$query = $this->db->get_where('status',array('alumid'=>$alumid));
 			$result = $query->row_array();
-			return "Current Status:".$result['search'];
+			return "Current Status:".$this->codeParser->search($result['search']);
 		}
 		else
 			return "false";
@@ -629,8 +629,19 @@ class MemberModel extends CI_Model{
 		$query = $this->db->get_where('accompaniants',array('alumid'=>$alumid));
 		$num = $query->num_rows();
 		$this->db->insert('accompaniants',array('name'=>$name,'age'=>$age,'gender'=>$gender,'relationship'=>$relationship,'alumid'=>$alumid,'memberid'=>$num+1));
-		return $this->table->generate($this->db->get_where('accompaniants',array('alumid'=>$alumid)));
+		$query = $this->db->get_where('accompaniants',array('alumid'=>$alumid));
+			$data['accompaniants']='';
+			if($query->num_rows()>0){
+				$data['accompaniants'] = '<table class="table table-striped table-bordered table-hover"><th><td>Member Number</td><td>Age</td><td>Gender</td><td>Relationship</td><td></td></th>';
+				foreach ($query->result_array() as $row) {
+					$data['accompaniants'] .= '<tr><td></td><td>'.$row['memberid'].'</td><td>'.$row['name'].'</td><td>'.$row['age'].'</td><td>'.$row['relationship'].'</td><td><button class="btn btn-danger" onclick="Javascript:removeAccompaniant('.$row['memberid'].','.$row['alumid'].')" ><span class="glyphicon glyphicon-remove"></span></button></td></tr>';
+				}
+				$data['accompaniants'] .= '</table>';
+			}
 
+			$data['accompaniants'] .= '<form name="form7" action="javascript:addMember()">Alum Id:<input type="text" name="alumid" value="'.$alumid.'" disabled><br><table class="table table-striped table-bordered table-hover"><tr><td><input type="text" name="name" placeholder="Name" class="form-control" /></td><td><input type="text" name="age" placeholder="Age" class="form-control" /></td><td><input type="text" name="gender" placeholder="Gender" class="form-control" /></td><td><input type="text" name="relationship" placeholder="Relationship" class="form-control" /></td></tr></table><br><input type="submit" class="btn btn-success" name="submit" value="Add Member"/></form>';
+
+			return $data['accompaniants'];
 	}
 	public function updateRemark($alumid,$remark){
 		$query = $this->db->get_where('remarks',array('alumid'=>$alumid));
@@ -646,6 +657,23 @@ class MemberModel extends CI_Model{
 
 	}
 
+	public function removeAccompaniant($memberid,$alumid){
+		$this->db->where('memberid',$memberid);
+		$this->db->delete('accompaniants');
+		$query = $this->db->get_where('accompaniants',array('alumid'=>$alumid));
+			$data['accompaniants']='';
+			if($query->num_rows()>0){
+				$data['accompaniants'] = '<table class="table table-striped table-bordered table-hover"><th><td>Member Number</td><td>Age</td><td>Gender</td><td>Relationship</td><td></td></th>';
+				foreach ($query->result_array() as $row) {
+					$data['accompaniants'] .= '<tr><td></td><td>'.$row['memberid'].'</td><td>'.$row['name'].'</td><td>'.$row['age'].'</td><td>'.$row['relationship'].'</td><td><button class="btn btn-danger" onclick="Javascript:removeAccompaniant('.$row['memberid'].','.$row['alumid'].')" ><span class="glyphicon glyphicon-remove"></span></button></td></tr>';
+				}
+				$data['accompaniants'] .= '</table>';
+			}
+
+			$data['accompaniants'] .= '<form name="form7" action="javascript:addMember()">Alum Id:<input type="text" name="alumid" value="'.$alumid.'" disabled><br><table class="table table-striped table-bordered table-hover"><tr><td><input type="text" name="name" placeholder="Name" class="form-control" /></td><td><input type="text" name="age" placeholder="Age" class="form-control" /></td><td><input type="text" name="gender" placeholder="Gender" class="form-control" /></td><td><input type="text" name="relationship" placeholder="Relationship" class="form-control" /></td></tr></table><br><input type="submit" class="btn btn-success" name="submit" value="Add Member"/></form>';
+
+			return $data['accompaniants'];
+	}
 
 	public function getNetworkingSummary($userid,$year=0){
 

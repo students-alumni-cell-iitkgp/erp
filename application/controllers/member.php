@@ -327,8 +327,14 @@ public function updateMember(){
 		$gender = $this->input->get('gender');
 		$relationship = $this->input->get('relationship');
 		$alumid = $this->input->get('alumid');
-		echo $this->memberModel->updateMember($name,$age,$gender,$relationship,$alumid).'<form name="form7" action="javascript:addMember()">Alum Id:<input type="text" name="alumid" value="'.$alumid.'" disabled><br><table class="table table-striped table-bordered table-hover"><tr><td><input type="text" name="name" placeholder="Name" class="form-control" /></td><td><input type="text" name="age" placeholder="Age" class="form-control" /></td><td><input type="text" name="gender" placeholder="Gender" class="form-control" /></td><td><input type="text" name="relationship" placeholder="Relationship" class="form-control" /></td></tr></table><br><input type="submit" class="btn btn-success" name="submit" value="Add Member"/></form>';
+		echo $this->memberModel->updateMember($name,$age,$gender,$relationship,$alumid);
 	
+}
+public function removeAccompaniant(){
+		$memberid = $this->input->get('id');
+		$alumid = $this->input->get('alumid');
+		echo $this->memberModel->removeAccompaniant($memberid,$alumid);
+
 }
 public function updateRemark(){
 	$remark = $this->input->get('remark');

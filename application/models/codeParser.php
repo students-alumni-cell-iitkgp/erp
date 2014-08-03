@@ -17,5 +17,36 @@ class Codeparser extends CI_Model{
 		break;
 	}
 	}
+	public function response($code){
+		switch ($code) {
+			case '1':
+				return "Neutral";
+				break;
+			case '2':
+				return "Negative";
+				break;
+			case '3':
+				return "Positive";
+				break;
+		}
+	}
+	public function search($code){
+		switch ($code) {
+			
+			case '0':
+				return "Yet to be searched";
+				break;
+
+			case '1':
+				return "Found";
+				break;
+
+			case '2':
+				return "Not Found";
+				break;
+
+			
+		}
+	}
 
 }

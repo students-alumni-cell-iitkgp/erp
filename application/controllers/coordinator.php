@@ -131,6 +131,8 @@ public function verifyPayment($alumid){
 			$this->load->view('templates/accessErr');
 		}
 	}
+
+
 }
 
 

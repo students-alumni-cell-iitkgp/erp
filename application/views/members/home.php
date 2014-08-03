@@ -6,7 +6,7 @@
 
 
 foreach ($years as $year) {
-	echo '<button type="button"  class="btn btn-success " style="width:80px ;height:40px !important"><li><a style="color:white" href="'.site_url().'/member/year/'.$year['alumSince'].'">'.$year['alumSince'].'</a></li></button>';
+	echo '<li><a class="btn btn-success" style="color:white" href="'.site_url().'/member/year/'.$year['alumSince'].'">'.$year['alumSince'].'</a></li>';
 }
 
 
@@ -103,7 +103,7 @@ foreach ($years as $year) {
 
 	</table>
 	<h3 style="text-decoration: underline;"> Registration Status </h3>
-	<div class="col-md-12" style="background-color:white" id="register"> </div>
+	<div class="col-md-12" style="background-color:white;height:60px" id="register"> </div>
 <script type="text/javascript">
 
 function getNetworkingSummary(year){

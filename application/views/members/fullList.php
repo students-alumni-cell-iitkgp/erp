@@ -118,30 +118,30 @@
 
 <ul class="nav nav-pills nav-stacked">
 <li>
-<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a style="color:white" href="<?php echo site_url() ?>/member/year/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Full List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></button>
+<a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/year/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Full List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
 </li>
 
 <li>
-<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a style="color:white" href="<?php echo site_url() ?>/member/positive/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Positive&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></button>
+<a style="color:white" class="btn btn-success" href="<?php echo site_url() ?>/member/positive/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Positive&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
 </li>
 <li>
-<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a style="color:white" href="<?php echo site_url() ?>/member/negative/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Negative&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></button>
+<a style="color:white" class="btn btn-success" href="<?php echo site_url() ?>/member/negative/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Negative&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
 </li>
 <li>
-<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a style="color:white" href="<?php echo site_url() ?>/member/neutral/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Neutral&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></button>
+<a  class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/neutral/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Neutral&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
 </li>
 
 <li>
-<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a style="color:white" href="<?php echo site_url() ?>/member/registered/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;Registered&nbsp;&nbsp;&nbsp;&nbsp;</a></button>
+<a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/registered/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;Registered&nbsp;&nbsp;&nbsp;&nbsp;</a>
 </li>
 <li>
-<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a style="color:white" href="<?php echo site_url() ?>/member/uncontacted/<?php echo $year ?>">Yet to be contacted</a></button>
+<a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/uncontacted/<?php echo $year ?>">Yet to be contacted</a>
 </li>
 <li>
-<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a style="color:white" href="<?php echo site_url() ?>/member/unsearched/<?php echo $year ?>">Yet to be searched</a></button>
+<a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/unsearched/<?php echo $year ?>">Yet to be searched</a>
 </li>
 <li>
-<button type="button" style="width:180px;height:40px" class="btn btn-lg btn-success"><a style="color:white" href="<?php echo site_url() ?>/member/notFound/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;Not Found &nbsp;&nbsp; &nbsp; &nbsp;         </a></button>
+<a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/notFound/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;Not Found &nbsp;&nbsp; &nbsp; &nbsp;         </a>
 </li>
 
 </ul>
@@ -253,6 +253,21 @@ function addMember(){
   xhr.open("GET","<?php echo site_url()?>/member/updateMember?name="+name+"&age="+age+"&gender="+gender+"&relationship="+relationship+"&alumid="+alumid,true);
   xhr.send();
   
+}
+function removeAccompaniant(id,alumid){
+
+  console.log(id);
+   xhr.onreadystatechange = function(){
+    if(xhr.readyState==4 && xhr.status==200){
+      var accompanyDiv = document.getElementById('accompany');
+        accompanyDiv.innerHTML = xhr.responseText;
+      
+    }
+  };
+  xhr.open("GET","<?php echo site_url()?>/member/removeAccompaniant?id="+id+"&alumid="+alumid,true);
+  xhr.send();
+  
+
 }
 function updatePayment(){ 
       var payment = form2.payment.value;
