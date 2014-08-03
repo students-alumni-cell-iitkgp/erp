@@ -116,8 +116,14 @@ public function getUserId2($username){// to be used in work assignment form
 				$count++;	
 			
 		}
-		if($count>0)
+		if($count=$to-$from+1)
+		{	
+			$query = $this->db->get_where('notificationmembers',array('userid'=>$userid));
+			$id = $query->num_rows()+1;
+			date_default_timezone_set('Asia/Calcutta');
+			$this->db->insert('notificationmembers',array('userid'=>$userid,'id'=>$id,'message'=>"Alumni from ".$from." to ".$to." alloted to you",'date'=>date('Y-m-d')));
 			return "success";
+		}
 		else
 			return "failed";
 
@@ -125,18 +131,28 @@ public function getUserId2($username){// to be used in work assignment form
 
 	}
 	public function getNotifications(){
-		$query = $this->db->get('notifications');
+		$query = $this->db->get('notificationsheads');
 		if($query->num_rows()>0){
 			return $this->table->generate($query);
 		}else{
-			return "No Notification";
+			return "<h2>No Notification!!</h2>";
 		}
 	}
-	public function verifyPayment($alumid){
+	public function verifyRegister($id){
+		$this->db->where('alumid',$alumid);
+		if($this->db->update('status',array('register'=>2))){
+			$this->db->where('id',$id);
+			$this->db->update('notificationsheads',array('status'=>'1'));
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public function verifyPayment($id){
 		$this->db->where('alumid',$alumid);
 		if($this->db->update('status',array('pay'=>2))){
-			$this->db->where('alumid',$alumid);
-			$this->db->update('notifications',array('status'=>1));
+			$this->db->where('id',$id);
+			$this->db->update('notificationsheads',array('status'=>'1'));
 			return true;
 		}else{
 			return false;
@@ -144,7 +160,7 @@ public function getUserId2($username){// to be used in work assignment form
 	}
 
 public function numberOfNotifications(){
-	$query = $this->db->get_where('notifications',array('status'=>'0'));
+	$query = $this->db->get_where('notificationsheads',array('status'=>'0'));
 	return $query->num_rows();
 }
 

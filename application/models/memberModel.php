@@ -552,8 +552,10 @@ class MemberModel extends CI_Model{
 			$result = $query->row_array();
 			$this->load->model('codeParser');
 			$value = $this->codeParser->register($result['register']);
-			$this->db->insert('notifications',array('alumid'=>$alumid,'userid'=>$userid,'message'=>"Alumni Registered"));
-
+			if($register=='1'){
+				date_default_timezone_set('Asia/Calcutta');
+				$this->db->insert('notificationsheads',array('notification'=>"Alumni with id ".$alumid." registered",'date'=>date('Y-m-d') ));
+			}
 			return "Current Status: ".$value;
 		}
 		else
@@ -580,7 +582,8 @@ class MemberModel extends CI_Model{
 		if($this->db->update('status',array('pay'=>'1'))&& $this->db->insert('payment',array('alumid'=>$alumid,'dateofpayment'=>$dateofpayment,'referenceNo'=>$referenceNo,'paymentAmt'=>$paymentAmt))){
 			$query = $this->db->get_where('payment',array('alumid'=>$alumid));
 			$userid = $this->getUserId();
-			$this->db->insert('notifications',array('alumid'=>$alumid,'userid'=>$userid,'message'=>"Verify payment"));
+			date_default_timezone_set('Asia/Calcutta');
+			$this->db->insert('notificationsheads',array('notification'=>"Alumni with id ".$alumid." has paid registration money",'date'=>date('Y-m-d') ));
 			return "Current Status: Paid<br>".$this->table->generate($query);
 			
 		}
@@ -721,7 +724,18 @@ class MemberModel extends CI_Model{
 
 
 	}
-
+	public function numberOfNotifications(){
+	$query = $this->db->get_where('notificationmembers',array('status'=>'0'));
+	return $query->num_rows();
+}
+public function getNotifications(){
+		$query = $this->db->get('notificationsheads');
+		if($query->num_rows()>0){
+			return $this->table->generate($query);
+		}else{
+			return "<h2>No Notification!!</h2>";
+		}
+	}
 }
 
 

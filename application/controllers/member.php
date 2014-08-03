@@ -21,11 +21,11 @@ class Member extends CI_Controller{
 	public function index(){
 		if($this->accessCheck()){
 		$data = array('years'=>$this->memberModel->getYearList());
-		$this->load->view('templates/header');
+		$notifications = $this->memberModel->numberOfNotifications();
+		$this->session->set_userdata('notifications',$notifications);
+		$this->load->view('templates/header',$data);
 		$this->load->view('templates/menu');
 		$this->load->view('members/home',$data);
-		//fetch data for networking summary
-		//$this->load->view('members/summary');
 		$this->load->view('templates/footer');
 		
 	}
@@ -351,6 +351,19 @@ public function getNetworkingSummary($year){
 		echo json_encode($data);
 	
 		//echo json_encode($data['msg']="boo");
+}
+public function getNotifications(){
+	if($this->accessCheck()){
+		$data['result'] = $this->memberModel->getNotifications();
+		$this->load->view('templates/header');
+		$this->load->view('templates/menu');
+		$this->load->view('templates/dummy',$data);
+		$this->load->view('templates/footer');
+	}else{
+		$this->load->view('templates/accessErr');
+		
+	}
+
 }
 
 }
