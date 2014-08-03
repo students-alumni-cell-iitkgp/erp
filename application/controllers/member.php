@@ -365,6 +365,12 @@ public function getNotifications(){
 	}
 
 }
+public function notificationStatus(){
+	$id = $this->input->get('id');
+	
+	$this->memberModel->updateNotificationStatus($id);
+	
+}
 
 }
 ?>

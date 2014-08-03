@@ -736,6 +736,11 @@ public function getNotifications(){
 			return "<h2>No Notification!!</h2>";
 		}
 	}
+	public function updateNotificationStatus($id){
+	$userid = $this->getUserId();
+	$this->db->where(array('userid'=>$userid,'id'=>$id));
+	$this->db->update('notificationmembers',array('status'=>1));
+	}
 }
 
 
