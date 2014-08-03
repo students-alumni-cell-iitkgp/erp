@@ -8,11 +8,13 @@ class Login extends CI_Controller{
 		$this->load->helper('url');
 		$this->load->library('form_validation');
 		$this->load->library('session');
-		$this->form_validation->set_rules('username','Username','trim|required|xss_clean');
-		$this->form_validation->set_rules('password','Password','trim|required|md5');
+		
 	}
 	public function index(){
 		//here we need to check if a person is already logged in. In such a case, we will redirect him to his view.
+		$this->form_validation->set_rules('username','Username','trim|required|xss_clean');
+		$this->form_validation->set_rules('password','Password','trim|required|md5|min_length[8]');
+
 		if($this->session->userdata('privilege')){
 			$this->redirectUser($this->session->userdata('privilege'));
 		}
@@ -61,7 +63,9 @@ class Login extends CI_Controller{
 				header('Refresh:2, url="admin"');
 				echo 'You have been logged in as admin. You are being redirected.';
 				break;
-			
+			case '4':
+				echo '<h2>You have either not registered or ypur account has not been activated yet. Contact the admin</h2>';
+				break;
 		}
 
 
@@ -74,6 +78,46 @@ class Login extends CI_Controller{
 		echo "You have been logged out. You are being redirected.";
 	}
 
+
+	public function register(){
+		$this->form_validation->set_rules('username','Username','trim|required|xss_clean');
+		$this->form_validation->set_rules('password','Password','trim|required|md5|min_length[8]');
+		$this->form_validation->set_rules('name','Name','trim|required');
+		$this->form_validation->set_rules('email','Email','trim|required|valid_email');
+		$this->form_validation->set_rules('repassword','Reentered Password','trim|required|matches[password]');
+
+		if($this->session->userdata('privilege')){
+			$this->redirectUser($this->session->userdata('privilege'));
+		}
+
+		elseif ($this->form_validation->run() == FALSE)
+		{	
+			$this->load->view('templates/header');
+			$this->load->view('registerForm');
+			$this->load->view('templates/footer');
+		}
+		else
+		{	
+			$this->load->model('loginModel');
+			$usernameStatus = $this->loginModel->checkUserName();
+			if($usernameStatus=='-1'){
+				$message['message'] ="Username already exists";
+				$this->load->view('registerForm',$message);
+			}else{
+				if($this->loginModel->register()=="registered"){
+					header('Refresh:3,url="index"');
+					echo "You have been successfully registered. You can login once your account is approved.You are being redirected back.";
+				}else{
+					header('Refresh:3,url="index"');
+					echo 'There was some problem with the registration. Please try again.';
+
+				}
+		}
+
+
+
+	}
+}
 }
 
 

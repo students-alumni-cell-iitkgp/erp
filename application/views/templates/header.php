@@ -20,6 +20,6 @@ body{
 <body class="container">
 	<div id="wrapper">
 <div class="row">
-<span class="col-md-12" style="font:bold 25px Tahoma"><h2 ><center>ERP for STUDENT'S ALUMNI CELL</center></h2><?php //$this->load->view('tot_registrations');?><br><!-- important--></span>
+<span class="col-md-12" style="font:bold 25px Tahoma"><h2 ><center>ERP for STUDENTS' ALUMNI CELL</center></h2><?php //$this->load->view('tot_registrations');?><br><!-- important--></span>
 </div>
 

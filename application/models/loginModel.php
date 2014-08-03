@@ -26,10 +26,36 @@ class LoginModel extends CI_Model{
  		return $result['userid'];
  	}
 
+ 	public function checkUserName(){
+
+
+ 		$query = $this->db->get_where('users',array('username'=>$this->input->post('username')));
+ 		if($query->num_rows()>0){
+ 			return "-1";
+ 		}else{
+ 			return "1";
+ 		}
+ 	}
+
+ 	public function register(){
+
+ 		$username = $this->input->post('username');
+ 		$password = $this->input->post('password');
+ 		$name = $this->input->post('name');
+ 		$email = $this->input->post('email');
+
+ 		if($this->db->insert('users',array('name'=>$name,'username'=>$username,'password'=>$password,'email'=>$email,'privilege'=>'4')))
+ 			{
+ 				return "registered";
+ 			}
+ 			else{
+ 			return "unable to regsiter";
+ 		}
+
+
+	}
 
 }
-
-
 
 
 ?>
