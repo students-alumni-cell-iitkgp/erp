@@ -357,7 +357,7 @@ public function getNotifications(){
 		$data['result'] = $this->memberModel->getNotifications();
 		$this->load->view('templates/header');
 		$this->load->view('templates/menu');
-		$this->load->view('templates/dummy',$data);
+		$this->load->view('templates/dummyMember',$data);
 		$this->load->view('templates/footer');
 	}else{
 		$this->load->view('templates/accessErr');

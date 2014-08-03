@@ -729,7 +729,7 @@ class MemberModel extends CI_Model{
 	return $query->num_rows();
 }
 public function getNotifications(){
-		$query = $this->db->get('notificationsheads');
+		$query = $this->db->get('notificationmembers');
 		if($query->num_rows()>0){
 			return $this->table->generate($query);
 		}else{

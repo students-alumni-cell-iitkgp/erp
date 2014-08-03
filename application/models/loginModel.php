@@ -46,6 +46,9 @@ class LoginModel extends CI_Model{
 
  		if($this->db->insert('users',array('name'=>$name,'username'=>$username,'password'=>$password,'email'=>$email,'privilege'=>'4')))
  			{
+ 				date_default_timezone_set('Asia/Calcutta');
+ 				$this->db->insert('notificationsheads',array('notification'=>$name." is trying to register",'date'=>date('Y-m-d')));
+
  				return "registered";
  			}
  			else{

@@ -1,10 +1,14 @@
 <div class="navbar navbar-default">
 	<ul class="nav navbar-nav">
 		<?php 
-		if($this->session->userdata('privilege')==1)
+		if($this->session->userdata('privilege')==1){
 			$homeUrl = site_url('member/index');
-		elseif($this->session->userdata('privilege')==2)
+			$notificationUrl = site_url('member/getNotifications');
+		}
+		elseif($this->session->userdata('privilege')==2){
 			$homeUrl = site_url('coordinator/index');
+			$notificationUrl = site_url('coordinator/getNotifications');
+		}
 			$notifications = $this->session->userdata('notifications');
 
 		?>
@@ -19,7 +23,7 @@
 
 <li id="notifications">
 
-<?php echo '<a   href="'.site_url().'/member/getNotifications " ><span id="notif">'.$notifications.'</span> Notifications  </a>';?>
+<?php echo '<a   href="'.$notificationUrl.'" ><span id="notif">'.$notifications.'</span> Notifications  </a>';?>
 </li>
 <li>
 <?php if($this->session->userdata('alias')){
