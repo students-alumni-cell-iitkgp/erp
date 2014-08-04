@@ -190,6 +190,25 @@ else{
 	}else{
 	$this->load->view('templates/accessErr');
 }}
+public function Paid($year){
+								if($this->accessCheck()){
+
+		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
+			$data['table'] = $this->memberModel->getTable($year,"Paid");
+			$data['year'] = $year;
+			$this->load->view('templates/header');
+			$this->load->view('templates/menu');
+			$this->load->view('members/fullList',$data);
+			$this->load->view('templates/footer');
+		}else{
+			$this->load->view('templates/header');
+			$this->load->view('templates/badParam');
+			$this->load->view('templates/footer');
+		}
+
+	}else{
+	$this->load->view('templates/accessErr');
+}}
 public function getProfile(){
 	$id=$this->input->get('id');
 	$data = $this->memberModel->getPrimaryInfo($id);

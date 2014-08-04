@@ -118,21 +118,21 @@
 
 <ul class="nav nav-pills nav-stacked">
 <li>
-<a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/year/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Full List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+<a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/year/<?php echo $year ?>">Full List</a>
 </li>
 
 <li>
-<a style="color:white" class="btn btn-success" href="<?php echo site_url() ?>/member/positive/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Positive&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+<a style="color:white" class="btn btn-success" href="<?php echo site_url() ?>/member/positive/<?php echo $year ?>">Positive</a>
 </li>
 <li>
-<a style="color:white" class="btn btn-success" href="<?php echo site_url() ?>/member/negative/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Negative&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+<a style="color:white" class="btn btn-success" href="<?php echo site_url() ?>/member/negative/<?php echo $year ?>">Negative</a>
 </li>
 <li>
-<a  class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/neutral/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Neutral&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+<a  class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/neutral/<?php echo $year ?>">Neutral</a>
 </li>
 
 <li>
-<a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/registered/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;Registered&nbsp;&nbsp;&nbsp;&nbsp;</a>
+<a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/registered/<?php echo $year ?>">Registered</a>
 </li>
 <li>
 <a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/uncontacted/<?php echo $year ?>">Yet to be contacted</a>
@@ -141,9 +141,11 @@
 <a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/unsearched/<?php echo $year ?>">Yet to be searched</a>
 </li>
 <li>
-<a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/notFound/<?php echo $year ?>">&nbsp;&nbsp;&nbsp;&nbsp;Not Found &nbsp;&nbsp; &nbsp; &nbsp;         </a>
+<a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/notFound/<?php echo $year ?>">Not Found</a>
 </li>
-
+<li>
+<a class="btn btn-success" style="color:white" href="<?php echo site_url() ?>/member/Paid/<?php echo $year ?>">Paid</a>
+</li>
 </ul>
 
 </div>

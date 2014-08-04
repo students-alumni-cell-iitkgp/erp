@@ -100,6 +100,8 @@ class MemberModel extends CI_Model{
 			return $this->Unsearched($year);
 		elseif($list=="notFound")
 			return $this->Unsearched($year);
+		elseif($list=="Paid")
+			return $this->Paid($year);
 	}
 
 	public function FullList($year){
@@ -211,9 +213,23 @@ class MemberModel extends CI_Model{
 			return -1;
 		}else{
 			
-			$table = $this->table->generate();
+			$table = $this->table->generate($query);
 			return $table;
 		}
+
+	}
+	public function Paid($year){
+		$table = "";
+		$userid = $this->getUserId();
+		$query = $this->db->query($this->query1." status.pay = 2 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
+		if($query->num_rows==0){
+			return -1;
+		}else{
+			
+			$table = $this->table->generate($query);
+			return $table;
+		}
+
 
 	}
 
