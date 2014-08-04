@@ -131,6 +131,7 @@ public function getUserId2($username){// to be used in work assignment form
 
 	}
 	public function getNotifications(){
+		$this->db->where('status',0);
 		$query = $this->db->get('notificationsheads');
 		if($query->num_rows()>0){
 			return $this->table->generate($query);
@@ -138,28 +139,7 @@ public function getUserId2($username){// to be used in work assignment form
 			return "<h2>No Notification!!</h2>";
 		}
 	}
-	//Next two functions used in notifications
-	/*public function verifyRegister($id){
-		$this->db->where('alumid',$alumid);
-		if($this->db->update('status',array('register'=>2))){
-			$this->db->where('id',$id);
-			$this->db->update('notificationsheads',array('status'=>'1'));
-			return true;
-		}else{
-			return false;
-		}
-	}
-	public function verifyPay($id){
-		$this->db->where('alumid',$alumid);
-		if($this->db->update('status',array('pay'=>2))){
-			$this->db->where('id',$id);
-			$this->db->update('notificationsheads',array('status'=>'1'));
-			return true;
-		}else{
-			return false;
-		}
-	}*/
-	//Used in notifiactions
+	
 
 public function numberOfNotifications(){
 	$query = $this->db->get_where('notificationsheads',array('status'=>'0'));
@@ -183,6 +163,59 @@ public function verifyPayment($alumid){
 	$this->db->where('alumid',$alumid);
 	if($this->db->update('status',array('pay'=>2)))
 		return "success";
+}
+public function getNetworkingSummary($year=0){
+	if($year!=0){
+			$data['total'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year    ")->num_rows();
+			$data['found'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.search = 1")->num_rows();
+			$data['yettobesearched'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.search = 0")->num_rows();
+			$data['notfound'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.search = 2")->num_rows();
+			$data['neutral'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.called = 1")->num_rows();
+			$data['positive'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.called = 3")->num_rows();
+			$data['negative'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.called = 3")->num_rows();
+			$data['called2way'] = $data['neutral']+$data['positive']+$data['negative']; 
+			$data['register'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND  status.register= 2")->num_rows();
+			$data['paid'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.pay= 2")->num_rows();
+
+		
+
+		}
+		else{
+			$data['total'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid")->num_rows();
+			$data['found'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE     status.search = 1")->num_rows();
+			$data['yettobesearched'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE      status.search = 0")->num_rows();
+			$data['notfound'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE status.search = 2")->num_rows();
+			$data['neutral'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE status.called = 1")->num_rows();
+			$data['positive'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE status.called = 3")->num_rows();
+			$data['negative'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE status.called = 3")->num_rows();
+			$data['called2way'] = $data['neutral']+$data['positive']+$data['negative'];
+			$data['register'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE status.register= 2")->num_rows();
+			$data['paid'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE status.pay= 2")->num_rows();
+			
+
+		}
+		return $data;
+}
+
+public function updateNotificationStatus($id){
+	
+	
+	$this->db->where('id',$id);
+	$this->db->update('notificationsheads',array('status'=>1));
+	
+}
+
+public function getUnregistered(){
+	$query = $this->db->get_where('users',array('privilege'=>4));
+	$data = '';
+	
+	if($query->num_rows()>0){
+	foreach ($query->result_array() as $row) {
+		$data .= form_open('coordinator/confirmRegister').'<input class="form-control" name="userid" type="hidden" value="'.$row['userid'].'"/><input class="form-control" name="name" type="text" value="'.$row['name'].'" disabled/><input name="email" class="form-control" type="text" value="'.$row['email'].'" disabled><input class="form-control" type="submit" name="submit" class="btn btn-success" value="Confirm Registration"/></form>';
+	}
+	
+}
+return $data;
 }
 }
 

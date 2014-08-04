@@ -26,7 +26,8 @@ class Coordinator extends CI_Controller{
 			$data['memberList'] = $this->coordinatorModel->getMembers();
 			$notifications = $this->coordinatorModel->numberOfNotifications();
 			$this->session->set_userdata('notifications',$notifications);
-			
+			$this->load->model('memberModel');
+			$data['years'] = $this->memberModel->getYearList();
 			$this->load->view('templates/header',$data);
 			$this->load->view('templates/menu');
 			$this->load->view('coordinators/home',$data);
@@ -35,7 +36,9 @@ class Coordinator extends CI_Controller{
 			$data['members'] = $this->coordinatorModel->getMembers();
 			
 			$data['msg'] = "";
+			$this->load->view('coordinators/networkingSummary',$data);
 			$this->load->view('coordinators/assignWork',$data);
+			
 			$this->load->view('templates/footer');
 		}else{
 			$this->load->view('templates/accessErr');
@@ -109,7 +112,7 @@ public function getNotifications(){
 		$data['result'] = $this->coordinatorModel->getNotifications();
 		$this->load->view('templates/header');
 		$this->load->view('templates/menu');
-		$this->load->view('templates/dummy',$data);
+		$this->load->view('templates/dummyCoordinator',$data);
 		$this->load->view('templates/footer');
 	}else{
 		$this->load->view('templates/accessErr');
@@ -143,17 +146,54 @@ public function showVerifyRegistration(){
 			$this->load->view('templates/accessErr');
 		}
 	}
+
 public function verifyRegistration($alumid){
 	if($this->coordinatorModel->verifyRegistration($alumid)=="success")
 		echo "success";
 	
 }
+
 public function verifyPayment($alumid){
 	if($this->coordinatorModel->verifyPayment($alumid)=="success")
 		echo "success";
+}
+public function getNetworkingSummary($year){
+	if($data =  $this->coordinatorModel->getNetworkingSummary($year))
+		echo json_encode($data);
+
+}
+
+public function notificationStatus(){
+
+	$id = $this->input->get('id');
+
+	$this->coordinatorModel->updateNotificationStatus($id);
 	
 }
 
+public function registerMember(){
+	if($this->accessCheck()){
+		$data['data'] = $this->coordinatorModel->getUnregistered();
+		$this->load->view('templates/header');
+		$this->load->view('templates/menu');
+		$this->load->view('coordinators/registerMember',$data);
+		$this->load->view('templates/footer');
+	}else{
+		$this->load->view('template/accessErr');
+	}
+
+}
+public function confirmRegister(){
+
+	
+	$id = $this->input->post('userid');
+	$this->db->where('userid',$id);
+	$this->db->update('users',array('privilege'=>1));
+	$url = $_SERVER['HTTP_REFERER'];
+	header("Refresh:2, url='".$url."'");
+	echo  "Member Registered. You are being redirected back";
+
+}
 }
 
 

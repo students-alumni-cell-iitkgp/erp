@@ -37,6 +37,10 @@
 
 
 </li>
+<li>
+ <?php if($this->session->userdata('privilege')=='2') echo '<a href="'.site_url().'/coordinator/registerMember" >Member Registration </a>' ?>
+
+</li>
 </ul>
 
 </div>

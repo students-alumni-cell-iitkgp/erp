@@ -30,7 +30,7 @@ if(isset($msg))
 	echo '<option class="form-control" value="'.$member.'">'.$member.'</option>';
 }?>
 </select><br>
-<center><input type="submit" class="btn btn-primary" name="submit" value="Assign">
+<center><input type="submit" class="btn btn-success" name="submit" value="Assign">
 </center></form>
 </div>
 <div class="col-md-3"></div>
