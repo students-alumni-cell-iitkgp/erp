@@ -31,6 +31,12 @@
 } 
 ?>
 </li>
+<li > <?php if($this->session->userdata('privilege')=='2') echo '<a href="'.site_url().'/coordinator/showVerifyPayment" >Verify Payment</a>' ?>
+</li>
+<li > <?php if($this->session->userdata('privilege')=='2') echo '<a href="'.site_url().'/coordinator/showVerifyRegistration" >Verify Registration</a>' ?>
+
+
+</li>
 </ul>
 
 </div>

@@ -118,20 +118,41 @@ public function getNotifications(){
 
 }
 
-public function verifyPayment($alumid){
+public function showVerifyPayment(){
 	if($this->accessCheck()){
-		if($this->coordinatorModel->verifyPayment($alumid)){
-			header('Location:'.site_url("coordinator"));
-			echo  "Payment verified.";
-		}
-		else
-			echo "some error occured,please try again.";
-
+		$data['data'] = $this->coordinatorModel->showVerifyPayment();
+		$this->load->view('templates/header');
+		$this->load->view('templates/menu');
+		$this->load->view('coordinators/verifyPayment',$data);
+		$this->load->view('templates/footer');
+		
 		}else{
 			$this->load->view('templates/accessErr');
 		}
 	}
 
+public function showVerifyRegistration(){
+	if($this->accessCheck()){
+		$data['data'] = $this->coordinatorModel->showVerifyRegistration();
+		$this->load->view('templates/header');
+		$this->load->view('templates/menu');
+		$this->load->view('coordinators/verifyRegistration',$data);
+		$this->load->view('templates/footer');
+
+		}else{
+			$this->load->view('templates/accessErr');
+		}
+	}
+public function verifyRegistration($alumid){
+	if($this->coordinatorModel->verifyRegistration($alumid)=="success")
+		echo "success";
+	
+}
+public function verifyPayment($alumid){
+	if($this->coordinatorModel->verifyPayment($alumid)=="success")
+		echo "success";
+	
+}
 
 }
 

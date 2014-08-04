@@ -138,7 +138,8 @@ public function getUserId2($username){// to be used in work assignment form
 			return "<h2>No Notification!!</h2>";
 		}
 	}
-	public function verifyRegister($id){
+	//Next two functions used in notifications
+	/*public function verifyRegister($id){
 		$this->db->where('alumid',$alumid);
 		if($this->db->update('status',array('register'=>2))){
 			$this->db->where('id',$id);
@@ -148,7 +149,7 @@ public function getUserId2($username){// to be used in work assignment form
 			return false;
 		}
 	}
-	public function verifyPayment($id){
+	public function verifyPay($id){
 		$this->db->where('alumid',$alumid);
 		if($this->db->update('status',array('pay'=>2))){
 			$this->db->where('id',$id);
@@ -157,14 +158,32 @@ public function getUserId2($username){// to be used in work assignment form
 		}else{
 			return false;
 		}
-	}
+	}*/
+	//Used in notifiactions
 
 public function numberOfNotifications(){
 	$query = $this->db->get_where('notificationsheads',array('status'=>'0'));
 	return $query->num_rows();
 }
 
-
+public function showVerifyPayment(){
+	$query = $this->db->query('SELECT alumni.alumid,alumni.FirstName,alumni.LastName,alumni.alumSince,alumni.Department FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.pay=1');
+	return $this->table->generate($query);
+}
+public function showVerifyRegistration(){
+	$query = $this->db->query('SELECT alumni.alumid,alumni.FirstName,alumni.LastName,alumni.alumSince,alumni.Department FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.register=1');
+	return $this->table->generate($query);
+}
+public function verifyRegistration($alumid){
+	$this->db->where('alumid',$alumid);
+	if($this->db->update('status',array('register'=>2)))
+		return "success";
+}
+public function verifyPayment($alumid){
+	$this->db->where('alumid',$alumid);
+	if($this->db->update('status',array('pay'=>2)))
+		return "success";
+}
 }
 
 ?>
