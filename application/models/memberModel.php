@@ -51,9 +51,8 @@ class MemberModel extends CI_Model{
 	}
 
 	public function getYearList(){
-		$this->db->select('alumSince');
-		$this->db->distinct();
-		$query = $this->db->get('alumni');
+		
+		$query = $this->db->query("SELECT DISTINCT alumSince FROM alumni ORDER BY alumSince DESC");
 		if($query->num_rows()>0){
 			return $query->result_array();
 		}
@@ -719,6 +718,7 @@ class MemberModel extends CI_Model{
 			$data['negative'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.called = 3")->num_rows();
 			$data['called2way'] = $data['neutral']+$data['positive']+$data['negative']; 
 			$data['register'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.register= 2")->num_rows();
+			$data['paid'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE alumni.alumSince = $year AND status.userid = $userid AND status.pay= 2")->num_rows();
 
 		
 
@@ -733,6 +733,7 @@ class MemberModel extends CI_Model{
 			$data['negative'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE  status.userid = $userid AND status.called = 3")->num_rows();
 			$data['called2way'] = $data['neutral']+$data['positive']+$data['negative'];
 			$data['register'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE status.userid = $userid AND status.register= 2")->num_rows();
+			$data['paid'] = $this->db->query("SELECT status.* FROM status JOIN alumni ON alumni.alumid = status.alumid WHERE status.userid = $userid AND status.pay= 2")->num_rows();
 			
 
 		}

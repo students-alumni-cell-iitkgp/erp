@@ -102,8 +102,9 @@ foreach ($years as $year) {
 		</tbody>
 
 	</table>
-	<h3 style="text-decoration: underline;"> Registration Status </h3>
-	<div class="col-md-12" style="background-color:white;height:60px" id="register"> </div>
+	<div class="row">
+	<h3 class="col-md-6" style="text-decoration: underline;"> Registered </h3><h3 class="col-md-6" style="text-decoration:underline;"> Paid</h3></div>
+	<div class="row"><div class="col-md-6" style="background-color:white;height:60px" id="register"> </div><div class="col-md-6" style="background-color:white;height:60px" id="paid"></div></div>
 <script type="text/javascript">
 
 function getNetworkingSummary(year){
@@ -123,7 +124,7 @@ function getNetworkingSummary(year){
   var positive = document.getElementById('positive');
   var negative = document.getElementById('negative');
   var register = document.getElementById('register');
-      
+  var paid = document.getElementById('paid');    
   xhr.onreadystatechange = function(){
     if(xhr.readyState==4 && xhr.status==200){
     	console.log(JSON.parse(xhr.responseText));
@@ -137,6 +138,7 @@ function getNetworkingSummary(year){
     			negative.innerHTML = obj.negative;
       			total.innerHTML = obj.total;
       			register.innerHTML = obj.register;
+    			paid.innerHTML = obj.paid;
     }
   };
   xhr.open("GET","<?php echo site_url()?>/member/getNetworkingSummary/"+year,true);
