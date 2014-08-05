@@ -1,4 +1,4 @@
-<div class="navbar navbar-default">
+<div class="navbar navbar-default" id="menu">
 	<ul class="nav navbar-nav">
 		<?php 
 		if($this->session->userdata('privilege')==1){

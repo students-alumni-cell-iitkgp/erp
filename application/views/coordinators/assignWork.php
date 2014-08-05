@@ -8,7 +8,7 @@ if(isset($msg))
 ?>
 <div class="row">
 <div class="col-md-3"></div>
-<div class="col-md-6">
+<div class="col-md-6  jumbotron">
 <?php echo form_open('coordinator/assignWork');?>
 <label for="from" class="form-control">From </label>
 <select name="from" class="form-control">

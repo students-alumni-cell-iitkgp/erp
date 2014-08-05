@@ -62,17 +62,17 @@ class MemberModel extends CI_Model{
 		$tmpl = array (
                     'table_open'          => '<table class="table table-striped table-bordered table-hover" border="5" cellpadding="6" cellspacing="4">',
 
-                    'heading_row_start'   => '<tr >',// Important
+                    'heading_row_start'   => '<tr style="background-color:#6C6CB6;color:white">',// Important
                     'heading_row_end'     => '</tr>',
                     'heading_cell_start'  => '<th class="heading">',
                     'heading_cell_end'    => '</th>',
 
-                    'row_start'           => '<tr class="lookfor" style="background-color:#6C6CB6;color:#6C6CB6" >',
+                    'row_start'           => '<tr class="lookfor"  >',
                     'row_end'             => '</tr>',
                     'cell_start'          => '<td>',
                     'cell_end'            => '</td>',
 
-                    'row_alt_start'       => '<tr class="lookfor" style="background-color:#6C6CB6;color:white"  >',
+                    'row_alt_start'       => '<tr class="lookfor"   >',
                     'row_alt_end'         => '</tr>',
                     'cell_alt_start'      => '<td>',
                     'cell_alt_end'        => '</td>',

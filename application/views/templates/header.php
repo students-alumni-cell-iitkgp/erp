@@ -14,6 +14,13 @@ html{
 body{
 	background-color:#c8c7ff;
 }
+#menu{
+	background-color:#6C6CB6;
+
+}
+#menu a{
+	color:white;
+}
 
  	</style>
  </head>

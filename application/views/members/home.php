@@ -15,6 +15,7 @@ foreach ($years as $year) {
 ?>
 </ul>
 </div>
+<hr><hr>
 <h2>Networking Summary</h2>
 <div id="overall">
 	<ul class='nav nav-pills nav-justified' role='tablist'>
