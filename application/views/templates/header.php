@@ -18,6 +18,7 @@ body{
  	</style>
  </head>
 <body class="container">
+	<?php if(isset($heading)) echo '<center><h2>'.$heading.'</h2></center>'?>
 	<div id="wrapper">
 		<br>
 

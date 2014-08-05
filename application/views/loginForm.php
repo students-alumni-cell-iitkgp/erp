@@ -10,6 +10,7 @@ echo form_open('login');
 
 		<div class="col-md-6">
 <div class="container-fluid jumbotron" style="text-align: center;">
+	
 	<span style="color:red"><?php echo validation_errors(); ?></span>
 	<span><?php if(isset($message)){echo $message;}?></span>
 	

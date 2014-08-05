@@ -148,11 +148,17 @@ public function numberOfNotifications(){
 
 public function showVerifyPayment(){
 	$query = $this->db->query('SELECT alumni.alumid,alumni.FirstName,alumni.LastName,alumni.alumSince,alumni.Department FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.pay=1');
-	return $this->table->generate($query);
+	if($query->num_rows()>0)
+		return $this->table->generate($query);
+	else
+		return "<h2>Nothing here, move along!</h2>";
 }
 public function showVerifyRegistration(){
 	$query = $this->db->query('SELECT alumni.alumid,alumni.FirstName,alumni.LastName,alumni.alumSince,alumni.Department FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.register=1');
-	return $this->table->generate($query);
+	if($query->num_rows()>0)
+		return $this->table->generate($query);
+	else
+		return "<h2>Nothing here, move along!</h2>";
 }
 public function verifyRegistration($alumid){
 	$this->db->where('alumid',$alumid);
@@ -211,7 +217,7 @@ public function getUnregistered(){
 	
 	if($query->num_rows()>0){
 	foreach ($query->result_array() as $row) {
-		$data .= form_open('coordinator/confirmRegister').'<input class="form-control" name="userid" type="hidden" value="'.$row['userid'].'"/><input class="form-control" name="name" type="text" value="'.$row['name'].'" disabled/><input name="email" class="form-control" type="text" value="'.$row['email'].'" disabled><input class="form-control" type="submit" name="submit" class="btn btn-success" value="Confirm Registration"/></form>';
+		$data .= form_open('coordinator/confirmRegister',array('class'=>'form-inline')).'<input class="form-control" name="userid" type="hidden" value="'.$row['userid'].'"/><input class="form-control" name="name" type="text" value="'.$row['name'].'" disabled/><input name="email" class="form-control" type="text" value="'.$row['email'].'" disabled><input class="form-control" type="submit" name="submit" class="btn btn-success" value="Confirm Registration"/></form>';
 	}
 	
 }

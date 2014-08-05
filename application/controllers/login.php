@@ -21,7 +21,8 @@ class Login extends CI_Controller{
 
 		elseif ($this->form_validation->run() == FALSE)
 		{	
-			$this->load->view('templates/header');
+			$data['heading'] = "ERP SYSTEM, SAC";
+			$this->load->view('templates/header',$data);
 			$this->load->view('loginForm');
 			$this->load->view('templates/footer');
 		}
