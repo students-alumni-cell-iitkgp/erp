@@ -83,155 +83,64 @@ class MemberModel extends CI_Model{
               );
 
 		$this->table->set_template($tmpl);
-		if($list=="FullList")
-			return $this->FullList($year);
-		elseif($list=="positive")
-			return $this->Positive($year);
-		elseif($list=="negative")	
-			return $this->Negative($year);
-		elseif($list=="neutral")
-			return $this->Neutral($year);
-		elseif($list=="register")
-			return $this->Register($year);
-		elseif($list=="uncontacted")
-			return $this->Uncontacted($year);
-		elseif($list=="unsearched")
-			return $this->Unsearched($year);
-		elseif($list=="notFound")
-			return $this->Unsearched($year);
-		elseif($list=="Paid")
-			return $this->Paid($year);
-	}
-
-	public function FullList($year){
-		$table = "";
-		$userid = $this->getUserId();
-		$query = $this->db->query($this->query1." status.userid = $userid AND alumni.alumSince = $year ".$this->query2);
-		//$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year));
-		if($query->num_rows==0){
+			$query =  $this->customTable($year,$list);
+			if($query->num_rows==0){
 			return -1;
-		}else{
+			}else{
 			
 			$table = $this->table->generate($query);
 			return $table;
 		}
 	}
 
-	public function Positive($year){
-		$table = "";
-		$userid = $this->getUserId();
-		$query = $this->db->query($this->query1." status.called = 3 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
-		//$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'3'));
-		if($query->num_rows==0){
-			return -1;
-		}else{
-			
-			$table = $this->table->generate($query);
-			return $table;
-		}
-	}
 
-	public function Negative($year){
 
-		$table = "";
-		$userid = $this->getUserId();
-		$query = $this->db->query($this->query1." status.called = '2' AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
-		//$query = $this->db->get_where('status',array('userid'=>$userid,'year'=>$year,'called'=>'2'));
-		if($query->num_rows==0){
-			return -1;
-		}else{
-			
-			$table = $this->table->generate($query);
-			return $table;
+
+	public function customTable($year,$param){
+			$userid = $this->getUserId();
+			$query = "";
+		switch($param){
+			case "FullList":
+			$query = $this->db->query($this->query1." status.userid = $userid AND alumni.alumSince = $year ".$this->query2);
+			break;
+
+			case "positive":
+			$query = $this->db->query($this->query1." status.called = 3 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
+			break;
+
+			case "negative":
+			$query = $this->db->query($this->query1." status.called = '2' AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
+			break;
+
+			case "neutral":
+			$query = $this->db->query($this->query1." status.called = '1' AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
+			break;
+
+			case "register":
+			$query = $this->db->query( $this->query1." status.register = 2 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
+			break;
+
+			case "uncontacted":
+			$query = $this->db->query($this->query1." status.called = 0 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
+			break;
+
+			case "unsearched":
+			$query = $this->db->query($this->query1." status.search = 0 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
+			break;
+
+			case "notFound":
+			$query = $this->db->query($this->query1." status.search = -1 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
+			break;
+
+			case "Paid":
+			$query = $this->db->query($this->query1." status.pay = 2 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
+			break;
+
 		}
+		return $query;
 
 	}
 	
-	public function Neutral($year){
-
-		$table = "";
-		$userid = $this->getUserId();
-		$query = $this->db->query($this->query1." status.called = '1' AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
-		if($query->num_rows==0){
-			return -1;
-		}else{
-			
-			$table = $this->table->generate($query);
-			return $table;
-		}
-
-	}
-	public function Register($year){
-
-		$table = "";
-		$userid = $this->getUserId();
-		$query = $this->db->query( $this->query1." status.register = 2 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
-		if($query->num_rows==0){
-			return -1;
-		}else{
-			
-			$table = $this->table->generate($query);
-			return $table;
-		}
-
-	}
-	public function Uncontacted($year){
-
-		$table = "";
-		$userid = $this->getUserId();
-		$query = $this->db->query($this->query1." status.called = 0 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
-		if($query->num_rows==0){
-			return -1;
-		}else{
-			
-			$table = $this->table->generate($query);
-			return $table;
-		}
-
-	}
-	public function Unsearched($year){
-
-		$table = "";
-		$userid = $this->getUserId();
-		$query = $this->db->query($this->query1." status.search = 0 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
-		if($query->num_rows==0){
-			return -1;
-		}else{
-			
-			$table = $this->table->generate($query);
-			return $table;
-		}
-
-	}
-	public function notFound($year){
-
-		$table = "";
-		$userid = $this->getUserId();
-		$query = $this->db->query($this->query1." status.search = -1 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
-		if($query->num_rows==0){
-			return -1;
-		}else{
-			
-			$table = $this->table->generate($query);
-			return $table;
-		}
-
-	}
-	public function Paid($year){
-		$table = "";
-		$userid = $this->getUserId();
-		$query = $this->db->query($this->query1." status.pay = 2 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
-		if($query->num_rows==0){
-			return -1;
-		}else{
-			
-			$table = $this->table->generate($query);
-			return $table;
-		}
-
-
-	}
-
 
 	public function getPrimaryInfo($id){
 	
