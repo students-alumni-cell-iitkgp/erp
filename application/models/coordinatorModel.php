@@ -147,7 +147,7 @@ public function numberOfNotifications(){
 }
 
 public function showVerifyPayment(){
-	$query = $this->db->query('SELECT alumni.alumid,alumni.FirstName,alumni.LastName,alumni.alumSince,alumni.Department FROM alumni JOIN status ON status.alumid = alumni.alumid WHERE status.pay=1');
+	$query = $this->db->query('SELECT alumni.alumid,alumni.FirstName,alumni.LastName,alumni.alumSince,payment.dateofpayment,payment.referenceNo,payment.paymentAmt,payment.remarks FROM alumni JOIN status ON status.alumid = alumni.alumid JOIN payment ON payment.alumid = alumni.alumid WHERE status.pay=1');
 	if($query->num_rows()>0)
 		return $this->table->generate($query);
 	else

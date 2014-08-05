@@ -67,12 +67,12 @@ class MemberModel extends CI_Model{
                     'heading_cell_start'  => '<th class="heading">',
                     'heading_cell_end'    => '</th>',
 
-                    'row_start'           => '<tr class="lookfor" >',
+                    'row_start'           => '<tr class="lookfor" style="background-color:#6C6CB6;color:#6C6CB6" >',
                     'row_end'             => '</tr>',
                     'cell_start'          => '<td>',
                     'cell_end'            => '</td>',
 
-                    'row_alt_start'       => '<tr class="lookfor" >',
+                    'row_alt_start'       => '<tr class="lookfor" style="background-color:#6C6CB6;color:white"  >',
                     'row_alt_end'         => '</tr>',
                     'cell_alt_start'      => '<td>',
                     'cell_alt_end'        => '</td>',
@@ -327,15 +327,7 @@ class MemberModel extends CI_Model{
 					switch ($query->row_array()['pay']) {
 						case '0':
 						$data['paymentstatus'] .="Not Paid";
-						$data['paymentstatus'] .= '<form name="form2" action="Javascript:updatePayment()">';
-
-						$data['paymentstatus'] .= '<div class="radio-inline"><input type="radio" name="payment" value="0">Not Paid</div><div class="radio-inline"><input type="radio" name="payment" value="1">Paid but not verified</div><br>';
-						$data['paymentstatus'] .= '<table class="table table-striped table-bordered table-hover">';
-						$data['paymentstatus'] .= '<tr><td><input type="text" name="alumid" value="'.$id.'" disabled></td><td><input type="date" name="dateofpayment" class="form-control"></td><td><input type="text" class="form-control" name="referenceNo"></td><td><input type="number" name="paymentAmt" class="form-control"></td></tr>';
-						$data['paymentstatus'] .='</table>';
-					
-						$data['paymentstatus'] .='<input type="submit" name="submit" value="Update" class="btn btn-success"></form>';
-					
+						
 
 						break;
 						case '1':
@@ -355,15 +347,7 @@ class MemberModel extends CI_Model{
 								}
 								$data['paymentstatus'] .= '</tr></table></form>';
 							}
-						$data['paymentstatus'] .= '<form name="form2" action="Javascript:updatePayment()">';
-
-						$data['paymentstatus'] .= '<div class="radio-inline"><input type="radio" name="payment" value="0">Not Paid</div><div class="radio-inline"><input type="radio" name="payment" value="1">Paid but not verified</div><br>';
-						$data['paymentstatus'] .= '<table class="table table-striped table-bordered table-hover">';
-						$data['paymentstatus'] .= '<tr><td><input type="text" name="alumid" value="'.$id.'" disabled></td><td><input type="date" name="dateofpayment" class="form-control"></td><td><input type="text" class="form-control" name="referenceNo"></td><td><input type="number" name="paymentAmt" class="form-control"></td></tr>';
-						$data['paymentstatus'] .='</table>';
-					
-						$data['paymentstatus'] .='<input type="submit" name="submit" value="Update" class="btn btn-success"></form>';
-					
+						
 							break;
 						case '2':
 							$data['paymentstatus'] .= "Verified";
@@ -374,6 +358,15 @@ class MemberModel extends CI_Model{
 						
 					}
 
+						$data['paymentstatus'] .= '<form name="form2" action="Javascript:updatePayment()">';
+
+						$data['paymentstatus'] .= '<div class="radio-inline"><input type="radio" name="payment" value="0">Not Paid</div><div class="radio-inline"><input type="radio" name="payment" value="1">Paid but not verified</div><br>';
+						$data['paymentstatus'] .= '<table class="table table-striped table-bordered table-hover">';
+						$data['paymentstatus'] .= '<tr><td><input type="text" name="alumid" value="'.$id.'" disabled></td><td><input type="date" name="dateofpayment" placeholder="dateofpayment" class="form-control"></td><td><input type="text" class="form-control" name="referenceNo" placeholder="Reference Number"></td><td><input type="number" name="paymentAmt" class="form-control"></td><td><input type="text" class="form-control" name="remarks" placeholder="remarks"/></td></tr>';
+						$data['paymentstatus'] .='</table>';
+					
+						$data['paymentstatus'] .='<input type="submit" name="submit" value="Update" class="btn btn-success"></form>';
+					
 					$data['registerstatus'] = 'Current Staus: ';
 					$query = $this->db->get_where('status',array('alumid'=>$id));
 
@@ -591,12 +584,15 @@ class MemberModel extends CI_Model{
 			return "false";
 
 	}
-	public function updatePayment($payment,$alumid,$dateofpayment,$referenceNo,$paymentAmt){
+	public function updatePayment($payment,$alumid,$dateofpayment,$referenceNo,$paymentAmt,$remarks){
 		if($payment!=1){
 			return "Change the payment status first";
 		}
+		$rowsQuery = $this->db->get_where('payment',array('alumid'=>$alumid));
+		$num = $rowsQuery->num_rows()+1;
 		$query = $this->db->where('alumid',$alumid);
-		if($this->db->update('status',array('pay'=>'1'))&& $this->db->insert('payment',array('alumid'=>$alumid,'dateofpayment'=>$dateofpayment,'referenceNo'=>$referenceNo,'paymentAmt'=>$paymentAmt))){
+
+		if($this->db->update('status',array('pay'=>'1'))&& $this->db->insert('payment',array('alumid'=>$alumid,'paymentid'=>$num,'dateofpayment'=>$dateofpayment,'referenceNo'=>$referenceNo,'paymentAmt'=>$paymentAmt,'remarks'=>$remarks))){
 			$query = $this->db->get_where('payment',array('alumid'=>$alumid));
 			$userid = $this->getUserId();
 			date_default_timezone_set('Asia/Calcutta');

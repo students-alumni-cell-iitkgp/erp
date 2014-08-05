@@ -16,6 +16,7 @@ echo $result;
   	}
   	
 
+  var notif= document.getElementById('notif');
 function EventHandler(){
 	//this.cells[2].innerHTML = '<a href="<?php echo site_url()?>/coordinator/verifyPayment/'+this.cells[0].innerHTML+'">Verify Payment</a>';
 	//this.onmouseover=null;
@@ -24,7 +25,7 @@ function EventHandler(){
 	var ref = this.cells[3];
 	 xhr.onreadystatechange = function(){
     if(xhr.readyState==4 && xhr.status==200){
-
+      notif.innerHTML = parseInt(notif.innerHTML)-1;
      ref.innerHTML = "Seen";
    
     }

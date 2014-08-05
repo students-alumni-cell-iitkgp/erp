@@ -166,6 +166,7 @@ public function getNetworkingSummary($year){
 public function notificationStatus(){
 
 	$id = $this->input->get('id');
+	$this->session->set_userdata('notifications',$this->session->userdata('notifications')-1) ;
 
 	$this->coordinatorModel->updateNotificationStatus($id);
 	

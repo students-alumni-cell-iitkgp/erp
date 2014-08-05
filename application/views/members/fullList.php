@@ -39,7 +39,7 @@
       
       <hr>
   <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-4">
       <h2>
         <a >
           Response/Calling Status
@@ -49,12 +49,12 @@
         <div id="responsestatus"></div>
      </div>
 
-<div class="col-md-6">
-      <h2>
+<div class="col-md-8">
+      <center><h2>
         <a >
           Payment Status
         </a>
-      </h2>
+      </h2></center>
     
         <div id="paymentstatus"></div>
      
@@ -277,6 +277,7 @@ function updatePayment(){
       var dateofpayment = form2.dateofpayment.value;
       var referenceNo = form2.referenceNo.value;
       var paymentAmt = form2.paymentAmt.value;
+      var remarks = form2.remarks.value;
   xhr.onreadystatechange = function(){
     if(xhr.readyState==4 && xhr.status==200){
       var payDiv = document.getElementById('paymentstatus');
@@ -284,7 +285,7 @@ function updatePayment(){
       
     }
   };
-  xhr.open("GET","<?php echo site_url()?>/member/updatePayment?payment="+payment+"&alumid="+alumid+"&dateofpayment="+dateofpayment+"&referenceNo="+referenceNo+"&paymentAmt="+paymentAmt,true);
+  xhr.open("GET","<?php echo site_url()?>/member/updatePayment?payment="+payment+"&alumid="+alumid+"&dateofpayment="+dateofpayment+"&referenceNo="+referenceNo+"&paymentAmt="+paymentAmt+"&remarks="+remarks,true);
   xhr.send();
 }
 function updateSearch(){      

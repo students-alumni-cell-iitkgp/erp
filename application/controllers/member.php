@@ -297,7 +297,8 @@ public function updatePayment(){
 			$dateofpayment = $this->input->get('dateofpayment');
 			$referenceNo =	$this->input->get('referenceNo');
 			$paymentAmt = $this->input->get('paymentAmt');
-			$result = $this->memberModel->updatePayment($payment,$alumid,$dateofpayment,$referenceNo,$paymentAmt);
+			$remarks = $this->input->get('remarks');
+			$result = $this->memberModel->updatePayment($payment,$alumid,$dateofpayment,$referenceNo,$paymentAmt,$remarks);
 			
 				echo $result;
 			
