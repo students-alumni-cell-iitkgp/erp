@@ -14,7 +14,7 @@ class MemberModel extends CI_Model{
 
                     'heading_row_start'   => '<tr >',// Important
                     'heading_row_end'     => '</tr>',
-                    'heading_cell_start'  => '<th class="heading">',
+                    'heading_cell_start'  => '<th class="heading" style="background-color:#6C6CB6;color:white">',
                     'heading_cell_end'    => '</th>',
 
                     'row_start'           => '<tr class="lookfor" >',
@@ -59,30 +59,7 @@ class MemberModel extends CI_Model{
 	}
 
 	public function getTable($year,$list="FullList"){
-		$tmpl = array (
-                    'table_open'          => '<table class="table table-striped table-bordered table-hover" border="5" cellpadding="6" cellspacing="4">',
-
-                    'heading_row_start'   => '<tr style="background-color:#6C6CB6;color:white">',// Important
-                    'heading_row_end'     => '</tr>',
-                    'heading_cell_start'  => '<th class="heading">',
-                    'heading_cell_end'    => '</th>',
-
-                    'row_start'           => '<tr class="lookfor"  >',
-                    'row_end'             => '</tr>',
-                    'cell_start'          => '<td>',
-                    'cell_end'            => '</td>',
-
-                    'row_alt_start'       => '<tr class="lookfor"   >',
-                    'row_alt_end'         => '</tr>',
-                    'cell_alt_start'      => '<td>',
-                    'cell_alt_end'        => '</td>',
-
-              
-
-                    'table_close'         => '</table>'
-              );
-
-		$this->table->set_template($tmpl);
+		
 			$query =  $this->customTable($year,$list);
 			if($query->num_rows==0){
 			return -1;
@@ -328,29 +305,14 @@ class MemberModel extends CI_Model{
 	}
 
 	public function search(){
-		$this->table->clear();
+		
 		$tmpl = array (
-                    'table_open'          => '<table class="table table-striped table-bordered table-hover" border="0" cellpadding="4" cellspacing="0">',
+                    'table_open'          => '<table class="table table-striped table-bordered table-hover" border="5" cellpadding="6" cellspacing="4">',
 
-                    'heading_row_start'   => '<tr><th></th>',
-                    'heading_row_end'     => '</tr>',
-                    'heading_cell_start'  => '<th>',
-                    'heading_cell_end'    => '</th>',
-
-                    'row_start'           => '<tr>',
-                    'row_end'             => '</tr>',
-                    'cell_start'          => '<td>',
-                    'cell_end'            => '</td>',
-
-                    'row_alt_start'       => '<tr>',
-                    'row_alt_end'         => '</tr>',
-                    'cell_alt_start'      => '<td>',
-                    'cell_alt_end'        => '</td>',
-
-                    'table_close'         => '</table>'
+                    'heading_row_start'   => '<tr ><td></td>',// Important
               );
 
-		$this->table->set_template($tmpl); 
+		$this->table->set_template($tmpl);
 
 		$sql = "SELECT * FROM alumni WHERE";
 		$count= 0;
