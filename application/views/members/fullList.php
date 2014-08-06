@@ -221,6 +221,8 @@ function addCallDetails(){
 
   xhr.open("GET","<?php echo site_url()?>/member/addCallDetail?alumid="+alumid,true);
   xhr.send();
+ 
+
 }
 function updateCall(){
       var remarks = form1.remarks.value;
@@ -228,16 +230,8 @@ function updateCall(){
       var nexttime = form1.nexttime.value;
       var callid = form1.callid.value;
       var alumid = form1.alumid.value;
-  xhr.onreadystatechange = function(){
-    if(xhr.readyState==4 && xhr.status==200){
-      var callDiv = document.getElementById('call');
-        callDiv.innerHTML = xhr.responseText;
-      
-    }
-  };
-console.log("remarks="+remarks+"&nextdate="+nextdate+"&nexttime="+nexttime+"callid="+callid+"alumid="+alumid);
-  xhr.open("GET","<?php echo site_url()?>/member/updateCall?remarks="+remarks+"&nextdate="+nextdate+"&nexttime="+nexttime+"&callid="+callid+"&alumid="+alumid,true);
-  xhr.send();
+      doAjax("<?php echo site_url()?>/member/updateCall?remarks="+remarks+"&nextdate="+nextdate+"&nexttime="+nexttime+"&callid="+callid+"&alumid="+alumid,call);
+
 }
 function addMember(){
   var name = form7.name.value;
@@ -245,115 +239,47 @@ function addMember(){
       var gender = form7.gender.value;
       var relationship = form7.relationship.value;
       var alumid = form7.alumid.value;
-  xhr.onreadystatechange = function(){
-    if(xhr.readyState==4 && xhr.status==200){
-      var accompanyDiv = document.getElementById('accompany');
-        accompanyDiv.innerHTML = xhr.responseText;
-      
-    }
-  };
-  xhr.open("GET","<?php echo site_url()?>/member/updateMember?name="+name+"&age="+age+"&gender="+gender+"&relationship="+relationship+"&alumid="+alumid,true);
-  xhr.send();
-  
+      doAjax("<?php echo site_url()?>/member/updateMember?name="+name+"&age="+age+"&gender="+gender+"&relationship="+relationship+"&alumid="+alumid,accompany);
+
 }
 function removeAccompaniant(id,alumid){
-
-  console.log(id);
-   xhr.onreadystatechange = function(){
-    if(xhr.readyState==4 && xhr.status==200){
-      var accompanyDiv = document.getElementById('accompany');
-        accompanyDiv.innerHTML = xhr.responseText;
-      
-    }
-  };
-  xhr.open("GET","<?php echo site_url()?>/member/removeAccompaniant?id="+id+"&alumid="+alumid,true);
-  xhr.send();
-  
-
+    doAjax("<?php echo site_url()?>/member/removeAccompaniant?id="+id+"&alumid="+alumid,accompany);
 }
 function updatePayment(){ 
-      var payment = form2.payment.value;
       var alumid = form2.alumid.value;
       var dateofpayment = form2.dateofpayment.value;
       var referenceNo = form2.referenceNo.value;
       var paymentAmt = form2.paymentAmt.value;
       var remarks = form2.remarks.value;
-  xhr.onreadystatechange = function(){
-    if(xhr.readyState==4 && xhr.status==200){
-      var payDiv = document.getElementById('paymentstatus');
-        payDiv.innerHTML =  xhr.responseText;
-      
-    }
-  };
-  xhr.open("GET","<?php echo site_url()?>/member/updatePayment?payment="+payment+"&alumid="+alumid+"&dateofpayment="+dateofpayment+"&referenceNo="+referenceNo+"&paymentAmt="+paymentAmt+"&remarks="+remarks,true);
-  xhr.send();
+      doAjax("<?php echo site_url()?>/member/updatePayment?alumid="+alumid+"&dateofpayment="+dateofpayment+"&referenceNo="+referenceNo+"&paymentAmt="+paymentAmt+"&remarks="+remarks,paymentstatus);
+
 }
 function updateSearch(){      
       var alumid = form3.alumid.value;
-      
       var search = form3.search.value;
-  xhr.onreadystatechange = function(){
-    if(xhr.readyState==4 && xhr.status==200){
-      var searchDiv = document.getElementById('searchstatus');
-        searchDiv.innerHTML =  xhr.responseText;
-      
-    }
-  };
-  xhr.open("GET","<?php echo site_url()?>/member/updateSearch?alumid="+alumid+"&search="+search,true);
-  xhr.send();
+      doAjax("<?php echo site_url()?>/member/updateSearch?alumid="+alumid+"&search="+search,searchstatus);
+
 }
 function updateResponse(){
-  
-      
       var alumid = form4.alumid.value;
-      
       var response = form4.response.value;
-  xhr.onreadystatechange = function(){
-    if(xhr.readyState==4 && xhr.status==200){
-      var responseDiv = document.getElementById('responsestatus');
-        responseDiv.innerHTML =  xhr.responseText;
-      
-    }
-  };
-  xhr.open("GET","<?php echo site_url()?>/member/updateResponse?alumid="+alumid+"&response="+response,true);
-  xhr.send();
+      doAjax("<?php echo site_url()?>/member/updateResponse?alumid="+alumid+"&response="+response,responsestatus);
+
 }
 function updateRegister(){
-  
-  
-      
       var alumid = form5.alumid.value;
-      
       var register = form5.register.value;
-  xhr.onreadystatechange = function(){
-    if(xhr.readyState==4 && xhr.status==200){
-      var registerDiv = document.getElementById('registerstatus');
-        registerDiv.innerHTML =  xhr.responseText;
-      
-    }
-  };
-  xhr.open("GET","<?php echo site_url()?>/member/updateRegister?alumid="+alumid+"&register="+register,true);
-  xhr.send();
+      doAjax("<?php echo site_url()?>/member/updateRegister?alumid="+alumid+"&register="+register,registerstatus);
+
 }
 function updateRemarks(){
- 
       var alumid = form6.alumid.value;
-      
       var remark = form6.remark.value;
-  xhr.onreadystatechange = function(){
-    if(xhr.readyState==4 && xhr.status==200){
-      var remarkDiv = document.getElementById('remarks');
-        remarkDiv.innerHTML =  xhr.responseText;
-      
-    }
-  };
-  xhr.open("GET","<?php echo site_url()?>/member/updateRemark?alumid="+alumid+"&remark="+remark,true);
-  xhr.send();
-
+      doAjax("<?php echo site_url()?>/member/updateRemark?alumid="+alumid+"&remark="+remark,remarks);
 }
 
 function getdetails(id){
-//window.alert(id);
+// function responsible for getting details into the popup
 var xhr;
 if(window.XMLHttpRequest){
 xhr = new XMLHttpRequest();
@@ -367,11 +293,8 @@ xhr.onreadystatechange = function(){
         console.log(JSON.parse(xhr.responseText));
 
 		var obj = JSON.parse(xhr.responseText);
-		/*document.getElementById("name").innerHTML=obj.name;
-    document.getElementById("hall").innerHTML=obj.hall;
-    document.getElementById("year").innerHTML=obj.year;*/
     document.getElementById("call").innerHTML = obj.callhistory|| "nothing to show";
-   document.getElementById("profile").innerHTML = obj.profile;
+    document.getElementById("profile").innerHTML = obj.profile;
     document.getElementById("searchstatus").innerHTML = obj.searchstatus;
     document.getElementById("responsestatus").innerHTML = obj.responsestatus;
     document.getElementById("paymentstatus").innerHTML = obj.paymentstatus;
@@ -386,6 +309,18 @@ xhr.onreadystatechange = function(){
 
 xhr.open("GET","<?php echo site_url()?>/member/getProfile?id="+id,true);
 xhr.send();
+}
+
+function doAjax(request,div){
+xhr.onreadystatechange = function(){
+    if(xhr.readyState==4 && xhr.status==200){
+      var reference = document.getElementById(div);
+        div.innerHTML =  xhr.responseText;
+      
+    }
+  };
+xhr.open("GET",request,true);
+  xhr.send();
 }
 
 </script>
