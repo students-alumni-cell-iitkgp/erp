@@ -21,6 +21,9 @@ body{
 #menu a{
 	color:white;
 }
+h2{
+	color:red;
+}
 
  	</style>
  </head>

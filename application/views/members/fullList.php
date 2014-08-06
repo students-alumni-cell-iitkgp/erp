@@ -20,18 +20,18 @@
         
   
       <h2>
-        <a >
+      
           Call History
-        </a>
+      
       </h2>
     
       
        <div id="call"></div>
      <hr>
       <h2>
-        <a >
+      
           Profile
-        </a>
+     
       </h2>
     
         <div id="profile"></div>
@@ -41,9 +41,9 @@
   <div class="row">
   <div class="col-md-4">
       <h2>
-        <a >
+       
           Response/Calling Status
-        </a>
+       
       </h2>
     
         <div id="responsestatus"></div>
@@ -51,9 +51,9 @@
 
 <div class="col-md-8">
       <center><h2>
-        <a >
+        
           Payment Status
-        </a>
+   
       </h2></center>
     
         <div id="paymentstatus"></div>
@@ -66,17 +66,17 @@
       <div class="row">
         <div class="col-md-6">
       <h2 >
-        <a >
+       
           Searching Status
-        </a>
+     
       </h2>
         <div id="searchstatus"></div>
       </div>
       <div class="col-md-6">
          <h2 >
-        <a >
+       
           Register Status
-        </a>
+       
       </h2>
         <div id="registerstatus"></div>
       </div>
@@ -85,19 +85,19 @@
     <div class="row">
       <div class="col-md-6">
  <h2 >
-        <a >
+       
           Remarks
-        </a>
+       
       </h2>
-        <div id="remarks"></div>
+        <div ></div>
 
 
     </div>
     <div class="col-md-6">
  <h2 >
-        <a >
+      
           Accompaniants
-        </a>
+      
       </h2>
         <div id="accompany"></div>
 
@@ -221,7 +221,7 @@ function addCallDetails(){
 
   xhr.open("GET","<?php echo site_url()?>/member/addCallDetail?alumid="+alumid,true);
   xhr.send();
- 
+
 
 }
 function updateCall(){

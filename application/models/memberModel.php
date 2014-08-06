@@ -140,12 +140,12 @@ class MemberModel extends CI_Model{
 				}else{
 					$src = base_url().'files/images/dummy.jpg';
 				}
-				$data['profile'] = '<div class="row"><div class="col-md-3"><img width="90%" src="'.$src.'" /></div><div class="col-md-9">';
+				$data['profile'] = '<div class="row"><div class="col-md-3"><img class="img-responsive" width="90%" src="'.$src.'" /><h2>Remarks</h2><br><div id="remarks"></div></div><div class="col-md-9">';
 				$data['profile'] .= form_open_multipart('member/updateProfile');
 				
 				foreach ($result as $key => $value) {
 					if($key!="alumid"&&$key!="assigned"&&$key!="image"){
-					$data['profile'] .= '<span font="bold 15px Tahoma">'.$key.'</span>   :<input class="form-control"  name="'.$key.'" value="'.$value.'">';
+					$data['profile'] .= '<span style="font:bold 15px Tahoma;color:green">'.$key.'</span>   :<input class="form-control"  name="'.$key.'" value="'.$value.'">';
 					
 				}elseif ($key=="alumid"){
 					$data['profile'] .= '   :<input class="form-control" style="visibility:hidden" name="'.$key.'" value="'.$value.'" >';
@@ -275,12 +275,12 @@ class MemberModel extends CI_Model{
 			if($query->num_rows()>0){
 				$remark = $query->row_array()['remark'];
 				$data['remarks'] = '<form name="form6" action="Javascript:updateRemarks()">Alum Id:<input type="text" name="alumid" value="'.$id.'" disabled><br>';
-				$data['remarks'] .= 'Remark:<input type="text" class="form-control"  name="remark" value="'.$remark.'"><br>';
+				$data['remarks'] .= 'Remark:<textarea class="form-control"  name="remark" >'.$remark.'</textarea><br>';
 				$data['remarks'] .='<input type="submit" name="submit" value="Update" class="btn btn-success"></form>';
 			}else{
 
 				$data['remarks'] = '<form name="form6" action="Javascript:updateRemarks()">Alum Id:<input type="text" name="alumid" value="'.$id.'" disabled><br>';
-				$data['remarks'] .= 'Remark:<input type="text" class="form-control" name="remark" placeholder="Your remark Here"><br>';
+				$data['remarks'] .= 'Remark:<textarea class="form-control" name="remark" rows="5" placeholder="Your remark Here"></textarea><br>';
 				$data['remarks'] .='<input type="submit" name="submit" value="Update" class="btn btn-success"></form>';
 
 			}
