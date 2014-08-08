@@ -15,6 +15,7 @@ echo $result;
     	link[i].onclick = EventHandler;
   	}
   	
+  var notif= document.getElementById('notif');
 
 function EventHandler(){
 	//this.cells[2].innerHTML = '<a href="<?php echo site_url()?>/coordinator/verifyPayment/'+this.cells[0].innerHTML+'">Verify Payment</a>';
@@ -23,6 +24,7 @@ function EventHandler(){
 	var ref = this.cells[4];
 	 xhr.onreadystatechange = function(){
     if(xhr.readyState==4 && xhr.status==200){
+      notif.innerHTML = parseInt(notif.innerHTML)-1;
 
      ref.innerHTML = "Seen";
     
