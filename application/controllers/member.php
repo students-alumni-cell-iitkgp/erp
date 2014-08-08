@@ -36,19 +36,7 @@ else{
 	public function year($year){
 		if($this->accessCheck()){
 
-		$this->data1 = $this->memberModel->getYearList();
-		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
-			$data['table'] = $this->memberModel->getTable($year);
-			$data['year'] = $year;
-			$this->load->view('templates/header');
-			$this->load->view('templates/menu');
-			$this->load->view('members/fullList',$data);
-			$this->load->view('templates/footer');
-		}else{
-			$this->load->view('templates/header');
-			$this->load->view('templates/badParam');
-			$this->load->view('templates/footer');
-		}
+			$this->getTable($year,"FullList");
 
 
 	}else{
@@ -56,59 +44,25 @@ else{
 }}
 
 	public function positive($year){
-				if($this->accessCheck()){
-
-		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
-			$data['table'] = $this->memberModel->getTable($year,"positive");
-			$data['year'] = $year;
-			$this->load->view('templates/header');
-			$this->load->view('templates/menu');
-			$this->load->view('members/fullList',$data);
-			$this->load->view('templates/footer');
+		if($this->accessCheck()){
+			$this->getTable($year,"Positive");
 		}else{
-			$this->load->view('templates/header');
-			$this->load->view('templates/badParam');
-			$this->load->view('templates/footer');
+			$this->load->view('templates/accessErr');
 		}
-
 	}
-else{
-	$this->load->view('templates/accessErr');
-}}
 	public function negative($year){
 				if($this->accessCheck()){
 
-		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
-			$data['table'] = $this->memberModel->getTable($year,"negative");
-			$data['year'] = $year;
-			$this->load->view('templates/header');
-			$this->load->view('templates/menu');
-			$this->load->view('members/fullList',$data);
-			$this->load->view('templates/footer');
-		}else{
-			$this->load->view('templates/header');
-			$this->load->view('templates/badParam');
-			$this->load->view('templates/footer');
-		}
+					$this->getTable($year,"negative");
+
 }
 	else{
 	$this->load->view('templates/accessErr');
 }}
 	public function neutral($year){
 				if($this->accessCheck()){
+			$this->getTable($year,"neutral");
 
-		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
-			$data['table'] = $this->memberModel->getTable($year,"neutral");
-			$data['year'] = $year;
-			$this->load->view('templates/header');
-			$this->load->view('templates/menu');
-			$this->load->view('members/fullList',$data);
-			$this->load->view('templates/footer');
-		}else{
-			$this->load->view('templates/header');
-			$this->load->view('templates/badParam');
-			$this->load->view('templates/footer');
-		}
 
 	}else{
 	$this->load->view('templates/accessErr');
@@ -117,56 +71,22 @@ else{
 	public function registered($year){
 				if($this->accessCheck()){
 
-		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
-			$data['table'] = $this->memberModel->getTable($year,"register");
-			$data['year'] = $year;
-			$this->load->view('templates/header');
-			$this->load->view('templates/menu');
-			$this->load->view('members/fullList',$data);
-			$this->load->view('templates/footer');
-		}else{
-			$this->load->view('templates/header');
-			$this->load->view('templates/badParam');
-			$this->load->view('templates/footer');
-		}
+					$this->getTable($year,"register");
 
 	}else{
 	$this->load->view('templates/accessErr');
 }}
 	public function uncontacted($year){
 						if($this->accessCheck()){
-
-		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
-			$data['table'] = $this->memberModel->getTable($year,"uncontacted");
-			$data['year'] = $year;
-			$this->load->view('templates/header');
-			$this->load->view('templates/menu');
-			$this->load->view('members/fullList',$data);
-			$this->load->view('templates/footer');
-		}else{
-			$this->load->view('templates/header');
-			$this->load->view('templates/badParam');
-			$this->load->view('templates/footer');
-		}
+			$this->getTable($year,"uncontacted");
 
 	}else{
 	$this->load->view('templates/accessErr');
 }}
 	public function unsearched($year){
 						if($this->accessCheck()){
+			$this->getTable($year,"unsearched");
 
-		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
-			$data['table'] = $this->memberModel->getTable($year,"unsearched");
-			$data['year'] = $year;
-			$this->load->view('templates/header');
-			$this->load->view('templates/menu');
-			$this->load->view('members/fullList',$data);
-			$this->load->view('templates/footer');
-		}else{
-			$this->load->view('templates/header');
-			$this->load->view('templates/badParam');
-			$this->load->view('templates/footer');
-		}
 
 	}else{
 	$this->load->view('templates/accessErr');
@@ -174,37 +94,17 @@ else{
 	public function notFound($year){
 								if($this->accessCheck()){
 
-		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
-			$data['table'] = $this->memberModel->getTable($year,"notFound");
-			$data['year'] = $year;
-			$this->load->view('templates/header');
-			$this->load->view('templates/menu');
-			$this->load->view('members/fullList',$data);
-			$this->load->view('templates/footer');
-		}else{
-			$this->load->view('templates/header');
-			$this->load->view('templates/badParam');
-			$this->load->view('templates/footer');
-		}
+				$this->getTable($year,"notFound");
+
 
 	}else{
 	$this->load->view('templates/accessErr');
 }}
 public function Paid($year){
-								if($this->accessCheck()){
+	if($this->accessCheck()){
 
-		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
-			$data['table'] = $this->memberModel->getTable($year,"Paid");
-			$data['year'] = $year;
-			$this->load->view('templates/header');
-			$this->load->view('templates/menu');
-			$this->load->view('members/fullList',$data);
-			$this->load->view('templates/footer');
-		}else{
-			$this->load->view('templates/header');
-			$this->load->view('templates/badParam');
-			$this->load->view('templates/footer');
-		}
+					$this->getTable($year,"Paid");
+
 
 	}else{
 	$this->load->view('templates/accessErr');
@@ -214,6 +114,21 @@ public function getProfile(){
 	$data = $this->memberModel->getPrimaryInfo($id);
 
 	echo json_encode($data);
+}
+public function getTable($year,$list){
+	$this->data1 = $this->memberModel->getYearList();
+		if(in_array(array('alumSince'=>$year),$this->data1)){// think of a get around
+			$data['table'] = $this->memberModel->getTable($year,$list);
+			$data['year'] = $year;
+			$this->load->view('templates/header');
+			$this->load->view('templates/menu');
+			$this->load->view('members/fullList',$data);
+			$this->load->view('templates/footer');
+		}else{
+			$this->load->view('templates/header');
+			$this->load->view('templates/badParam');
+			$this->load->view('templates/footer');
+		}
 }
 
 

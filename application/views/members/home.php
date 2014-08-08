@@ -2,11 +2,12 @@
 <div class="navbar nav-pills nav-justified" id ="topPane">
 
 	<ul class="nav navbar-nav">
+
 <?php
 
 
 foreach ($years as $year) {
-	echo '<li><a class="btn btn-success" style="color:white" href="'.site_url().'/member/year/'.$year['alumSince'].'">'.$year['alumSince'].'</a></li>';
+	echo '<li><a class="btn btn-success" style="color:white" href="'.site_url().'/coordinator/year/'.$year['alumSince'].'">'.$year['alumSince'].'</a></li>';
 }
 
 

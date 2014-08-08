@@ -170,10 +170,10 @@ class MemberModel extends CI_Model{
 						case '1':
 							$data['searchstatus'] .= "Found";
 							break;
-							case '2':
+						case '2':
 							$data['searchstatus'] .= "Unable to find";
 							break;
-							case '4':
+						case '4':
 							$data['searchstatus'] .= "Ready contact";
 							break;
 						
@@ -186,15 +186,15 @@ class MemberModel extends CI_Model{
 					$data['responsestatus'] = "Current Staus: ";
 					switch ($query->row_array()['called']) {
 						case '0':
-						$data['responsestatus'] .="Not called";
-						break;
+							$data['responsestatus'] .="Not called";
+							break;
 						case '1':
 							$data['responsestatus'] .= "Neutral";
 							break;
 						case '2':
 							$data['responsestatus'] .= "Negative";
 							break;
-							case '3':
+						case '3':
 							$data['responsestatus'] .= "Positive";
 							break;
 							
@@ -212,10 +212,8 @@ class MemberModel extends CI_Model{
 				
 					switch ($query->row_array()['pay']) {
 						case '0':
-						$data['paymentstatus'] .="Not Paid";
-						
-
-						break;
+							$data['paymentstatus'] .="Not Paid";
+							break;
 						case '1':
 							$data['paymentstatus'] .= "Paid, Not verified";
 							$query = $this->db->get_where('payment',array('alumid'=>$id));
