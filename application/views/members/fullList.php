@@ -84,12 +84,6 @@
     <hr><hr>
     <div class="row">
       <div class="col-md-6">
- <h2 >
-       
-          Remarks
-       
-      </h2>
-        <div ></div>
 
 
     </div>

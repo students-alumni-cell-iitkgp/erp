@@ -61,13 +61,13 @@ class MemberModel extends CI_Model{
 	public function getTable($year,$list="FullList"){
 		
 			$query =  $this->customTable($year,$list);
-			if($query->num_rows==0){
-			return -1;
-			}else{
 			
-			$table = $this->table->generate($query);
-			return $table;
-		}
+			
+			if($query!="Undefined table data")
+				return $query;
+			else
+				return '-1';
+		
 	}
 
 
@@ -114,7 +114,7 @@ class MemberModel extends CI_Model{
 			break;
 
 		}
-		return $query;
+		return $this->table->generate($query);
 
 	}
 	
