@@ -2,6 +2,7 @@
 class MemberModel extends CI_Model{
 
 	private $query1 = "SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince,callhistory.nextdate,callhistory.nexttime FROM alumni JOIN status  ON alumni.alumid = status.alumid  LEFT JOIN callhistory ON callhistory.alumid = alumni.alumid WHERE";
+	private $queryP = "SELECT alumni.alumid,alumni.Firstname,alumni.LastName,alumni.HallofResidence,alumni.alumSince,payment.paymentAmt, payment.remarks FROM alumni JOIN status  ON alumni.alumid = status.alumid  JOIN payment ON payment.alumid = alumni.alumid WHERE";
 	private $query2 = "GROUP BY alumni.alumid ORDER BY callhistory.nextdate DESC";
 	public function __construct(){
 		parent::__construct();
@@ -110,7 +111,7 @@ class MemberModel extends CI_Model{
 			break;
 
 			case "Paid":
-			$query = $this->db->query($this->query1." status.pay = 2 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
+			$query = $this->db->query($this->queryP." status.pay = 2 AND alumni.alumSince = $year AND status.userid = $userid ");
 			break;
 
 		}
@@ -604,11 +605,11 @@ class MemberModel extends CI_Model{
 
 	}
 	public function numberOfNotifications(){
-	$query = $this->db->get_where('notificationmembers',array('status'=>'0'));
+	$query = $this->db->get_where('notificationmembers',array('status'=>0));
 	return $query->num_rows();
 }
 public function getNotifications(){
-		$query = $this->db->get('notificationmembers');
+		$query = $this->db->get_where('notificationmembers',array('status'=>0));
 		if($query->num_rows()>0){
 			return $this->table->generate($query);
 		}else{

@@ -90,6 +90,7 @@
 	<h3 class="col-md-6" style="text-decoration: underline;"> Registered </h3><h3 class="col-md-6" style="text-decoration:underline;"> Paid</h3></div>
 	<div class="row"><div class="col-md-6" style="background-color:white;height:60px" id="register"> </div><div class="col-md-6" style="background-color:white;height:60px" id="paid"></div></div>
 <hr><hr>
+<a href="<?php echo site_url('coordinator/assignWork')?>"><h2>Assign work to the student members<h2></a>
 <script type="text/javascript">
 
 function getNetworkingSummary(year){

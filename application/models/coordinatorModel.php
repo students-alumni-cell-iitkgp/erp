@@ -125,7 +125,7 @@ public function getUserId2($username){// to be used in work assignment form
 			return "success";
 		}
 		else
-			return "failed";
+			return "Operation partially failed. Contact the admin";
 
 
 

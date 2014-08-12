@@ -31,13 +31,10 @@ class Coordinator extends CI_Controller{
 			$this->load->view('templates/header',$data);
 			$this->load->view('templates/menu');
 			$this->load->view('coordinators/home',$data);
-			$data['fromid'] = $this->coordinatorModel->getUnassignedAlum();
-			$data['toid'] = $this->coordinatorModel->getUnassignedAlum();
-			$data['members'] = $this->coordinatorModel->getMembers();
+			
 			
 			$data['msg'] = "";
 			$this->load->view('coordinators/networkingSummary',$data);
-			$this->load->view('coordinators/assignWork',$data);
 			
 			$this->load->view('templates/footer');
 		}else{
@@ -91,10 +88,10 @@ public function assignWork(){
 				$member = $this->input->post('member');
 				
 					if($this->coordinatorModel->assignWork($from,$to,$member)=="success"){
-						header('Refresh:2, url="index"');
+						header('Refresh:2, url="assignWork"');
 						echo "Work assigned. You are being redirected back";
 					}else{
-						header('Refresh:2, url="index"');
+						header('Refresh:2, url="assignWork"');
 						echo "Unable to assign work, you are being redirected back";
 
 					}
