@@ -107,7 +107,7 @@ class MemberModel extends CI_Model{
 			break;
 
 			case "notFound":
-			$query = $this->db->query($this->query1." status.search = -1 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
+			$query = $this->db->query($this->query1." status.search = 2 AND alumni.alumSince = $year AND status.userid = $userid ".$this->query2);
 			break;
 
 			case "Paid":
@@ -172,7 +172,7 @@ class MemberModel extends CI_Model{
 							$data['searchstatus'] .= "Found";
 							break;
 						case '2':
-							$data['searchstatus'] .= "Unable to find";
+							$data['searchstatus'] .= "Not found";
 							break;
 						case '4':
 							$data['searchstatus'] .= "Ready contact";
@@ -201,7 +201,9 @@ class MemberModel extends CI_Model{
 							
 						
 					}
-					$data['responsestatus'] .= '';
+					$data['responsestatus'] .= '<br>';
+					$data['responsestatus'] .= '<form name="form4" action="Javascript:updateResponse()">';
+
 					$data['responsestatus'] .= 'Alumid<input  name="alumid" value="'.$id.'" disabled><br>';
 
 					$data['responsestatus'] .= '<div class="radio-inline"><input type="radio" name="response" value="1">Neutral</div><div class="radio-inline"><input type="radio" name="response"  value="3">Positive</div><div class="radio-inline"><input name="response" type="radio" value="2">Negative</div><div class="radio-inline"><input name="response" type="radio" value="0">Not Called</div><br>';
@@ -484,7 +486,7 @@ class MemberModel extends CI_Model{
 			$lastRow = $row;
 		}
 		$callRow = '<form name="form1" action="Javascript:updateCall()"><table class="table table-striped table-bordered table-hover">';
-		$callRow .='<tr><td><input type="text" name="alumid" class="form-control" value="'.$lastRow['alumid'].'"disabled></td><td><input type="text" class="form-control" name="callid" value="'.$lastRow['callid'].'" disabled></td><td>'.$lastRow['date'].'</td><td>'.$lastRow['time'].'</td><td><input type="text" id="remarks" class="form-control" name="remarks"></td><td><input type="date" class="form-control" name="nextdate"></td><td><input type="text" name="nexttime" class="form-control"></td>';
+		$callRow .='<tr><td><input type="text" name="alumid" class="form-control" value="'.$lastRow['alumid'].'"disabled></td><td><input type="text" class="form-control" name="callid" value="'.$lastRow['callid'].'" disabled></td><td>'.$lastRow['date'].'</td><td>'.$lastRow['time'].'</td><td><input type="text" id="remarks" class="form-control" placeholder="remarks" name="remarks"></td><td><input type="date" class="form-control" placeholder="nextdate" name="nextdate"></td><td><input type="text" placeholder="nexttime" name="nexttime" class="form-control"></td>';
 		$callRow .='</tr></table><input type="submit" name="submit" id="button1" class="btn btn-success" value="Update"></form>';
 		return $callRow;
 	}

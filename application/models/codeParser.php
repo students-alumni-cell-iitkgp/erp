@@ -23,6 +23,9 @@ class Codeparser extends CI_Model{
 	}
 	public function response($code){
 		switch ($code) {
+			case '0':
+				return "Not Called";
+				break;
 			case '1':
 				return "Neutral";
 				break;

@@ -45,7 +45,7 @@ else{
 
 	public function positive($year){
 		if($this->accessCheck()){
-			$this->getTable($year,"Positive");
+			$this->getTable($year,"positive");
 		}else{
 			$this->load->view('templates/accessErr');
 		}
