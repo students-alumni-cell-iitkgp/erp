@@ -227,12 +227,17 @@ class MemberModel extends CI_Model{
 									$data['paymentstatus'] .='<th>'.$key.'</th>';
 									# code...
 								}
-								$data['paymentstatus'] .='</tr><tr>';
+								$data['paymentstatus'] .='</tr>';
+								foreach($query->result_array() as $result){
+								$data['paymentstatus'] .='<tr>';	
 								foreach ($result as $key => $value) {
 									$data['paymentstatus'] .='<td>'.$value.'</td>';
 									# code...
 								}
-								$data['paymentstatus'] .= '</tr></table></form>';
+								$data['paymentstatus'] .= '</tr>';
+							}
+							$data['paymentstatus'] .= '</table>';
+								
 							}
 						
 							break;
