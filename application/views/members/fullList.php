@@ -249,20 +249,51 @@ function updatePayment(){
 
 }
 function updateSearch(){      
-      var alumid = form3.alumid.value;
-      var search = form3.search.value;
+     var alumid = form3.alumid.value;
+      var search = 0;
+       var radios = document.getElementsByName('search');
+var search=0;
+for (var i = 0, length = radios.length; i < length; i++) {
+    if (radios[i].checked) {
+        // do whatever you want with the checked radio
+        search = (radios[i].value);
+
+        // only one radio can be logically checked, don't check the rest
+        break;
+    }
+}
       doAjax("<?php echo site_url()?>/member/updateSearch?alumid="+alumid+"&search="+search,searchstatus);
 
 }
 function updateResponse(){
       var alumid = form4.alumid.value;
-      var response = form4.response.value;
+     var radios = document.getElementsByName('response');
+var response=0;
+for (var i = 0, length = radios.length; i < length; i++) {
+    if (radios[i].checked) {
+        // do whatever you want with the checked radio
+        response = (radios[i].value);
+
+        // only one radio can be logically checked, don't check the rest
+        break;
+    }
+}
       doAjax("<?php echo site_url()?>/member/updateResponse?alumid="+alumid+"&response="+response,responsestatus);
 
 }
 function updateRegister(){
-      var alumid = form5.alumid.value;
-      var register = form5.register.value;
+      var register =0;
+       var radios = document.getElementsByName('register');
+var register=0;
+for (var i = 0, length = radios.length; i < length; i++) {
+    if (radios[i].checked) {
+        // do whatever you want with the checked radio
+        register = (radios[i].value);
+
+        // only one radio can be logically checked, don't check the rest
+        break;
+    }
+}
       doAjax("<?php echo site_url()?>/member/updateRegister?alumid="+alumid+"&register="+register,registerstatus);
 
 }
